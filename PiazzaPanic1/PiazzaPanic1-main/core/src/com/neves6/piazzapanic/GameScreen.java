@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -33,6 +34,8 @@ public class GameScreen extends ScreenAdapter {
     int[] renderableLayers = { 0, 1, 2 };
     Texture selectedTexture;
     Texture recipes;
+
+    Music music_background;
     public GameScreen(PiazzaPanicGame game, int level) {
         this.game = game;
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
@@ -49,6 +52,9 @@ public class GameScreen extends ScreenAdapter {
         }
         selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
         recipes = new Texture(Gdx.files.internal("recipes.png"));
+        music_background = Gdx.audio.newMusic(Gdx.files.internal("sounds/background.mp3"));
+        music_background.setLooping(true);
+        music_background.play();
     }
 
     @Override
