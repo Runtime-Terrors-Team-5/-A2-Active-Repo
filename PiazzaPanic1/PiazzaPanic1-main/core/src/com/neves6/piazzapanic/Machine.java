@@ -91,6 +91,10 @@ public class Machine{
         return processingTime;
     }
 
+    public String getOutput(){
+        return output;
+    }  // game test
+
     public Septet getMachineInfo(){
         if (this.operator == null){return new Septet(input, output, processingTime, sticky, 1, active,
             runtime);}
