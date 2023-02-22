@@ -1,10 +1,12 @@
 package com.neves6.piazzapanic;
 
+import java.io.Serializable;
+
 /**
  * Machine class.
  * Represents a machine or station in the game.
  */
-public class Machine {
+public class Machine{
     private final String type;
     private final String input;
     private final String output;

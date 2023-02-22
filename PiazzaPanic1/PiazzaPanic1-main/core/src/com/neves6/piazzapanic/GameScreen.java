@@ -51,6 +51,25 @@ public class GameScreen extends ScreenAdapter {
         recipes = new Texture(Gdx.files.internal("recipes.png"));
     }
 
+    public GameScreen(PiazzaPanicGame game) {
+        this.game = game;
+        font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
+        //bg = new Texture(Gdx.files.internal("title_screen_large.png"));
+        this.INITIAL_WIDTH = Gdx.graphics.getWidth();
+        this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
+
+        map = new TmxMapLoader().load("tilemaps/level1.tmx");
+        gm = SaveAndLoadHandler.getSave();
+        unitScale = Gdx.graphics.getHeight() / (12f*32f);
+        wScale = unitScale * 32f;
+        hScale = unitScale * 32f;
+        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+
+        selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
+        recipes = new Texture(Gdx.files.internal("recipes.png"));
+    }
+
+
     @Override
     public void show(){
         camera = new OrthographicCamera();
@@ -87,6 +106,9 @@ public class GameScreen extends ScreenAdapter {
                 }
                 if (keyCode == Input.Keys.E) {
                     gm.tryInteract();
+                }
+                if (keyCode == Input.Keys.O){
+                    SaveAndLoadHandler.setSave(gm);
                 }
                 return true;
             }

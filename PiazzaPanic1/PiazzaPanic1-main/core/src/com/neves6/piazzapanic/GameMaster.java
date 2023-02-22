@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -362,6 +363,8 @@ class ScenarioGameMaster extends GameMaster {
             if (tray.contains("burger") && tray.contains("toastedbun")){
                 customers.remove(0);
                 tray.clear();
+                customers.add(new Customer("Customer"+1, -1, -1, "salad"));
+
                 serving.play(soundVolume);
             }
         } else if (customers.get(0).getOrder() == "salad"){
@@ -378,6 +381,7 @@ class ScenarioGameMaster extends GameMaster {
             if (tray.contains("choppedtomato") && tray.contains("choppedlettuce") && tray.contains("choppedonion")){
                 customers.remove(0);
                 tray.clear();
+                customers.add(new Customer("Customer"+1, -1, -1, "salad"));
                 serving.play(soundVolume);
             }
         }

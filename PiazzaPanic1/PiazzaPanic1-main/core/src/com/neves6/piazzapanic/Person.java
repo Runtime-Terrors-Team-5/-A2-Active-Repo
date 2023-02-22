@@ -2,12 +2,13 @@ package com.neves6.piazzapanic;
 
 import com.badlogic.gdx.graphics.Texture;
 
+import java.io.Serializable;
 import java.util.Stack;
 
 /**
  * Base person class.
  */
-public class Person {
+public class Person{
     private final String name;
     private int xCoord;
     private int yCoord;
