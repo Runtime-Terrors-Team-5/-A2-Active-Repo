@@ -75,4 +75,8 @@ public class Machine {
     public float getProcessingTime(){
         return processingTime;
     }
+
+    public String getOutput(){
+        return output;
+    }  // game test
 }
