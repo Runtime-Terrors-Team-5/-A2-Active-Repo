@@ -48,7 +48,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         // https://mvnrepository.com/artifact/com.esotericsoftware/kryo
-        implementation 'com.esotericsoftware:kryo:4.0.0'
+        implementation 'com.esotericsoftware:kryo:5.4.0'
 
 
     }
@@ -61,7 +61,7 @@ project(":core") {
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         // https://mvnrepository.com/artifact/com.esotericsoftware/kryo
-        implementation 'com.esotericsoftware:kryo:4.0.0'
+        implementation 'com.esotericsoftware:kryo:5.4.0'
 
 
     }

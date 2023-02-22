@@ -1,5 +1,6 @@
 package com.neves6.piazzapanic;
 
+import com.badlogic.gdx.Gdx;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
@@ -52,6 +53,16 @@ public final class SaveAndLoadHandler {
      */
     public static void setSave(ScenarioGameMaster gm) {
         kryo.register(ScenarioGameMaster.class);
+        /*
+        kryo.register(java.util.ArrayList.class);
+        kryo.register(Chef.class);
+        kryo.register(java.util.Stack.class);
+        kryo.register(com.badlogic.gdx.graphics.Texture.class);
+        kryo.register(com.badlogic.gdx.graphics.glutils.FileTextureData.class);
+        kryo.register(com.badlogic.gdx.backends.lwjgl3.Lwjgl3FileHandle.class);
+        */
+
+       // kryo.register();
         saveFileExistenceHandler();
         try {
             Output output = new Output(Files.newOutputStream(Paths.get(savesFilepath)));
