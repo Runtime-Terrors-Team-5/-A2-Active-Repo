@@ -41,7 +41,7 @@ public class GameScreen extends ScreenAdapter {
         this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
         if (level == 1) {
             map = new TmxMapLoader().load("tilemaps/level1.tmx");
-            gm = new ScenarioGameMaster(game, map, 2, 5);
+            gm = new ScenarioGameMaster(game, map, 2, 5,level);
             unitScale = Gdx.graphics.getHeight() / (12f*32f);
             wScale = unitScale * 32f;
             hScale = unitScale * 32f;

@@ -35,9 +35,9 @@ public final class SaveAndLoadHandler {
      * @return ArrayList of settings values.
      */
     public static saveData getSave() {
-        kryo.register(saveData.class);
-        kryo.register(Sextet.class);
-        kryo.register(Triplet.class);
+        kryo.register(saveData.class, new JavaSerializer());
+        kryo.register(Sextet.class, new JavaSerializer());
+        kryo.register(Triplet.class, new JavaSerializer());
 
 
         kryo.register(java.util.ArrayList.class, new JavaSerializer());
@@ -48,9 +48,7 @@ public final class SaveAndLoadHandler {
         saveData data = null;
         try {
             Input input = new Input(Files.newInputStream(Paths.get(savesFilepath)));
-            System.out.println(2);
             data = kryo.readObject(input, saveData.class);
-            System.out.println(3);
             input.close();
 
         } catch (Exception e) {
@@ -66,9 +64,9 @@ public final class SaveAndLoadHandler {
     public static void setSave(ScenarioGameMaster gm) {
 
         //kryo.setRegistrationRequired(false);
-        kryo.register(saveData.class);
-        kryo.register(Sextet.class);
-        kryo.register(Triplet.class);
+        kryo.register(saveData.class, new JavaSerializer());
+        kryo.register(Sextet.class, new JavaSerializer());
+        kryo.register(Triplet.class, new JavaSerializer());
 
 
         kryo.register(java.util.ArrayList.class, new JavaSerializer());
@@ -96,7 +94,7 @@ public final class SaveAndLoadHandler {
         } else {
             try {
                 f.createNewFile();
-                ScenarioGameMaster defaults = new ScenarioGameMaster((PiazzaPanicGame) null, null, 2, 5);
+                ScenarioGameMaster defaults = new ScenarioGameMaster((PiazzaPanicGame) null, null, 2, 5,1);
                 setSave(defaults);
             } catch (Exception e) {
                 e.printStackTrace();

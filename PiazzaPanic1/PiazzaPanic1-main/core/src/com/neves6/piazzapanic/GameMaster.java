@@ -51,8 +51,9 @@ class ScenarioGameMaster extends GameMaster {
      * @param chefno Number of chefs.
      * @param custno Number of customers.
      */
-    public ScenarioGameMaster(PiazzaPanicGame game, TiledMap map, int chefno, int custno) {
+    public ScenarioGameMaster(PiazzaPanicGame game, TiledMap map, int chefno, int custno,int level) {
         this.game = game;
+        this.level = level;
         settings = Utility.getSettings();
         this.map = map;
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
@@ -108,11 +109,14 @@ class ScenarioGameMaster extends GameMaster {
 
     public ScenarioGameMaster(ArrayList<Sextet> chefdata, ArrayList<Triplet> customerData,
         PiazzaPanicGame game, int level, int selectedChef) {
+
         this.game = game;
         settings = Utility.getSettings();
         this.level = level;
         if (level == 1) {
             this.map = new TmxMapLoader().load("tilemaps/level1.tmx");}
+        System.out.println(level);
+        System.out.println(this.map);
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
 
         for (Sextet chef: chefdata) {
@@ -123,7 +127,7 @@ class ScenarioGameMaster extends GameMaster {
             this.customers.add(new Customer("Customer", (int) customer.getValue0(),
                 (int) customer.getValue1(), (String) customer.getValue2()));
         }
-        this.selectedChef = selectedChef - 1;
+        this.selectedChef = selectedChef;
 
         totalTimer = 0f;
         machines.add(new Machine("fridgemeat", "", "meat", 0, false));

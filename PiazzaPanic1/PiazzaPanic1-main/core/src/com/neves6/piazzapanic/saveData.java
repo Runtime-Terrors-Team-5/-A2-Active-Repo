@@ -1,12 +1,13 @@
 package com.neves6.piazzapanic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Stack;
 import org.javatuples.Quintet;
 import org.javatuples.Sextet;
 import org.javatuples.Triplet;
 
-public class saveData {
+public class saveData implements Serializable {
 
     private ArrayList<Sextet> chefdata;
     private int level;
@@ -19,6 +20,7 @@ public class saveData {
             chefdata.add(i.getChefInfo());
         }
         this.level = level;
+        System.out.println(level);
         this.customerdata = new ArrayList<>();
         for (Customer i:customers) {
             customerdata.add(i.getCustomerData());
