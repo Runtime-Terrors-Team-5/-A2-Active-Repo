@@ -5,9 +5,13 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Stack;
+import org.javatuples.Quintet;
+import org.javatuples.Sextet;
+import org.javatuples.Triplet;
 
 /**
  * GameMaster class.
@@ -38,6 +42,7 @@ class ScenarioGameMaster extends GameMaster {
     Sound trash;
     float soundVolume;
     ArrayList<String> settings;
+    int level;
 
     /**
      * ScenarioGameMaster constructor.
@@ -101,6 +106,68 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 
+    public ScenarioGameMaster(ArrayList<Sextet> chefdata, ArrayList<Triplet> customerData,
+        PiazzaPanicGame game, int level, int selectedChef) {
+        this.game = game;
+        settings = Utility.getSettings();
+        this.level = level;
+        if (level == 1) {
+            this.map = new TmxMapLoader().load("tilemaps/level1.tmx");}
+        collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
+
+        for (Sextet chef: chefdata) {
+            this.chefs.add(new Chef("Chef",chef));
+        }
+
+        for (Triplet customer: customerData) {
+            this.customers.add(new Customer("Customer", (int) customer.getValue0(),
+                (int) customer.getValue1(), (String) customer.getValue2()));
+        }
+        this.selectedChef = selectedChef - 1;
+
+        totalTimer = 0f;
+        machines.add(new Machine("fridgemeat", "", "meat", 0, false));
+        machines.add(new Machine("fridgetomato", "", "tomato", 0, false));
+        machines.add(new Machine("fridgelettuce", "", "lettuce", 0, false));
+        machines.add(new Machine("fridgeonion", "", "onion", 0, false));
+        machines.add(new Machine("fridgebun", "", "bun", 0, false));
+        machines.add(new Machine("grill1patty", "patty", "burger", 3, true));
+        machines.add(new Machine("grill2patty", "patty", "burger", 3, true));
+        machines.add(new Machine("grill1bun", "bun", "toastedbun", 3, true));
+        machines.add(new Machine("grill2bun", "bun", "toastedbun", 3, true));
+        machines.add(new Machine("forming1", "meat", "patty", 3, true));
+        machines.add(new Machine("forming2", "meat", "patty", 3, true));
+        machines.add(new Machine("chopping1tomato", "tomato", "choppedtomato", 3, true));
+        machines.add(new Machine("chopping2tomato", "tomato", "choppedtomato", 3, true));
+        machines.add(new Machine("chopping1lettuce", "lettuce", "choppedlettuce", 3, true));
+        machines.add(new Machine("chopping2lettuce", "lettuce", "choppedlettuce", 3, true));
+        machines.add(new Machine("chopping1onion", "onion", "choppedonion", 3, true));
+        machines.add(new Machine("chopping2onion", "onion", "choppedonion", 3, true));
+        // disposal and tray/serving handled separately
+
+        grill = Gdx.audio.newSound(Gdx.files.internal("sounds/grill.mp3"));
+        chopping = Gdx.audio.newSound(Gdx.files.internal("sounds/chopping.mp3"));
+        serving = Gdx.audio.newSound(Gdx.files.internal("sounds/serving.mp3"));
+        fridge = Gdx.audio.newSound(Gdx.files.internal("sounds/fridge.mp3"));
+        forming = Gdx.audio.newSound(Gdx.files.internal("sounds/forming.mp3"));
+        trash = Gdx.audio.newSound(Gdx.files.internal("sounds/trash.mp3"));
+
+        switch (settings.get(1).strip()){
+            case "full":
+                soundVolume = 1f;
+                break;
+            case "half":
+                soundVolume = 0.5f;
+                break;
+            case "none":
+                soundVolume = 0f;
+                break;
+        }
+    }
+
+    public saveData generateSaveData(){
+        return new saveData(chefs, level, customers,selectedChef);
+    }
     public void setSelectedChef(int selectedChef) {
         this.selectedChef = selectedChef - 1;
     }

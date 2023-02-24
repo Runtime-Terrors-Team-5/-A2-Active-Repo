@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.esotericsoftware.kryo.serializers.JavaSerializer;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,6 +13,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import org.javatuples.Sextet;
+import org.javatuples.Triplet;
 
 public final class SaveAndLoadHandler {
     public static String savesFilepath = "save.txt";
@@ -31,20 +34,29 @@ public final class SaveAndLoadHandler {
      *
      * @return ArrayList of settings values.
      */
-    public static ScenarioGameMaster getSave() {
-        kryo.register(ScenarioGameMaster.class);
+    public static saveData getSave() {
+        kryo.register(saveData.class);
+        kryo.register(Sextet.class);
+        kryo.register(Triplet.class);
+
+
+        kryo.register(java.util.ArrayList.class, new JavaSerializer());
+        kryo.register(java.util.Stack.class, new JavaSerializer());
+
+
         saveFileExistenceHandler();
-        ScenarioGameMaster gm = null;
+        saveData data = null;
         try {
             Input input = new Input(Files.newInputStream(Paths.get(savesFilepath)));
-
-            gm = kryo.readObject(input, ScenarioGameMaster.class);
+            System.out.println(2);
+            data = kryo.readObject(input, saveData.class);
+            System.out.println(3);
             input.close();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return gm;
+        return data;
     }
 
     /**
@@ -52,23 +64,23 @@ public final class SaveAndLoadHandler {
      * @param gm ArrayList of settings values to be saved.
      */
     public static void setSave(ScenarioGameMaster gm) {
-        kryo.register(ScenarioGameMaster.class);
-        /*
-        kryo.register(java.util.ArrayList.class);
-        kryo.register(Chef.class);
-        kryo.register(java.util.Stack.class);
-        kryo.register(com.badlogic.gdx.graphics.Texture.class);
-        kryo.register(com.badlogic.gdx.graphics.glutils.FileTextureData.class);
-        kryo.register(com.badlogic.gdx.backends.lwjgl3.Lwjgl3FileHandle.class);
-        */
+
+        //kryo.setRegistrationRequired(false);
+        kryo.register(saveData.class);
+        kryo.register(Sextet.class);
+        kryo.register(Triplet.class);
+
+
+        kryo.register(java.util.ArrayList.class, new JavaSerializer());
+        kryo.register(java.util.Stack.class, new JavaSerializer());
+
+
 
        // kryo.register();
         saveFileExistenceHandler();
         try {
             Output output = new Output(Files.newOutputStream(Paths.get(savesFilepath)));
-            System.out.println(1);
-            kryo.writeObject(output, gm);
-            System.out.println(2);
+            kryo.writeObject(output, gm.generateSaveData());
             output.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,7 +96,7 @@ public final class SaveAndLoadHandler {
         } else {
             try {
                 f.createNewFile();
-                ScenarioGameMaster defaults = new ScenarioGameMaster(null, null, 2, 5);
+                ScenarioGameMaster defaults = new ScenarioGameMaster((PiazzaPanicGame) null, null, 2, 5);
                 setSave(defaults);
             } catch (Exception e) {
                 e.printStackTrace();
