@@ -94,7 +94,7 @@ class Customer extends Person{
 }
 
 /**
- * Chef subclass.
+ * Chef subclass.    made public
  */
 class Chef extends Person {
     private boolean isStickied;
