@@ -3,6 +3,7 @@ package com.neves6.piazzapanic;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Stack;
 import org.javatuples.Quintet;
 import org.javatuples.Sextet;
@@ -137,13 +138,18 @@ class Chef extends Person {
         super(name, (int) chef.getValue0(), (int) chef.getValue1());
         this.isStickied = (boolean) chef.getValue4();
         this.inventory = (Stack<String>) chef.getValue3();
+
         this.facing = (String) chef.getValue2();
         this.txUp =    new Texture("people/chef" + chef.getValue5() + "up.png");
-
         this.txDown =  new Texture("people/chef" + chef.getValue5() + "down.png");
         this.txLeft =  new Texture("people/chef" + chef.getValue5() + "left.png");
         this.txRight = new Texture("people/chef" + chef.getValue5() + "right.png");
-        this.txNow = txDown;
+
+        if (Objects.equals(this.facing, "up")){this.txNow = txUp;}
+        else if (Objects.equals(this.facing, "down")){this.txNow = txDown;}
+        else if (Objects.equals(this.facing, "left")){this.txNow = txLeft;}
+        else if (Objects.equals(this.facing, "right")){this.txNow = txRight;}
+
     }
 
     public boolean getIsStickied(){

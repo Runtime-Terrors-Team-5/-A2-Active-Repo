@@ -1,6 +1,8 @@
 package com.neves6.piazzapanic;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import org.javatuples.Septet;
+import org.javatuples.Sextet;
 
 /**
  * Machine class.
@@ -31,6 +33,17 @@ public class Machine{
         this.processingTime = processingTime;
         this.sticky = sticky;
         this.active = false;
+    }
+
+    public Machine(Septet machine, ArrayList<Chef> chefs) {
+        this.type = "";
+        this.input = (String) machine.getValue0();
+        this.output = (String) machine.getValue1();
+        this.processingTime = (float) machine.getValue2();
+        this.sticky = (Boolean) machine.getValue3();
+        this.active = (Boolean) machine.getValue5();
+        this.operator = chefs.get((Integer) machine.getValue4()-1);
+        this.runtime = (float) machine.getValue6();
     }
 
     /**
@@ -76,5 +89,14 @@ public class Machine{
     }
     public float getProcessingTime(){
         return processingTime;
+    }
+
+    public Septet getMachineInfo(){
+        if (this.operator == null){return new Septet(input, output, processingTime, sticky, 1, active,
+            runtime);}
+        else {
+            return new Septet(input, output, processingTime, sticky, operator.getChefNumb(), active,
+                runtime);
+        }
     }
 }

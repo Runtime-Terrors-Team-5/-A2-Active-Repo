@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Stack;
 import org.javatuples.Quintet;
+import org.javatuples.Septet;
 import org.javatuples.Sextet;
 import org.javatuples.Triplet;
 
@@ -108,7 +109,7 @@ class ScenarioGameMaster extends GameMaster {
     }
 
     public ScenarioGameMaster(ArrayList<Sextet> chefdata, ArrayList<Triplet> customerData,
-        PiazzaPanicGame game, int level, int selectedChef) {
+        PiazzaPanicGame game, int level, int selectedChef,ArrayList<Septet> machinedata) {
 
         this.game = game;
         settings = Utility.getSettings();
@@ -130,6 +131,11 @@ class ScenarioGameMaster extends GameMaster {
         this.selectedChef = selectedChef;
 
         totalTimer = 0f;
+
+        for (Septet machine: machinedata) {
+            this.machines.add(new Machine(machine,chefs));
+        }
+        /*
         machines.add(new Machine("fridgemeat", "", "meat", 0, false));
         machines.add(new Machine("fridgetomato", "", "tomato", 0, false));
         machines.add(new Machine("fridgelettuce", "", "lettuce", 0, false));
@@ -147,6 +153,8 @@ class ScenarioGameMaster extends GameMaster {
         machines.add(new Machine("chopping2lettuce", "lettuce", "choppedlettuce", 3, true));
         machines.add(new Machine("chopping1onion", "onion", "choppedonion", 3, true));
         machines.add(new Machine("chopping2onion", "onion", "choppedonion", 3, true));
+        */
+
         // disposal and tray/serving handled separately
 
         grill = Gdx.audio.newSound(Gdx.files.internal("sounds/grill.mp3"));
@@ -170,7 +178,7 @@ class ScenarioGameMaster extends GameMaster {
     }
 
     public saveData generateSaveData(){
-        return new saveData(chefs, level, customers,selectedChef);
+        return new saveData(chefs, level, customers,selectedChef,machines);
     }
     public void setSelectedChef(int selectedChef) {
         this.selectedChef = selectedChef - 1;
