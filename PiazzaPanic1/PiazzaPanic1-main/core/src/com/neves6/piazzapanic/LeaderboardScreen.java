@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.files.FileHandle;
 
 public class LeaderboardScreen extends ScreenAdapter {
     PiazzaPanicGame game;
@@ -16,6 +17,7 @@ public class LeaderboardScreen extends ScreenAdapter {
     BitmapFont font;
     int winWidth;
     int winHeight;
+
 
     public LeaderboardScreen(PiazzaPanicGame game) {
         this.game = game;
@@ -42,12 +44,17 @@ public class LeaderboardScreen extends ScreenAdapter {
 
         winWidth = Gdx.graphics.getWidth();
         winHeight = Gdx.graphics.getHeight();
+        FileHandle handle = Gdx.files.local("leaderboard.txt");
+        String text = handle.readString();
+        //String[] wordsArray = text.split("\\r?\\n");
+
+
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        font.draw(game.batch, "LEADERBOARD:", winWidth - (6*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
+        font.draw(game.batch, "LEADERBOARD:\n" + text, winWidth - (6*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
         game.batch.end();
     }
 
