@@ -236,7 +236,12 @@ class ScenarioGameMaster extends GameMaster {
         if (chefs.get(chefno).getIsStickied()) {
             return false;
         }
-        if ((chefno == 0 && chefs.get(1).getxCoord() == x && chefs.get(1).getyCoord() == y) || (chefno == 1 && chefs.get(0).getxCoord() == x && chefs.get(0).getyCoord() == y)) {
+        if ((chefno == 0 && chefs.get(1).getxCoord() == x && chefs.get(1).getyCoord() == y) ||
+                (chefno == 0 && chefs.get(2).getxCoord() == x && chefs.get(2).getyCoord() == y) ||
+                (chefno == 1 && chefs.get(0).getxCoord() == x && chefs.get(0).getyCoord() == y) ||
+                (chefno == 1 && chefs.get(2).getxCoord() == x && chefs.get(2).getyCoord() == y) ||
+                (chefno == 2 && chefs.get(0).getxCoord() == x && chefs.get(0).getyCoord() == y) ||
+                (chefno == 2 && chefs.get(1).getxCoord() == x && chefs.get(1).getyCoord() == y)) {
             return false;
         }
         int tempCellTileID = collisionLayer.getCell(x, y).getTile().getId();
@@ -253,6 +258,8 @@ class ScenarioGameMaster extends GameMaster {
         comp += chefs.get(0).getInventory().toString();
         comp += "\nChef 2 is holding:\n";
         comp += chefs.get(1).getInventory().toString();
+        comp += "\nChef 3 is holding:\n";
+        comp += chefs.get(2).getInventory().toString();
         return comp;
     }
 
