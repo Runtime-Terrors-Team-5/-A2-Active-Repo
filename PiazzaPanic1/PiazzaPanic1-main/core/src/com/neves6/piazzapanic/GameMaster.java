@@ -474,7 +474,6 @@ class ScenarioGameMaster extends GameMaster {
             if (tray.contains("choppedtomato") && tray.contains("choppedlettuce") && tray.contains("choppedonion")){
                 customers.remove(0);
                 tray.clear();
-                customers.add(new Customer("Customer"+1, -1, -1, "salad"));
                 serving.play(soundVolume);
             }
         }
