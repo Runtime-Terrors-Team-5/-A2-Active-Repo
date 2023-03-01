@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Stack;
 import org.javatuples.Quintet;
 import org.javatuples.Septet;
@@ -123,8 +124,6 @@ class ScenarioGameMaster extends GameMaster {
         this.level = level;
         if (level == 1) {
             this.map = new TmxMapLoader().load("tilemaps/level1.tmx");}
-        System.out.println(level);
-        System.out.println(this.map);
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
 
         for (Sextet chef: chefdata) {
@@ -391,18 +390,21 @@ class ScenarioGameMaster extends GameMaster {
         }
         String invTop = chef.getInventory().peek();
         if (targetx == 6 && targety == 7) {
-            if (invTop == "patty") {
+
+
+            if (Objects.equals(invTop, "patty")) {
                 machines.get(5).process(chef);
                 grill.play(soundVolume);
-            } else if (invTop == "bun") {
+            } else if (Objects.equals(invTop, "bun")) {
                 machines.get(7).process(chef);
                 grill.play(soundVolume);
             }
         } else if (targetx == 7 && targety == 7) {
-            if (invTop == "patty") {
+
+            if (Objects.equals(invTop, "patty")) {
                 machines.get(6).process(chef);
                 grill.play(soundVolume);
-            } else if (invTop == "bun") {
+            } else if (Objects.equals(invTop, "bun")) {
                 machines.get(8).process(chef);
                 grill.play(soundVolume);
             }
@@ -413,22 +415,22 @@ class ScenarioGameMaster extends GameMaster {
             machines.get(10).process(chef);
             forming.play(soundVolume);
         } else if (targetx == 11 && targety == 7) {
-            if (invTop == "tomato") {
+            if (Objects.equals(invTop, "tomato")) {
                 machines.get(11).process(chef);
                 chopping.play(soundVolume);
-            } else if (invTop == "lettuce") {
+            } else if (Objects.equals(invTop, "lettuce")) {
                 machines.get(13).process(chef);
                 chopping.play(soundVolume);
-            } else if (invTop == "onion") {
+            } else if (Objects.equals(invTop, "onion")) {
                 machines.get(15).process(chef);
                 chopping.play(soundVolume);
             }
         } else if (targetx == 12 && targety == 7) {
-            if (invTop == "tomato") {
+            if (Objects.equals(invTop, "tomato")) {
                 machines.get(12).process(chef);
-            } else if (invTop == "lettuce") {
+            } else if (Objects.equals(invTop, "lettuce")) {
                 machines.get(14).process(chef);
-            } else if (invTop == "onion") {
+            } else if (Objects.equals(invTop, "onion")) {
                 machines.get(16).process(chef);
             }
         } else if (targetx == 1 && targety == 5) {
@@ -445,11 +447,11 @@ class ScenarioGameMaster extends GameMaster {
     private void addToTray() {
         Chef chef = chefs.get(selectedChef);
         Stack<String> inv = chef.getInventory();
-        if (customers.get(0).getOrder() == "burger"){
-            if (inv.peek() == "burger"){
+        if (Objects.equals(customers.get(0).getOrder(), "burger")){
+            if (Objects.equals(inv.peek(), "burger")){
                 inv.pop();
                 tray.add("burger");
-            } else if (inv.peek() == "toastedbun"){
+            } else if (Objects.equals(inv.peek(), "toastedbun")){
                 inv.pop();
                 tray.add("toastedbun");
             }
@@ -460,14 +462,14 @@ class ScenarioGameMaster extends GameMaster {
 
                 serving.play(soundVolume);
             }
-        } else if (customers.get(0).getOrder() == "salad"){
-            if (inv.peek() == "choppedtomato"){
+        } else if (Objects.equals(customers.get(0).getOrder(), "salad")){
+            if (Objects.equals(inv.peek(), "choppedtomato")){
                 inv.pop();
                 tray.add("choppedtomato");
-            } else if (inv.peek() == "choppedlettuce"){
+            } else if (Objects.equals(inv.peek(), "choppedlettuce")){
                 inv.pop();
                 tray.add("choppedlettuce");
-            } else if (inv.peek() == "choppedonion"){
+            } else if (Objects.equals(inv.peek(), "choppedonion")){
                 inv.pop();
                 tray.add("choppedonion");
             }

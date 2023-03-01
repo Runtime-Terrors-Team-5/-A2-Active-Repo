@@ -19,6 +19,7 @@ public class saveData implements Serializable {
     public saveData(ArrayList<Chef> chefs,int level, Stack<Customer> customers,int selectedChef,ArrayList<Machine> machines){
         this.chefdata = new ArrayList<>();
         for (Chef i:chefs) {
+            System.out.println(i.getChefInfo());
             chefdata.add(i.getChefInfo());
         }
         this.level = level;

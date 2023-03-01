@@ -140,6 +140,7 @@ class Chef extends Person {
         this.inventory = (Stack<String>) chef.getValue3();
 
         this.facing = (String) chef.getValue2();
+        this.chefNumb = (int) chef.getValue5();
         this.txUp =    new Texture("people/chef" + chef.getValue5() + "up.png");
         this.txDown =  new Texture("people/chef" + chef.getValue5() + "down.png");
         this.txLeft =  new Texture("people/chef" + chef.getValue5() + "left.png");
