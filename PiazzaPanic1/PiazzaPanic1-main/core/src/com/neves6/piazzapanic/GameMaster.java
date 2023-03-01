@@ -5,8 +5,14 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Stack;
+import org.javatuples.Quintet;
+import org.javatuples.Septet;
+import org.javatuples.Sextet;
+import org.javatuples.Triplet;
 
 /**
  * GameMaster class.
@@ -37,6 +43,7 @@ class ScenarioGameMaster extends GameMaster {
     Sound trash;
     float soundVolume;
     ArrayList<String> settings;
+    int level;
 
     /**
      * ScenarioGameMaster constructor.
@@ -45,8 +52,9 @@ class ScenarioGameMaster extends GameMaster {
      * @param chefno Number of chefs.
      * @param custno Number of customers.
      */
-    public ScenarioGameMaster(PiazzaPanicGame game, TiledMap map, int chefno, int custno) {
+    public ScenarioGameMaster(PiazzaPanicGame game, TiledMap map, int chefno, int custno,int level) {
         this.game = game;
+        this.level = level;
         settings = Utility.getSettings();
         this.map = map;
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
@@ -107,6 +115,78 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 
+    public ScenarioGameMaster(ArrayList<Sextet> chefdata, ArrayList<Triplet> customerData,
+        PiazzaPanicGame game, int level, int selectedChef,ArrayList<Septet> machinedata) {
+
+        this.game = game;
+        settings = Utility.getSettings();
+        this.level = level;
+        if (level == 1) {
+            this.map = new TmxMapLoader().load("tilemaps/level1.tmx");}
+        System.out.println(level);
+        System.out.println(this.map);
+        collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
+
+        for (Sextet chef: chefdata) {
+            this.chefs.add(new Chef("Chef",chef));
+        }
+
+        for (Triplet customer: customerData) {
+            this.customers.add(new Customer("Customer", (int) customer.getValue0(),
+                (int) customer.getValue1(), (String) customer.getValue2()));
+        }
+        this.selectedChef = selectedChef;
+
+        totalTimer = 0f;
+
+        for (Septet machine: machinedata) {
+            this.machines.add(new Machine(machine,chefs));
+        }
+        /*
+        machines.add(new Machine("fridgemeat", "", "meat", 0, false));
+        machines.add(new Machine("fridgetomato", "", "tomato", 0, false));
+        machines.add(new Machine("fridgelettuce", "", "lettuce", 0, false));
+        machines.add(new Machine("fridgeonion", "", "onion", 0, false));
+        machines.add(new Machine("fridgebun", "", "bun", 0, false));
+        machines.add(new Machine("grill1patty", "patty", "burger", 3, true));
+        machines.add(new Machine("grill2patty", "patty", "burger", 3, true));
+        machines.add(new Machine("grill1bun", "bun", "toastedbun", 3, true));
+        machines.add(new Machine("grill2bun", "bun", "toastedbun", 3, true));
+        machines.add(new Machine("forming1", "meat", "patty", 3, true));
+        machines.add(new Machine("forming2", "meat", "patty", 3, true));
+        machines.add(new Machine("chopping1tomato", "tomato", "choppedtomato", 3, true));
+        machines.add(new Machine("chopping2tomato", "tomato", "choppedtomato", 3, true));
+        machines.add(new Machine("chopping1lettuce", "lettuce", "choppedlettuce", 3, true));
+        machines.add(new Machine("chopping2lettuce", "lettuce", "choppedlettuce", 3, true));
+        machines.add(new Machine("chopping1onion", "onion", "choppedonion", 3, true));
+        machines.add(new Machine("chopping2onion", "onion", "choppedonion", 3, true));
+        */
+
+        // disposal and tray/serving handled separately
+
+        grill = Gdx.audio.newSound(Gdx.files.internal("sounds/grill.mp3"));
+        chopping = Gdx.audio.newSound(Gdx.files.internal("sounds/chopping.mp3"));
+        serving = Gdx.audio.newSound(Gdx.files.internal("sounds/serving.mp3"));
+        fridge = Gdx.audio.newSound(Gdx.files.internal("sounds/fridge.mp3"));
+        forming = Gdx.audio.newSound(Gdx.files.internal("sounds/forming.mp3"));
+        trash = Gdx.audio.newSound(Gdx.files.internal("sounds/trash.mp3"));
+
+        switch (settings.get(1).strip()){
+            case "full":
+                soundVolume = 1f;
+                break;
+            case "half":
+                soundVolume = 0.5f;
+                break;
+            case "none":
+                soundVolume = 0f;
+                break;
+        }
+    }
+
+    public saveData generateSaveData(){
+        return new saveData(chefs, level, customers,selectedChef,machines);
+    }
     public void setSelectedChef(int selectedChef) {
         this.selectedChef = selectedChef - 1;
     }
@@ -163,7 +243,12 @@ class ScenarioGameMaster extends GameMaster {
         if (chefs.get(chefno).getIsStickied()) {
             return false;
         }
-        if ((chefno == 0 && chefs.get(1).getxCoord() == x && chefs.get(1).getyCoord() == y) || (chefno == 1 && chefs.get(0).getxCoord() == x && chefs.get(0).getyCoord() == y)) {
+        if ((chefno == 0 && chefs.get(1).getxCoord() == x && chefs.get(1).getyCoord() == y) ||
+                (chefno == 0 && chefs.get(2).getxCoord() == x && chefs.get(2).getyCoord() == y) ||
+                (chefno == 1 && chefs.get(0).getxCoord() == x && chefs.get(0).getyCoord() == y) ||
+                (chefno == 1 && chefs.get(2).getxCoord() == x && chefs.get(2).getyCoord() == y) ||
+                (chefno == 2 && chefs.get(0).getxCoord() == x && chefs.get(0).getyCoord() == y) ||
+                (chefno == 2 && chefs.get(1).getxCoord() == x && chefs.get(1).getyCoord() == y)) {
             return false;
         }
         int tempCellTileID = collisionLayer.getCell(x, y).getTile().getId();
@@ -180,6 +265,8 @@ class ScenarioGameMaster extends GameMaster {
         comp += chefs.get(0).getInventory().toString();
         comp += "\nChef 2 is holding:\n";
         comp += chefs.get(1).getInventory().toString();
+        comp += "\nChef 3 is holding:\n";
+        comp += chefs.get(2).getInventory().toString();
         return comp;
     }
 
@@ -369,6 +456,8 @@ class ScenarioGameMaster extends GameMaster {
             if (tray.contains("burger") && tray.contains("toastedbun")){
                 customers.remove(0);
                 tray.clear();
+                customers.add(new Customer("Customer"+1, -1, -1, "salad"));
+
                 serving.play(soundVolume);
             }
         } else if (customers.get(0).getOrder() == "salad"){

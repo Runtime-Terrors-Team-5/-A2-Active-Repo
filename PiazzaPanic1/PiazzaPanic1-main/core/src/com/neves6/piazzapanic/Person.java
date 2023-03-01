@@ -2,12 +2,17 @@ package com.neves6.piazzapanic;
 
 import com.badlogic.gdx.graphics.Texture;
 
+import java.io.Serializable;
+import java.util.Objects;
 import java.util.Stack;
+import org.javatuples.Quintet;
+import org.javatuples.Sextet;
+import org.javatuples.Triplet;
 
 /**
  * Base person class.
  */
-public class Person {
+public class Person{
     private final String name;
     private int xCoord;
     private int yCoord;
@@ -82,6 +87,10 @@ class Customer extends Person{
         return txLeft;
     }
 
+    public Triplet getCustomerData(){
+        return new Triplet(getxCoord(),getyCoord(),getOrder());
+    }
+
 }
 
 /**
@@ -98,6 +107,7 @@ class Chef extends Person {
     private Texture txNow;
     private boolean isInteracting;
     private Machine machineInteractingWith;
+    private int chefNumb;
 
     /**
      * Chef constructor.
@@ -115,6 +125,7 @@ class Chef extends Person {
         super(name, xCoord, yCoord);
         this.isStickied = isStickied;
         this.inventory = inventory;
+        this.chefNumb = textureSet;
         this.inventory = new Stack<String>();
         this.facing = "down";
         this.txUp =    new Texture("people/chef" + textureSet + "up.png");
@@ -122,6 +133,23 @@ class Chef extends Person {
         this.txLeft =  new Texture("people/chef" + textureSet + "left.png");
         this.txRight = new Texture("people/chef" + textureSet + "right.png");
         this.txNow = txDown;
+    }
+    public Chef(String name,Sextet chef){
+        super(name, (int) chef.getValue0(), (int) chef.getValue1());
+        this.isStickied = (boolean) chef.getValue4();
+        this.inventory = (Stack<String>) chef.getValue3();
+
+        this.facing = (String) chef.getValue2();
+        this.txUp =    new Texture("people/chef" + chef.getValue5() + "up.png");
+        this.txDown =  new Texture("people/chef" + chef.getValue5() + "down.png");
+        this.txLeft =  new Texture("people/chef" + chef.getValue5() + "left.png");
+        this.txRight = new Texture("people/chef" + chef.getValue5() + "right.png");
+
+        if (Objects.equals(this.facing, "up")){this.txNow = txUp;}
+        else if (Objects.equals(this.facing, "down")){this.txNow = txDown;}
+        else if (Objects.equals(this.facing, "left")){this.txNow = txLeft;}
+        else if (Objects.equals(this.facing, "right")){this.txNow = txRight;}
+
     }
 
     public boolean getIsStickied(){
@@ -176,5 +204,11 @@ class Chef extends Person {
                 this.txNow = txRight;
                 break;
         }
+    }
+
+    public int getChefNumb(){return chefNumb;}
+
+    public Sextet getChefInfo(){
+        return new Sextet(getxCoord(),getyCoord(),getFacing(),getInventory(),getIsStickied(),getChefNumb());
     }
 }

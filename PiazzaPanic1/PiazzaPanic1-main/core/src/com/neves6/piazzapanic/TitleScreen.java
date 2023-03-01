@@ -26,6 +26,7 @@ public class TitleScreen extends ScreenAdapter {
     Stage stage;
     TextButton playButton;
     TextButton tutorialButton;
+    TextButton leaderboardButton;
     TextButton creditsButton;
     TextButton settingsButton;
     TextButton exitButton;
@@ -77,6 +78,17 @@ public class TitleScreen extends ScreenAdapter {
         });
 
         stage.addActor(tutorialButton);
+
+        leaderboardButton = new TextButton("Leaderboard", buttonStyle);
+        leaderboardButton.setPosition(Gdx.graphics.getWidth()/2f - leaderboardButton.getWidth()/2, Gdx.graphics.getHeight()/2f - leaderboardButton.getHeight()/2);
+        leaderboardButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new LeaderboardScreen(game));
+            }
+        });
+
+        stage.addActor(leaderboardButton);
 
         creditsButton = new TextButton("Credits", buttonStyle);
         creditsButton.setPosition(Gdx.graphics.getWidth()/2f - creditsButton.getWidth()/2, Gdx.graphics.getHeight()/2f - creditsButton.getHeight()*3/2);
@@ -139,12 +151,14 @@ public class TitleScreen extends ScreenAdapter {
         super.resize(width, height);
         playButton.setPosition(width/2f - playButton.getWidth()/2, height/2f + playButton.getHeight()/2);
         tutorialButton.setPosition(width/2f - tutorialButton.getWidth()/2, height/2f - tutorialButton.getHeight()/2);
-        creditsButton.setPosition(width/2f - creditsButton.getWidth()/2, height/2f - creditsButton.getHeight()*3/2);
-        settingsButton.setPosition(width/2f - settingsButton.getWidth()/2, height/2f - settingsButton.getHeight()*5/2);
-        exitButton.setPosition(width/2f - exitButton.getWidth()/2, height/2f - exitButton.getHeight()*7/2);
+        leaderboardButton.setPosition(width/2f - leaderboardButton.getWidth()/2, height/2f - leaderboardButton.getHeight()*3/2);
+        creditsButton.setPosition(width/2f - creditsButton.getWidth()/2, height/2f - creditsButton.getHeight()*5/2);
+        settingsButton.setPosition(width/2f - settingsButton.getWidth()/2, height/2f - settingsButton.getHeight()*7/2);
+        exitButton.setPosition(width/2f - exitButton.getWidth()/2, height/2f - exitButton.getHeight()*9/2);
         stage.clear();
         stage.addActor(playButton);
         stage.addActor(tutorialButton);
+        stage.addActor(leaderboardButton);
         stage.addActor(creditsButton);
         stage.addActor(settingsButton);
         stage.addActor(exitButton);
