@@ -15,8 +15,11 @@ public class saveData implements Serializable {
     private int level;
     private ArrayList<Triplet> customerdata;
     private int selectedChef;
+    private ArrayList<String> trayContent;
+    private float timeElapled;
 
-    public saveData(ArrayList<Chef> chefs,int level, Stack<Customer> customers,int selectedChef,ArrayList<Machine> machines){
+    public saveData(ArrayList<Chef> chefs,int level, Stack<Customer> customers,int selectedChef,
+        ArrayList<Machine> machines, ArrayList<String> trayContent, float timeElapsed){
         this.chefdata = new ArrayList<>();
         for (Chef i:chefs) {
             System.out.println(i.getChefInfo());
@@ -33,10 +36,13 @@ public class saveData implements Serializable {
         for (Machine i:machines){
             machinedata.add(i.getMachineInfo());
         }
+        this.trayContent = trayContent;
+        this.timeElapled = timeElapsed;
     }
 
     public ScenarioGameMaster loadGameMaster(PiazzaPanicGame game){
-        ScenarioGameMaster gm = new ScenarioGameMaster(chefdata,customerdata,game,level,selectedChef,machinedata);
+        ScenarioGameMaster gm = new ScenarioGameMaster(chefdata,customerdata,game,
+            level,selectedChef,machinedata,trayContent,timeElapled);
         return gm;
     }
 

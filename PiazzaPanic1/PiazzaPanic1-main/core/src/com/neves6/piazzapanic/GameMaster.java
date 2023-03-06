@@ -117,7 +117,8 @@ class ScenarioGameMaster extends GameMaster {
     }
 
     public ScenarioGameMaster(ArrayList<Sextet> chefdata, ArrayList<Triplet> customerData,
-        PiazzaPanicGame game, int level, int selectedChef,ArrayList<Septet> machinedata) {
+        PiazzaPanicGame game, int level, int selectedChef,ArrayList<Septet> machinedata
+        ,ArrayList<String> trayContent, float timeElapsed) {
 
         this.game = game;
         settings = Utility.getSettings();
@@ -141,6 +142,9 @@ class ScenarioGameMaster extends GameMaster {
         for (Septet machine: machinedata) {
             this.machines.add(new Machine(machine,chefs));
         }
+
+        this.tray = trayContent;
+        this.totalTimer = timeElapsed;
         /*
         machines.add(new Machine("fridgemeat", "", "meat", 0, false));
         machines.add(new Machine("fridgetomato", "", "tomato", 0, false));
@@ -184,7 +188,7 @@ class ScenarioGameMaster extends GameMaster {
     }
 
     public saveData generateSaveData(){
-        return new saveData(chefs, level, customers,selectedChef,machines);
+        return new saveData(chefs, level, customers,selectedChef,machines,tray,totalTimer);
     }
     public void setSelectedChef(int selectedChef) {
         this.selectedChef = selectedChef - 1;
