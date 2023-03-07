@@ -14,6 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
+import static com.badlogic.gdx.math.MathUtils.random;
+
 public class GameWinScreen extends ScreenAdapter {
     PiazzaPanicGame game;
     OrthographicCamera camera;
@@ -30,6 +37,8 @@ public class GameWinScreen extends ScreenAdapter {
     Skin skin;
     TextureAtlas atlas;
     int completionTime;
+    String lbText;
+
 
     public GameWinScreen(PiazzaPanicGame game, int completionTime) {
         this.game = game;
@@ -44,6 +53,8 @@ public class GameWinScreen extends ScreenAdapter {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch = new SpriteBatch();
 
+        output_to_leaderboard();
+
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         skin = new Skin();
@@ -54,7 +65,6 @@ public class GameWinScreen extends ScreenAdapter {
         buttonStyle.up = skin.getDrawable("black_alpha_mid");
         buttonStyle.down = skin.getDrawable("black_alpha_mid");
         buttonStyle.checked = skin.getDrawable("black_alpha_mid");
-
         creditsButton = new TextButton("Credits", buttonStyle);
         creditsButton.setPosition(Gdx.graphics.getWidth()/2f - creditsButton.getWidth()/2, Gdx.graphics.getHeight()/3f + creditsButton.getHeight()/2);
         creditsButton.addListener(new ChangeListener() {
@@ -74,6 +84,16 @@ public class GameWinScreen extends ScreenAdapter {
             }
         });
         stage.addActor(titleButton);
+
+    }
+
+    public void output_to_leaderboard() {
+        lbText = "\nPlayer_" + (random.nextInt(10 - 1 + 1) + 1) + " " + completionTime;
+        try {
+            Files.write(Paths.get("./leaderboard.txt"), lbText.getBytes(), StandardOpenOption.APPEND);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -111,6 +131,8 @@ public class GameWinScreen extends ScreenAdapter {
         stage.getViewport().update(width, height);
         camera.setToOrtho(false, width, height);
     }
+
+
 
     @Override
     public void hide(){

@@ -75,6 +75,8 @@ public class LevelSelectorScreen extends ScreenAdapter {
             public void changed(ChangeEvent event, Actor actor) {
                 //game.setScreen(new GameScreen(game, 1));
                 game.setScreen(new TutorialScreen(game, "game1"));
+                //use this to test the leaderboard writing functionality:
+                //game.setScreen(new GameWinScreen(game, 40));
             }
         });
         level1Button.addListener(new ChangeListener() {
