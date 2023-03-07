@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
+
 public class LevelSelectorScreen extends ScreenAdapter {
     PiazzaPanicGame game;
     OrthographicCamera camera;
@@ -75,7 +76,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
             public void changed(ChangeEvent event, Actor actor) {
                 //game.setScreen(new GameScreen(game, 1));
                 game.setScreen(new TutorialScreen(game, "game1"));
-                //use this to test the leaderboard writing functionality:
+                //use this next line to test the leaderboard writing functionality:
                 //game.setScreen(new GameWinScreen(game, 40));
             }
         });

@@ -1,5 +1,5 @@
-steve 	100
-mark  	57
-greg  	20
-john    32
-dave    72
+steve 	550
+mark  	400
+greg  	220
+john    200
+dave    180

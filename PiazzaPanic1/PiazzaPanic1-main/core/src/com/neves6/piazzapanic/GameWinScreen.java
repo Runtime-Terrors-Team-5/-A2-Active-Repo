@@ -19,6 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
+import javax.swing.JOptionPane;
+
 import static com.badlogic.gdx.math.MathUtils.random;
 
 public class GameWinScreen extends ScreenAdapter {
@@ -53,7 +55,11 @@ public class GameWinScreen extends ScreenAdapter {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch = new SpriteBatch();
 
-        output_to_leaderboard();
+        String username = JOptionPane.showInputDialog("What is your username (for the leaderboard)");
+
+        output_to_leaderboard(username);
+
+
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
@@ -87,8 +93,8 @@ public class GameWinScreen extends ScreenAdapter {
 
     }
 
-    public void output_to_leaderboard() {
-        lbText = "\nPlayer_" + (random.nextInt(10 - 1 + 1) + 1) + " " + completionTime;
+    public void output_to_leaderboard(String username) {
+        lbText = "\n" + username + " " + completionTime;
         try {
             Files.write(Paths.get("./leaderboard.txt"), lbText.getBytes(), StandardOpenOption.APPEND);
         }catch (IOException e) {
@@ -118,6 +124,7 @@ public class GameWinScreen extends ScreenAdapter {
         font.draw(game.batch, "CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
         game.batch.end();
         stage.draw();
+
     }
 
     @Override
