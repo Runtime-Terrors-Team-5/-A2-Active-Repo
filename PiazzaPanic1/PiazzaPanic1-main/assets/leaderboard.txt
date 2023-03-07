@@ -1,3 +1,5 @@
 steve 	100
 mark  	57
 greg  	20
+john    32
+dave    72

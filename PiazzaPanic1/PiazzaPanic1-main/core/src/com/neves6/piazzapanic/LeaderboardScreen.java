@@ -9,6 +9,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.files.FileHandle;
+import javafx.util.Pair;
+
+import javax.sound.midi.SysexMessage;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class LeaderboardScreen extends ScreenAdapter {
     PiazzaPanicGame game;
@@ -17,6 +23,10 @@ public class LeaderboardScreen extends ScreenAdapter {
     BitmapFont font;
     int winWidth;
     int winHeight;
+    String text;
+
+
+    ArrayList<Pair<String, Integer>> lbPairs = new ArrayList<Pair<String, Integer>>();
 
 
     public LeaderboardScreen(PiazzaPanicGame game) {
@@ -36,6 +46,30 @@ public class LeaderboardScreen extends ScreenAdapter {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch = new SpriteBatch();
+        FileHandle handle = Gdx.files.local("leaderboard.txt");
+        text = handle.readString(); //text contains the entire contents of leaderboard.txt
+        String[] wordsArray = text.split("\\s+"); //this splits text by whitespace
+        //this loop places all the values in the wordarray into a list of pairs
+        for(int i=0; i<((wordsArray.length)-1); i+=2){
+            Pair<String, Integer> addPair = new Pair<>(wordsArray[i], Integer.parseInt(wordsArray[i+1]));
+            lbPairs.add(addPair);
+        }
+
+        //sorts the pairs based on the value in the pair
+        for (int j = 0; j < lbPairs.size(); j++) {
+            for (int i = 0; i < lbPairs.size() - 1; i++) {
+                Pair<String, Integer> tempPair;
+                if (lbPairs.get(i).getValue() > lbPairs.get(i + 1).getValue()) {
+                    tempPair = lbPairs.get(i + 1);
+                    lbPairs.set(i + 1, lbPairs.get(i));
+                    lbPairs.set(i, tempPair);
+                }
+            }
+        }
+        text = "";
+        for (int i = 0; i < lbPairs.size(); i++) {
+            text = text + lbPairs.get(i).getKey() + ": " + lbPairs.get(i).getValue() + "\n";
+        }
     }
 
     public void render(float delta) {
@@ -44,9 +78,6 @@ public class LeaderboardScreen extends ScreenAdapter {
 
         winWidth = Gdx.graphics.getWidth();
         winHeight = Gdx.graphics.getHeight();
-        FileHandle handle = Gdx.files.local("leaderboard.txt");
-        String text = handle.readString();
-        //String[] wordsArray = text.split("\\r?\\n");
 
 
 
