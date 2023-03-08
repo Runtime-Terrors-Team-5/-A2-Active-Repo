@@ -65,6 +65,8 @@ project(":core") {
         // https://mvnrepository.com/artifact/org.javatuples/javatuples
         implementation 'org.javatuples:javatuples:1.2'
 
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+
 
 
     }
