@@ -2,6 +2,7 @@ package com.neves6.piazzapanic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g3d.particles.ResourceData.SaveData;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
@@ -46,6 +47,8 @@ class ScenarioGameMaster extends GameMaster {
     ArrayList<String> settings;
     int level;
 
+    int repPoint;
+
     /**
      * ScenarioGameMaster constructor.
      * @param game PiazzaPanicGame instance.
@@ -56,6 +59,7 @@ class ScenarioGameMaster extends GameMaster {
     public ScenarioGameMaster(PiazzaPanicGame game, TiledMap map, int chefno, int custno,int level) {
         this.game = game;
         this.level = level;
+        this.repPoint = 3;
         settings = Utility.getSettings();
         this.map = map;
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
@@ -116,35 +120,33 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 
-    public ScenarioGameMaster(ArrayList<Sextet> chefdata, ArrayList<Triplet> customerData,
-        PiazzaPanicGame game, int level, int selectedChef,ArrayList<Septet> machinedata
-        ,ArrayList<String> trayContent, float timeElapsed) {
-
+    public ScenarioGameMaster(saveData data, PiazzaPanicGame game) {
         this.game = game;
+        this.repPoint = data.getRepPoint();
         settings = Utility.getSettings();
-        this.level = level;
-        if (level == 1) {
+        this.level = data.getLevel();
+        if (this.level == 1) {
             this.map = new TmxMapLoader().load("tilemaps/level1.tmx");}
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
 
-        for (Sextet chef: chefdata) {
+        for (Sextet chef: data.getChefdata()) {
             this.chefs.add(new Chef("Chef",chef));
         }
 
-        for (Triplet customer: customerData) {
+        for (Triplet customer: data.getCustomerdata()) {
             this.customers.add(new Customer("Customer", (int) customer.getValue0(),
                 (int) customer.getValue1(), (String) customer.getValue2()));
         }
-        this.selectedChef = selectedChef;
+        this.selectedChef = data.getSelectedChef();
 
         totalTimer = 0f;
 
-        for (Septet machine: machinedata) {
+        for (Septet machine: data.getMachinedata()) {
             this.machines.add(new Machine(machine,chefs));
         }
 
-        this.tray = trayContent;
-        this.totalTimer = timeElapsed;
+        this.tray = data.getTrayContent();
+        this.totalTimer = data.getTimeElapled();
         /*
         machines.add(new Machine("fridgemeat", "", "meat", 0, false));
         machines.add(new Machine("fridgetomato", "", "tomato", 0, false));
@@ -338,6 +340,7 @@ class ScenarioGameMaster extends GameMaster {
                 machine.attemptGetOutput();
             }
         }
+        //for customer timer increase
         totalTimer += delta;
     }
 
@@ -486,5 +489,10 @@ class ScenarioGameMaster extends GameMaster {
         if (customers.size() == 0){
             game.setScreen(new GameWinScreen(game, (int) totalTimer));
         }
+    }
+
+    //rep decrease()
+    public void repDecrease(){
+
     }
 }
