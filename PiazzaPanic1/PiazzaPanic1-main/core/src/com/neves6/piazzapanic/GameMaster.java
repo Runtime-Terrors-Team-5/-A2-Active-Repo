@@ -12,6 +12,7 @@ import org.javatuples.Quartet;
 import org.javatuples.Septet;
 import org.javatuples.Sextet;
 import org.javatuples.Triplet;
+import java.util.Random;
 
 /**
  * GameMaster class.
@@ -42,9 +43,11 @@ class ScenarioGameMaster extends GameMaster {
     Sound trash;
     float soundVolume;
     ArrayList<String> settings;
+    Random rand;
     int level;
-
     int repPoint;
+    ArrayList<String> validOrder;
+
 
     /**
      * ScenarioGameMaster constructor.
@@ -60,15 +63,21 @@ class ScenarioGameMaster extends GameMaster {
         settings = Utility.getSettings();
         this.map = map;
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
+        if (this.level == 1){
+            validOrder = new ArrayList<>();
+            validOrder.add("salad");
+            validOrder.add("burger");
+        }
         for (int i = 0; i < chefno; i++) {
             chefs.add(new Chef("Chef", 6+i, 5, 1, 1, 1, false, new Stack<String>(), i+1));
         }
+        this.rand = new Random();
         for (int i = 0; i < custno; i++) {
-            if (i % 2 == 0) {
-                customers.add(new Customer("Customer"+i+1, -1, -1, "salad"));
-            } else {
-                customers.add(new Customer("Customer"+i+1, -1, -1, "burger"));
-            }
+
+            String order = validOrder.get(rand.nextInt((validOrder.size())));
+            customers.add(new Customer("Customer"+i+1, -1, -1, order));
+
+
         }
         totalTimer = 0f;
         machines.add(new Machine("fridgemeat", "", "meat", 0, false));

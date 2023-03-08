@@ -98,7 +98,7 @@ class Customer extends Person{
         return txLeft;
     }
 
-    //timer decrease
+    public void timerDecrease(float delta){this.timer -= delta;}
 
 
     public float getTimer() {return timer;}
