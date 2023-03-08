@@ -56,9 +56,7 @@ public class GameWinScreen extends ScreenAdapter {
         batch = new SpriteBatch();
 
         String username = JOptionPane.showInputDialog("What is your username (for the leaderboard)");
-
         output_to_leaderboard(username);
-
 
 
         stage = new Stage();
@@ -80,7 +78,6 @@ public class GameWinScreen extends ScreenAdapter {
             }
         });
         stage.addActor(creditsButton);
-
         titleButton = new TextButton("Title", buttonStyle);
         titleButton.setPosition(Gdx.graphics.getWidth()/2f - titleButton.getWidth()/2, Gdx.graphics.getHeight()/3f - titleButton.getHeight()/2);
         titleButton.addListener(new ChangeListener() {
@@ -110,7 +107,6 @@ public class GameWinScreen extends ScreenAdapter {
         winWidth = Gdx.graphics.getWidth();
         winHeight = Gdx.graphics.getHeight();
         bgScaleFactor = (float) winHeight / (float) bg.getHeight();
-
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
@@ -139,10 +135,8 @@ public class GameWinScreen extends ScreenAdapter {
         camera.setToOrtho(false, width, height);
     }
 
-
-
     @Override
-    public void hide(){
+    public void dispose(){
         super.dispose();
         game.dispose();
         batch.dispose();

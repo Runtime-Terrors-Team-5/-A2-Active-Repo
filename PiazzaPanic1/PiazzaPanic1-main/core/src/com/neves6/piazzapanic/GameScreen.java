@@ -127,6 +127,10 @@ public class GameScreen extends ScreenAdapter {
         });
 
         gm.tickUpdate(delta);
+        if (gm.repPoint==0){
+            //this.dispose();
+            game.setScreen(new GameWinScreen(game,0));
+        }
 
         Gdx.gl20.glViewport( 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -184,7 +188,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     @Override
-    public void hide(){
+    public void dispose(){
         super.dispose();
         game.dispose();
         batch.dispose();

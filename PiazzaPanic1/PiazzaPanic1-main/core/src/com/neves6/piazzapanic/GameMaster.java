@@ -348,6 +348,13 @@ class ScenarioGameMaster extends GameMaster {
             }
         }
         //for customer timer increase
+        getFirstCustomer().timerDecrease(delta);
+        if (getFirstCustomer().getTimer() < 0 ){
+            repDecrease();
+            customers.remove(0);
+        }
+
+
         totalTimer += delta;
     }
 
@@ -500,6 +507,6 @@ class ScenarioGameMaster extends GameMaster {
 
     //rep decrease()
     public void repDecrease(){
-
+        repPoint -= 1;
     }
 }

@@ -83,6 +83,11 @@ public class IntroScreen extends ScreenAdapter {
 
     @Override
     public void hide(){
+
+    }
+
+    @Override
+    public void dispose(){
         super.dispose();
         game.dispose();
         batch.dispose();

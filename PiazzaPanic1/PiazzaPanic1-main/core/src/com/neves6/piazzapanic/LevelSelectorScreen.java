@@ -80,13 +80,13 @@ public class LevelSelectorScreen extends ScreenAdapter {
                 //game.setScreen(new GameWinScreen(game, 40));
             }
         });
-        level1Button.addListener(new ChangeListener() {
+        level2Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 // game.setScreen(new GameScreen(game, 2));
             }
         });
-        level1Button.addListener(new ChangeListener() {
+        level3Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 // game.setScreen(new GameScreen(game, 3));
@@ -147,6 +147,11 @@ public class LevelSelectorScreen extends ScreenAdapter {
 
     @Override
     public void hide() {
+
+    }
+
+    @Override
+    public void dispose(){
         super.dispose();
         game.dispose();
         batch.dispose();
