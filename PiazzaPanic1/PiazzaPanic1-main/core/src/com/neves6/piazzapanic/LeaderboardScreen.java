@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.files.FileHandle;
-//import javafx.util.Pair;
 import org.javatuples.Pair;
 import javax.sound.midi.SysexMessage;
 import java.util.ArrayList;

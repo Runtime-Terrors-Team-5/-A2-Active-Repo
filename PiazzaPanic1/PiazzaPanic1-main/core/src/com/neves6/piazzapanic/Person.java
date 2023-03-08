@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Stack;
+import org.javatuples.Quartet;
 import org.javatuples.Quintet;
 import org.javatuples.Sextet;
 import org.javatuples.Triplet;
@@ -61,6 +62,8 @@ class Customer extends Person{
     private final Texture txUp;
     private final Texture txLeft;
 
+    private float timer;
+
     /**
      * Customer constructor.
      * @param name Name of customer.
@@ -71,7 +74,14 @@ class Customer extends Person{
     public Customer(String name, int xCoord, int yCoord, String order){
         super(name, xCoord, yCoord);
         this.order = order;
-        //this.timer = 20;
+        this.timer = 20;
+        this.txUp = new Texture("people/cust1up.png");
+        this.txLeft = new Texture("people/cust1left.png");
+    }
+    public Customer(String name, int xCoord, int yCoord, String order,float timer){
+        super(name, xCoord, yCoord);
+        this.order = order;
+        this.timer = timer;
         this.txUp = new Texture("people/cust1up.png");
         this.txLeft = new Texture("people/cust1left.png");
     }
@@ -90,8 +100,11 @@ class Customer extends Person{
 
     //timer decrease
 
-    public Triplet getCustomerData(){
-        return new Triplet(getxCoord(),getyCoord(),getOrder());
+
+    public float getTimer() {return timer;}
+
+    public Quartet getCustomerData(){
+        return new Quartet(getxCoord(),getyCoord(),getOrder(),getTimer());
     }
 
 }

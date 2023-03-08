@@ -2,16 +2,13 @@ package com.neves6.piazzapanic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.g3d.particles.ResourceData.SaveData;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Stack;
-import org.javatuples.Quintet;
+import org.javatuples.Quartet;
 import org.javatuples.Septet;
 import org.javatuples.Sextet;
 import org.javatuples.Triplet;
@@ -133,9 +130,10 @@ class ScenarioGameMaster extends GameMaster {
             this.chefs.add(new Chef("Chef",chef));
         }
 
-        for (Triplet customer: data.getCustomerdata()) {
+        for (Quartet customer: data.getCustomerdata()) {
             this.customers.add(new Customer("Customer", (int) customer.getValue0(),
-                (int) customer.getValue1(), (String) customer.getValue2()));
+                (int) customer.getValue1(), (String) customer.getValue2(),
+                (Float) customer.getValue3()));
         }
         this.selectedChef = data.getSelectedChef();
 
@@ -190,7 +188,7 @@ class ScenarioGameMaster extends GameMaster {
     }
 
     public saveData generateSaveData(){
-        return new saveData(chefs, level, customers,selectedChef,machines,tray,totalTimer);
+        return new saveData(chefs, level, customers,selectedChef,machines,tray,totalTimer,repPoint);
     }
     public void setSelectedChef(int selectedChef) {
         this.selectedChef = selectedChef - 1;

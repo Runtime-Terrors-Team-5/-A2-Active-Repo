@@ -3,6 +3,7 @@ package com.neves6.piazzapanic;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Stack;
+import org.javatuples.Quartet;
 import org.javatuples.Quintet;
 import org.javatuples.Septet;
 import org.javatuples.Sextet;
@@ -13,7 +14,7 @@ public class saveData implements Serializable {
     private ArrayList<Sextet> chefdata;
     private ArrayList<Septet> machinedata;
     private int level;
-    private ArrayList<Triplet> customerdata;
+    private ArrayList<Quartet> customerdata;
     private int selectedChef;
     private ArrayList<String> trayContent;
     private float timeElapled;
@@ -53,7 +54,7 @@ public class saveData implements Serializable {
 
     public int getLevel() {return level;}
 
-    public ArrayList<Triplet> getCustomerdata() {return customerdata;}
+    public ArrayList<Quartet> getCustomerdata() {return customerdata;}
 
     public ArrayList<Sextet> getChefdata() {return chefdata;}
 
