@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.files.FileHandle;
-import javafx.util.Pair;
-
+//import javafx.util.Pair;
+import org.javatuples.Pair;
 import javax.sound.midi.SysexMessage;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +59,7 @@ public class LeaderboardScreen extends ScreenAdapter {
         for (int j = 0; j < lbPairs.size(); j++) {
             for (int i = 0; i < lbPairs.size() - 1; i++) {
                 Pair<String, Integer> tempPair;
-                if (lbPairs.get(i).getValue() > lbPairs.get(i + 1).getValue()) {
+                if (lbPairs.get(i).getValue1() > lbPairs.get(i + 1).getValue1()) {
                     tempPair = lbPairs.get(i + 1);
                     lbPairs.set(i + 1, lbPairs.get(i));
                     lbPairs.set(i, tempPair);
@@ -68,7 +68,7 @@ public class LeaderboardScreen extends ScreenAdapter {
         }
         text = "";
         for (int i = 0; i < lbPairs.size(); i++) {
-            text = text + lbPairs.get(i).getKey() + ": " + lbPairs.get(i).getValue() + "\n";
+            text = text + lbPairs.get(i).getValue0() + ": " + lbPairs.get(i).getValue1() + "\n";
         }
     }
 
