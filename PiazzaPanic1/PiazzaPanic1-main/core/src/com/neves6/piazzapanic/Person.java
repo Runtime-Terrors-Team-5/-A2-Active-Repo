@@ -169,6 +169,22 @@ class Chef extends Person {
 
     }
 
+    /**
+     *  Test constructor
+     * @param name
+     * @param xCoord
+     * @param yCoord
+     */
+
+    public Chef(String name, int xCoord, int yCoord, int textureSet){
+        super(name, xCoord, yCoord);
+
+        this.txUp =    new Texture("people/chef" + textureSet + "up.png");
+        this.txDown =  new Texture("people/chef" + textureSet + "down.png");
+        this.txLeft =  new Texture("people/chef" + textureSet + "left.png");
+        this.txRight = new Texture("people/chef" + textureSet + "right.png");
+    }
+
     public boolean getIsStickied(){
         return isStickied;
     }
