@@ -188,9 +188,16 @@ public class GameScreen extends ScreenAdapter {
     }
 
     @Override
+    public void hide(){
+        //this.dispose();
+        batch.dispose();
+        font.dispose();
+        selectedTexture.dispose();
+        recipes.dispose();
+        map.dispose();
+    }
+    @Override
     public void dispose(){
-        super.dispose();
-        game.dispose();
         batch.dispose();
         font.dispose();
         stage.dispose();

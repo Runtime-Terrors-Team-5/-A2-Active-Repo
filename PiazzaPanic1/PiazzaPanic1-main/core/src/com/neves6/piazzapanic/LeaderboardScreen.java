@@ -94,7 +94,8 @@ public class LeaderboardScreen extends ScreenAdapter {
     }
 
     public void hide(){
-
+        batch.dispose();
+        font.dispose();
     }
 
     @Override

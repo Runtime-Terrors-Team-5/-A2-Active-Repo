@@ -83,7 +83,9 @@ public class IntroScreen extends ScreenAdapter {
 
     @Override
     public void hide(){
-
+        batch.dispose();
+        introSheet.dispose();
+        font.dispose();
     }
 
     @Override

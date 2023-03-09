@@ -81,7 +81,9 @@ public class TutorialScreen extends ScreenAdapter {
 
     @Override
     public void hide(){
-
+        batch.dispose();
+        font.dispose();
+        tutorial.dispose();
     }
 
     @Override

@@ -136,6 +136,15 @@ public class GameWinScreen extends ScreenAdapter {
     }
 
     @Override
+    public void hide(){
+        batch.dispose();
+        font.dispose();
+        bg.dispose();
+        stage.dispose();
+        skin.dispose();
+        atlas.dispose();
+    }
+    @Override
     public void dispose(){
         super.dispose();
         game.dispose();

@@ -168,7 +168,12 @@ public class TitleScreen extends ScreenAdapter {
 
     @Override
     public void hide(){
-
+        batch.dispose();
+        font.dispose();
+        bg.dispose();
+        stage.dispose();
+        skin.dispose();
+        atlas.dispose();
     }
 
     @Override

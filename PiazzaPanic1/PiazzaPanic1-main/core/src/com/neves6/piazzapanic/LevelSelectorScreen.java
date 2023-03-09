@@ -147,7 +147,13 @@ public class LevelSelectorScreen extends ScreenAdapter {
 
     @Override
     public void hide() {
-
+        batch.dispose();
+        font.dispose();
+        bg.dispose();
+        lock.dispose();
+        stage.dispose();
+        skin.dispose();
+        atlas.dispose();
     }
 
     @Override

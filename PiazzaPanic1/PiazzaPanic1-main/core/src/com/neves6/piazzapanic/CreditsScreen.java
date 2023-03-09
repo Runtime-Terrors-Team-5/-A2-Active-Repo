@@ -62,6 +62,12 @@ public class CreditsScreen extends ScreenAdapter {
     }
 
     @Override
+    public void hide(){
+        batch.dispose();
+        font.dispose();
+        credits.dispose();
+    }
+    @Override
     public void dispose(){
         super.dispose();
         game.dispose();
