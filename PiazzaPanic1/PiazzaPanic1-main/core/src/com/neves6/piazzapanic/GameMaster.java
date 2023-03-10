@@ -103,7 +103,6 @@ class ScenarioGameMaster extends GameMaster {
         machines.add(new Machine("fridgecheese", "", "cheese", 0, false));
         machines.add(new Machine("fridgedough", "", "dough", 0, false));
 
-
         // disposal and tray/serving handled separately
 
         grill = Gdx.audio.newSound(Gdx.files.internal("sounds/grill.mp3"));

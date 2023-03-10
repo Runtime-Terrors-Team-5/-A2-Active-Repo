@@ -103,4 +103,9 @@ public class Machine{
                 runtime);
         }
     }
+    public void fastForwardTime(Boolean active, float runtime){
+        this.active = active;
+        this.runtime = runtime;
+
+    }
 }

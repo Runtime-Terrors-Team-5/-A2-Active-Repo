@@ -2,12 +2,16 @@ package com.neves6.piazzapanic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Stack;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,8 +25,8 @@ import static org.junit.Assert.assertEquals;
 public class pizzamachineTest {
 
     ArrayList<Machine> machines = new ArrayList<>();
-    private FileHandle file;
-    String filePath = "people/chef1up.png";
+
+    TiledMap map;
 
     ArrayList<Chef> chefs = new ArrayList<>();
     public pizzamachineTest(){
@@ -30,7 +34,7 @@ public class pizzamachineTest {
 
         PiazzaPanicGame Game = new PiazzaPanicGame();
         //GameScreen NewGame = new GameScreen(Game, 1);
-        chefs.add(new Chef("A",1,1, Gdx.files.internal(filePath)));
+        //chefs.add(new Chef("A",1,1, Gdx.files.internal(filePath)));
         //chefs.add(new Chef("Chef", 6, 5, 1, 1, 1, false, new Stack<String>(), 1));
 
 
@@ -43,17 +47,27 @@ public class pizzamachineTest {
     @Test
     public void testPizzaMachineOutput() {
         machines.add(new Machine("Pizza", "uncooked_pizza", "pizza", 3, true));
-        assertEquals(machines.get(0).getOutput(),  "Pizza");
+        assertEquals(machines.get(0).getOutput(),  "pizza");
     }
 
     /**
-     * tests if pizza is added to the chef stack
+     * tests if pizza is added to the chef stack, instantiates and adds machines/chefs to a stack
+     * then adds the input to the chef inventory, runs the machine then checks for the expected item
      */
     @Test
-    public void testPizzaAddedToChefInventory() {
-        machines.add(new Machine("Pizza", "uncooked_pizza", "pizza", 3, true));
-        machines.get(0).process(chefs.get(0));
-        assertEquals(chefs.get(0).getInventory().pop(),  "Pizza");
+    public void testPizzaAddedToChefInventory() throws InterruptedException {
+        //chefs.add(new Chef("Chef", 6, 5, 1, 1, 1, false, new Stack<String>(), 1));
+        //chefs.get(0).addToInventory("uncooked_pizza");
+        //machines.add(new Machine("Pizza", "uncooked_pizza", "Pizza", 3, true));
+        //machines.get(0).process(chefs.get(0));
+        map = new TmxMapLoader().load("tilemaps/level1.tmx");
+        PiazzaPanicGame A = new PiazzaPanicGame();
+        ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
+        game.chefs.get(0).addToInventory("uncooked_pizza");
+        game.machines.get(17).process(game.chefs.get(0));
+        TimeUnit.SECONDS.sleep(4);
+        game.machines.get(17).attemptGetOutput();
+        assertEquals(game.chefs.get(0).getInventory().pop(),  "pizza");
 
 
     }
@@ -65,9 +79,13 @@ public class pizzamachineTest {
     public void testCheeseDoughAddedToChefInventory() {
         chefs.add(new Chef("Chef", 6, 5, 1, 1, 1, false, new Stack<String>(), 1));
 
-        machines.get(1).process(chefs.get(0));
+
+        machines.add(new Machine("fridgecheese", "", "cheese", 0, false));
+        machines.add(new Machine("fridgedough", "", "dough", 0, false));
+
+        machines.get(0).process(chefs.get(0));
         assertEquals(chefs.get(0).getInventory().pop(),  "cheese");
-        machines.get(2).process(chefs.get(0));
+        machines.get(1).process(chefs.get(0));
         assertEquals(chefs.get(0).getInventory().pop(),  "dough");
 
 
@@ -81,8 +99,8 @@ public class pizzamachineTest {
     public void testNewFridgeOutput() {
         machines.add(new Machine("fridgecheese", "", "cheese", 0, false));
         machines.add(new Machine("fridgedough", "", "dough", 0, false));
-        assertEquals(machines.get(1).getOutput(),  "cheese");
-        assertEquals(machines.get(2).getOutput(),  "dough");
+        assertEquals(machines.get(0).getOutput(),  "cheese");
+        assertEquals(machines.get(1).getOutput(),  "dough");
 
     }
 

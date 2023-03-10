@@ -44,7 +44,8 @@ allprojects {
 
 project(":desktop") {
     apply plugin: "java-library"
-
+    sourceSets.test.java.srcDirs = ["src/"]
+    sourceSets.main.resources.srcDirs += ['assets']
 
     dependencies {
         implementation project(":core")
@@ -63,6 +64,13 @@ project(":desktop") {
         api "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$gdxControllersVersion"
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
 
+        implementation 'junit:junit:4.+'
+        implementation "org.mockito:mockito-core:5.1.1"
+
+        implementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+
 
 
 
@@ -73,7 +81,8 @@ project(":desktop") {
 project(":core") {
     apply plugin: "java-library"
     apply plugin: "jacoco"
-
+    sourceSets.test.java.srcDirs = ["src/"]
+    sourceSets.main.resources.srcDirs += ['assets']
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
@@ -97,6 +106,16 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
 
 
+        implementation 'junit:junit:4.+'
+        implementation "org.mockito:mockito-core:5.1.1"
+
+        implementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+
+
+
+
     }
 
 
@@ -106,6 +125,7 @@ project(":tests") {
     apply plugin: "java"
 
     sourceSets.test.java.srcDirs = ["src/"]
+    sourceSets.main.resources.srcDirs += ['assets']
 
     dependencies {
         implementation project(":core")
@@ -128,3 +148,4 @@ project(":tests") {
 
 
 }
+

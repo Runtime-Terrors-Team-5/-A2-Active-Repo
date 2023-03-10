@@ -1,5 +1,6 @@
 package com.neves6.piazzapanic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -179,25 +180,7 @@ class Chef extends Person {
 
     }
 
-    /**
-     *  Test constructor for testing the chef classes inventory capabilities in holding new machine outputs
-     * @param name
-     * @param xCoord
-     * @param yCoord
-     */
 
-    public Chef(String name, int xCoord, int yCoord, FileHandle file){
-        super(name, xCoord, yCoord);
-
-        this.file = file;
-
-        this.txUp =    new Texture("people/chef1up.png");
-        this.txDown =  new Texture("people/chef1up.png");
-        this.txLeft =  new Texture("people/chef1up.png");
-        this.txRight = new Texture( "people/chef1up.png");
-
-
-    }
 
     public boolean getIsStickied(){
         return isStickied;
