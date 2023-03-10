@@ -1,13 +1,15 @@
 package com.neves6.piazzapanic;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
 
 import java.util.ArrayList;
 import java.util.Stack;
 
+import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -15,17 +17,20 @@ import java.util.Stack;
  * and all the machine inputs & outputs involved in creating a pizza with machines
  *
  */
-public class pizzamachinetest {
+@RunWith(GdxTestRunner.class)
+public class pizzamachineTest {
 
     ArrayList<Machine> machines = new ArrayList<>();
-
+    private FileHandle file;
+    String filePath = "people/chef1up.png";
 
     ArrayList<Chef> chefs = new ArrayList<>();
+    public pizzamachineTest(){
 
-    public pizzamachinetest(){
+
         PiazzaPanicGame Game = new PiazzaPanicGame();
         //GameScreen NewGame = new GameScreen(Game, 1);
-        chefs.add(new Chef("A",1,1, 1));
+        chefs.add(new Chef("A",1,1, Gdx.files.internal(filePath)));
         //chefs.add(new Chef("Chef", 6, 5, 1, 1, 1, false, new Stack<String>(), 1));
 
 
@@ -81,11 +86,11 @@ public class pizzamachinetest {
 
     }
 
-
-    public void main(String[] args){
-        pizzamachinetest test = new pizzamachinetest();
-        test.testCheeseDoughAddedToChefInventory();
-    }
+    //@Test
+  //  public void main(){
+  //      pizzamachinetest test = new pizzamachinetest();
+  //      test.testCheeseDoughAddedToChefInventory();
+  //  }
 
 
 }

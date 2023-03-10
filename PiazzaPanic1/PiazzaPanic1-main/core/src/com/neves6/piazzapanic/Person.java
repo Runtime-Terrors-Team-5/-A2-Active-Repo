@@ -1,5 +1,6 @@
 package com.neves6.piazzapanic;
 
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.io.Serializable;
@@ -124,6 +125,8 @@ class Chef extends Person {
     private boolean isInteracting;
     private Machine machineInteractingWith;
     private int chefNumb;
+    // holds textures so it can be run independently
+    private FileHandle file;
 
     /**
      * Chef constructor.
@@ -150,6 +153,13 @@ class Chef extends Person {
         this.txRight = new Texture("people/chef" + textureSet + "right.png");
         this.txNow = txDown;
     }
+
+    /**
+     *
+     * @param name
+     * @param chef
+     */
+
     public Chef(String name,Sextet chef){
         super(name, (int) chef.getValue0(), (int) chef.getValue1());
         this.isStickied = (boolean) chef.getValue4();
@@ -170,19 +180,23 @@ class Chef extends Person {
     }
 
     /**
-     *  Test constructor
+     *  Test constructor for testing the chef classes inventory capabilities in holding new machine outputs
      * @param name
      * @param xCoord
      * @param yCoord
      */
 
-    public Chef(String name, int xCoord, int yCoord, int textureSet){
+    public Chef(String name, int xCoord, int yCoord, FileHandle file){
         super(name, xCoord, yCoord);
 
-        this.txUp =    new Texture("people/chef" + textureSet + "up.png");
-        this.txDown =  new Texture("people/chef" + textureSet + "down.png");
-        this.txLeft =  new Texture("people/chef" + textureSet + "left.png");
-        this.txRight = new Texture("people/chef" + textureSet + "right.png");
+        this.file = file;
+
+        this.txUp =    new Texture("people/chef1up.png");
+        this.txDown =  new Texture("people/chef1up.png");
+        this.txLeft =  new Texture("people/chef1up.png");
+        this.txRight = new Texture( "people/chef1up.png");
+
+
     }
 
     public boolean getIsStickied(){
