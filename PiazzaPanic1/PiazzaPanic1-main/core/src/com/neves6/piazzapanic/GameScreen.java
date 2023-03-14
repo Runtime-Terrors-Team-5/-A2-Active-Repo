@@ -148,13 +148,11 @@ public class GameScreen extends ScreenAdapter {
         game.batch.draw(gm.getChef(1).getTxNow(), gm.getChef(1).getxCoord() * wScale, gm.getChef(1).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
         game.batch.draw(gm.getChef(2).getTxNow(), gm.getChef(2).getxCoord() * wScale, gm.getChef(2).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
         game.batch.draw(gm.getChef(3).getTxNow(), gm.getChef(3).getxCoord() * wScale, gm.getChef(3).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-        if (gm.getSelectedChef() == 1) {
-            game.batch.draw(selectedTexture, gm.getChef(1).getxCoord() * wScale, gm.getChef(1).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-        } else if (gm.getSelectedChef() == 2) {
-            game.batch.draw(selectedTexture, gm.getChef(2).getxCoord() * wScale, gm.getChef(2).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-        } else if (gm.getSelectedChef() == 3) {
-            game.batch.draw(selectedTexture, gm.getChef(3).getxCoord() * wScale, gm.getChef(3).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-        }
+
+        game.batch.draw(selectedTexture, gm.getChef(gm.getSelectedChef()).getxCoord() * wScale,
+            gm.getChef(gm.getSelectedChef()).getyCoord() * hScale, 32 * unitScale,
+            32 * unitScale);
+
         if (gm.getCustomersRemining() >= 1) {
             game.batch.draw(gm.getFirstCustomer().getTxUp(), 8 * wScale, 2 * hScale, 32 * unitScale, 32 * unitScale);
             for (int i = 1; i < gm.getCustomersRemining(); i++) {
@@ -189,7 +187,6 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void hide(){
-        //this.dispose();
         batch.dispose();
         font.dispose();
         selectedTexture.dispose();

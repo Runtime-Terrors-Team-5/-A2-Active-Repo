@@ -1,5 +1,7 @@
 package com.neves6.piazzapanic;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import java.util.ArrayList;
 import org.javatuples.Septet;
 import org.javatuples.Sextet;
@@ -66,6 +68,25 @@ public class Machine{
      * Checks if the machine is done processing and adds the output to the chef's inventory if it is.
      * Handles unsticking the chef.
      */
+    public void attemptGetOutput(int SelectedChef){
+        Chef chef = operator;
+        if (active && runtime >= processingTime) {
+            if (Gdx.input.isKeyJustPressed(Keys.E) && SelectedChef == (chef.getChefNumb()-1)){
+                chef.addToInventory(output);
+                chef.setIsStickied(false);
+                chef.setMachineInteractingWith(null);
+                active = false;
+                runtime = 0;
+            }
+        }
+        if (active && runtime >= processingTime*3){
+            chef.addToInventory("Junk");
+            chef.setIsStickied(false);
+            chef.setMachineInteractingWith(null);
+            active = false;
+            runtime = 0;
+        }
+    }
     public void attemptGetOutput(){
         Chef chef = operator;
         if (active && runtime >= processingTime) {
@@ -74,8 +95,9 @@ public class Machine{
             chef.setMachineInteractingWith(null);
             active = false;
             runtime = 0;
+            }
         }
-    }
+
 
     public void incrementRuntime(float delta){
         this.runtime += delta;

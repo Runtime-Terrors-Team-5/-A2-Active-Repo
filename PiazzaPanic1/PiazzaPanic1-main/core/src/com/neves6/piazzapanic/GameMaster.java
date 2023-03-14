@@ -343,7 +343,7 @@ class ScenarioGameMaster extends GameMaster {
         for (Machine machine : machines) {
             if (machine.getActive()) {
                 machine.incrementRuntime(delta);
-                machine.attemptGetOutput();
+                machine.attemptGetOutput(selectedChef);
             }
         }
         //for customer timer increase
@@ -478,7 +478,6 @@ class ScenarioGameMaster extends GameMaster {
             if (tray.contains("burger") && tray.contains("toastedbun")){
                 customers.remove(0);
                 tray.clear();
-                customers.add(new Customer("Customer"+1, -1, -1, "salad"));
 
                 serving.play(soundVolume);
             }
