@@ -5,14 +5,15 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Stack;
 import org.javatuples.Quartet;
 import org.javatuples.Septet;
 import org.javatuples.Sextet;
-import org.javatuples.Triplet;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Random;
+import java.util.Stack;
 
 /**
  * GameMaster class.
@@ -47,6 +48,7 @@ class ScenarioGameMaster extends GameMaster {
     int level;
     int repPoint;
     ArrayList<String> validOrder;
+    int powerUpCount;
 
 
     /**
@@ -62,6 +64,7 @@ class ScenarioGameMaster extends GameMaster {
         this.repPoint = 3;
         settings = Utility.getSettings();
         this.map = map;
+        this.powerUpCount = 0;
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
         if (this.level == 1){
             validOrder = new ArrayList<>();
@@ -500,6 +503,60 @@ class ScenarioGameMaster extends GameMaster {
         }
         if (customers.size() == 0){
             game.setScreen(new GameWinScreen(game, (int) totalTimer));
+        }
+    }
+
+    public void generatePowerUp(){
+        if(powerUpCount < 2){
+            Random rand = new Random();
+            int randomInt = rand.nextInt(500);
+            if (randomInt == 49){
+                int time = 200;
+                String powerUpType = "";
+                randomInt = rand.nextInt(5);
+                if (randomInt == 0){
+                    powerUpType = "cookSpeed";
+                }
+                else if (randomInt == 1){
+                    powerUpType = "rep";
+                }
+                else if (randomInt == 2){
+                    powerUpType = "doubleEarns";
+                }
+                else if (randomInt == 3){
+                    powerUpType = "pauseTime";
+                }
+                else if (randomInt == 4){
+                    powerUpType = "money";
+                }
+                int xCoord = rand.nextInt(13) + 1;
+                int yCoord = rand.nextInt(3) + 4;
+                new PowerUp(powerUpType,xCoord,yCoord,time);
+                powerUpCount += 1;
+            }
+        }
+    }
+
+    public void clearPowerUp(){
+        List<PowerUp> found = new ArrayList<>();
+        for(PowerUp inst: PowerUp.PowerUps)
+        {
+            inst.incrementTime();
+            if(inst.getTime() < 0){
+                found.add(inst);
+                powerUpCount -= 1;
+            }
+        }
+        PowerUp.PowerUps.removeAll(found);
+    }
+
+    public void getPowerUp(){
+        List<PowerUp> found = new ArrayList<>();
+        for(PowerUp inst: PowerUp.PowerUps){
+            if(inst.getxCoord() == chefs.get(getSelectedChef()-1).getxCoord() &&
+                    inst.getyCoord() == chefs.get(getSelectedChef()-1).getyCoord()){
+                inst.setActive();
+            }
         }
     }
 

@@ -35,11 +35,23 @@ public class GameScreen extends ScreenAdapter {
     Texture selectedTexture;
     Texture recipes;
 
+    ///I'll fix this later
+    Texture doubleMoneyIcon;
+    Texture fastIcon;
+    Texture frzTimeIcon;
+    Texture moneyIcon;
+    Texture repIcon;
+
     Music music_background;
     public GameScreen(PiazzaPanicGame game, int level) {
         this.game = game;
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
         //bg = new Texture(Gdx.files.internal("title_screen_large.png"));
+        doubleMoneyIcon = new Texture(Gdx.files.internal("icons/doubleMoneyIcon.png"));
+        fastIcon = new Texture(Gdx.files.internal("icons/fastIcon.png"));
+        frzTimeIcon = new Texture(Gdx.files.internal("icons/frzTimeIcon.png"));
+        moneyIcon = new Texture(Gdx.files.internal("icons/moneyIcon.png"));
+        repIcon = new Texture(Gdx.files.internal("icons/repIcon.png"));
         this.INITIAL_WIDTH = Gdx.graphics.getWidth();
         this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
         if (level == 1) {
@@ -148,6 +160,29 @@ public class GameScreen extends ScreenAdapter {
         game.batch.draw(gm.getChef(1).getTxNow(), gm.getChef(1).getxCoord() * wScale, gm.getChef(1).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
         game.batch.draw(gm.getChef(2).getTxNow(), gm.getChef(2).getxCoord() * wScale, gm.getChef(2).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
         game.batch.draw(gm.getChef(3).getTxNow(), gm.getChef(3).getxCoord() * wScale, gm.getChef(3).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+        for(PowerUp inst: PowerUp.PowerUps){
+            if(!inst.getActive()) {
+                if(inst.getType() == "cookSpeed"){
+                    game.batch.draw(fastIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+                }
+                else if(inst.getType() == "rep"){
+                    game.batch.draw(repIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+                }
+                else if(inst.getType() == "doubleEarns"){
+                    game.batch.draw(doubleMoneyIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+                }
+                else if(inst.getType() == "pauseTime"){
+                    game.batch.draw(frzTimeIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+                }
+                else if(inst.getType() == "money"){
+                    game.batch.draw(moneyIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+                }
+            }
+        }
+
+        gm.generatePowerUp();
+        gm.clearPowerUp();
+        gm.getPowerUp();
 
         game.batch.draw(selectedTexture, gm.getChef(gm.getSelectedChef()).getxCoord() * wScale,
             gm.getChef(gm.getSelectedChef()).getyCoord() * hScale, 32 * unitScale,
