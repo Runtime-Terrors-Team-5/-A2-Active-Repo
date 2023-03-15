@@ -162,20 +162,22 @@ public class GameScreen extends ScreenAdapter {
         game.batch.draw(gm.getChef(3).getTxNow(), gm.getChef(3).getxCoord() * wScale, gm.getChef(3).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
         for(PowerUp inst: PowerUp.PowerUps){
             if(!inst.getActive()) {
-                if(inst.getType() == "cookSpeed"){
-                    game.batch.draw(fastIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-                }
-                else if(inst.getType() == "rep"){
-                    game.batch.draw(repIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-                }
-                else if(inst.getType() == "doubleEarns"){
-                    game.batch.draw(doubleMoneyIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-                }
-                else if(inst.getType() == "pauseTime"){
-                    game.batch.draw(frzTimeIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-                }
-                else if(inst.getType() == "money"){
-                    game.batch.draw(moneyIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+                switch (inst.getType()) {
+                    case "cookSpeed":
+                        game.batch.draw(fastIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+                        break;
+                    case "rep":
+                        game.batch.draw(repIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+                        break;
+                    case "doubleEarns":
+                        game.batch.draw(doubleMoneyIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+                        break;
+                    case "pauseTime":
+                        game.batch.draw(frzTimeIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+                        break;
+                    case "money":
+                        game.batch.draw(moneyIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+                        break;
                 }
             }
         }
