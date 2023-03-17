@@ -65,7 +65,11 @@ public class pizzamachineTest {
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
         game.chefs.get(0).addToInventory("uncooked_pizza");
         game.machines.get(17).process(game.chefs.get(0));
+        System.out.println(game.machines.get(17).getRuntime());
         TimeUnit.SECONDS.sleep(4);
+        System.out.println(game.machines.get(17).getRuntime());
+        game.machines.get(17).fastForwardTime(true, 6);
+        System.out.println(game.machines.get(17).getRuntime());
         game.machines.get(17).attemptGetOutput();
         assertEquals(game.chefs.get(0).getInventory().pop(),  "pizza");
 

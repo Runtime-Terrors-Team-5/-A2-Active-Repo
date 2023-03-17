@@ -196,9 +196,11 @@ public class GameScreen extends ScreenAdapter {
                 game.batch.draw(gm.getFirstCustomer().getTxLeft(), (8+i) * wScale, 2 * hScale, 32 * unitScale, 32 * unitScale);
             }
         }
+
         font.draw(game.batch, gm.getMachineTimerForChef(0), gm.getChef(1).getxCoord() * wScale, gm.getChef(1).getyCoord() * hScale + 2*(hScale/3f), 32 * unitScale, 1, false);
         font.draw(game.batch, gm.getMachineTimerForChef(1), gm.getChef(2).getxCoord() * wScale, gm.getChef(2).getyCoord() * hScale + 2*(hScale/3f), 32 * unitScale, 1, false);
         font.draw(game.batch, gm.getMachineTimerForChef(2), gm.getChef(3).getxCoord() * wScale, gm.getChef(3).getyCoord() * hScale + 2*(hScale/3f), 32 * unitScale, 1, false);
+
         game.batch.draw(recipes, 20, 20);
         font.draw(game.batch, gm.generateHoldingsText(), winWidth - (6*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
         font.draw(game.batch, gm.generateCustomersTrayText(), winWidth - (3*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);

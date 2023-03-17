@@ -156,25 +156,6 @@ class ScenarioGameMaster extends GameMaster {
 
         this.tray = data.getTrayContent();
         this.totalTimer = data.getTimeElapled();
-        /*
-        machines.add(new Machine("fridgemeat", "", "meat", 0, false));
-        machines.add(new Machine("fridgetomato", "", "tomato", 0, false));
-        machines.add(new Machine("fridgelettuce", "", "lettuce", 0, false));
-        machines.add(new Machine("fridgeonion", "", "onion", 0, false));
-        machines.add(new Machine("fridgebun", "", "bun", 0, false));
-        machines.add(new Machine("grill1patty", "patty", "burger", 3, true));
-        machines.add(new Machine("grill2patty", "patty", "burger", 3, true));
-        machines.add(new Machine("grill1bun", "bun", "toastedbun", 3, true));
-        machines.add(new Machine("grill2bun", "bun", "toastedbun", 3, true));
-        machines.add(new Machine("forming1", "meat", "patty", 3, true));
-        machines.add(new Machine("forming2", "meat", "patty", 3, true));
-        machines.add(new Machine("chopping1tomato", "tomato", "choppedtomato", 3, true));
-        machines.add(new Machine("chopping2tomato", "tomato", "choppedtomato", 3, true));
-        machines.add(new Machine("chopping1lettuce", "lettuce", "choppedlettuce", 3, true));
-        machines.add(new Machine("chopping2lettuce", "lettuce", "choppedlettuce", 3, true));
-        machines.add(new Machine("chopping1onion", "onion", "choppedonion", 3, true));
-        machines.add(new Machine("chopping2onion", "onion", "choppedonion", 3, true));
-        */
 
         // disposal and tray/serving handled separately
 
