@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,7 +20,8 @@ public class GameScreen extends ScreenAdapter {
     PiazzaPanicGame game;
     OrthographicCamera camera;
     SpriteBatch batch;
-    BitmapFont font;
+    BitmapFont fontBlack;
+    BitmapFont fontGreen;
     Stage stage;
     int winWidth;
     int winHeight;
@@ -45,7 +47,9 @@ public class GameScreen extends ScreenAdapter {
     Music music_background;
     public GameScreen(PiazzaPanicGame game, int level) {
         this.game = game;
-        font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
+        fontBlack = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
+        fontGreen = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
+        fontGreen.setColor(0,250,0,50);
         //bg = new Texture(Gdx.files.internal("title_screen_large.png"));
         doubleMoneyIcon = new Texture(Gdx.files.internal("icons/doubleMoneyIcon.png"));
         fastIcon = new Texture(Gdx.files.internal("icons/fastIcon.png"));
@@ -71,7 +75,7 @@ public class GameScreen extends ScreenAdapter {
 
     public GameScreen(PiazzaPanicGame game) {
         this.game = game;
-        font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
+        fontBlack = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
         //bg = new Texture(Gdx.files.internal("title_screen_large.png"));
         this.INITIAL_WIDTH = Gdx.graphics.getWidth();
         this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
@@ -157,9 +161,11 @@ public class GameScreen extends ScreenAdapter {
         renderer.render(renderableLayers);
 
         game.batch.begin();
-        game.batch.draw(gm.getChef(1).getTxNow(), gm.getChef(1).getxCoord() * wScale, gm.getChef(1).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-        game.batch.draw(gm.getChef(2).getTxNow(), gm.getChef(2).getxCoord() * wScale, gm.getChef(2).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-        game.batch.draw(gm.getChef(3).getTxNow(), gm.getChef(3).getxCoord() * wScale, gm.getChef(3).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+        for (int i=1;i<4;i++){
+            game.batch.draw(gm.getChef(i).getTxNow(), gm.getChef(i).getxCoord() * wScale,
+                gm.getChef(i).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+
+        }
         for(PowerUp inst: PowerUp.PowerUps){
             if(!inst.getActive()) {
                 switch (inst.getType()) {
@@ -197,14 +203,28 @@ public class GameScreen extends ScreenAdapter {
             }
         }
 
-        font.draw(game.batch, gm.getMachineTimerForChef(0), gm.getChef(1).getxCoord() * wScale, gm.getChef(1).getyCoord() * hScale + 2*(hScale/3f), 32 * unitScale, 1, false);
-        font.draw(game.batch, gm.getMachineTimerForChef(1), gm.getChef(2).getxCoord() * wScale, gm.getChef(2).getyCoord() * hScale + 2*(hScale/3f), 32 * unitScale, 1, false);
-        font.draw(game.batch, gm.getMachineTimerForChef(2), gm.getChef(3).getxCoord() * wScale, gm.getChef(3).getyCoord() * hScale + 2*(hScale/3f), 32 * unitScale, 1, false);
+        for (int i=0;i<3;i++){
+            if (gm.getChef(i+1).getMachineInteractingWith() != null){
+                Machine currentMachine = gm.getChef(i+1).getMachineInteractingWith();
+                if (currentMachine.getActive() && currentMachine.getRuntime() >= currentMachine.getProcessingTime()){
+                    fontGreen.draw(game.batch, gm.getMachineTimerForChefDone(i),
+                        gm.getChef(i+1).getxCoord() * wScale, gm.getChef(i+1).getyCoord()
+                            * hScale + 2*(hScale/3f), 32 * unitScale, 1, false);
+                }
+                else {
+                    fontBlack.draw(game.batch, gm.getMachineTimerForChef(i),
+                        gm.getChef(i+1).getxCoord() * wScale, gm.getChef(i+1).getyCoord()
+                            * hScale + 2*(hScale/3f), 32 * unitScale, 1, false);
+
+                }
+
+            }
+        }
 
         game.batch.draw(recipes, 20, 20);
-        font.draw(game.batch, gm.generateHoldingsText(), winWidth - (6*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
-        font.draw(game.batch, gm.generateCustomersTrayText(), winWidth - (3*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
-        font.draw(game.batch, gm.generateTimerText(), winWidth - (winWidth/3f), 40, (winWidth/3f), -1, false);
+        fontBlack.draw(game.batch, gm.generateHoldingsText(), winWidth - (6*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
+        fontBlack.draw(game.batch, gm.generateCustomersTrayText(), winWidth - (3*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
+        fontBlack.draw(game.batch, gm.generateTimerText(), winWidth - (winWidth/3f), 40, (winWidth/3f), -1, false);
         game.batch.end();
 
         stage.draw();
@@ -227,7 +247,8 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void hide(){
         batch.dispose();
-        font.dispose();
+        fontBlack.dispose();
+        fontGreen.dispose();
         selectedTexture.dispose();
         recipes.dispose();
         map.dispose();
@@ -235,7 +256,8 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void dispose(){
         batch.dispose();
-        font.dispose();
+        fontBlack.dispose();
+        fontGreen.dispose();
         stage.dispose();
         map.dispose();
         renderer.dispose();

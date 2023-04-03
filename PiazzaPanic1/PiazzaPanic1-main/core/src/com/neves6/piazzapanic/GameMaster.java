@@ -310,6 +310,16 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 
+    public String getMachineTimerForChefDone(int chefno) {
+        Chef chef = chefs.get(chefno);
+        if (chef.getMachineInteractingWith() != null) {
+            Machine machine = chef.getMachineInteractingWith();
+            return ((int) (machine.getProcessingTime() - machine.getRuntime() + 1)*(-1)) + "";
+        } else {
+            return "";
+        }
+    }
+
     public int getCustomersRemining(){
         return customers.size();
     }
