@@ -2,6 +2,7 @@ package com.neves6.piazzapanic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -504,25 +505,32 @@ class ScenarioGameMaster extends GameMaster {
             if (randomInt == 49){
                 int time = 200;
                 String powerUpType = "";
+                Texture texture = new Texture(Gdx.files.internal("icons/fastIcon.png"));
+
                 randomInt = rand.nextInt(5);
                 if (randomInt == 0){
                     powerUpType = "cookSpeed";
+                    texture = new Texture(Gdx.files.internal("icons/fastIcon.png"));
                 }
                 else if (randomInt == 1){
                     powerUpType = "rep";
+                    texture = new Texture(Gdx.files.internal("icons/repIcon.png"));
                 }
                 else if (randomInt == 2){
                     powerUpType = "doubleEarns";
+                    texture = new Texture(Gdx.files.internal("icons/doubleMoneyIcon.png"));
                 }
                 else if (randomInt == 3){
                     powerUpType = "pauseTime";
+                    texture = new Texture(Gdx.files.internal("icons/frzTimeIcon.png"));
                 }
                 else if (randomInt == 4){
                     powerUpType = "money";
+                    texture = new Texture(Gdx.files.internal("icons/moneyIcon.png"));
                 }
                 int xCoord = rand.nextInt(13) + 1;
                 int yCoord = rand.nextInt(3) + 4;
-                new PowerUp(powerUpType,xCoord,yCoord,time);
+                new PowerUp(powerUpType,xCoord,yCoord,time,texture);
                 powerUpCount += 1;
             }
         }

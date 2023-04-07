@@ -1,5 +1,7 @@
 package com.neves6.piazzapanic;
 
+import com.badlogic.gdx.graphics.Texture;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,13 +11,15 @@ public class PowerUp {
     private int yCoord;
     private int time;
     private boolean active;
+    public Texture texture;
     public static List<PowerUp> PowerUps = new ArrayList<>();
 
-    public PowerUp(String PowerUpType, int xCoord, int yCoord, int time){
+    public PowerUp(String PowerUpType, int xCoord, int yCoord, int time, Texture texture){
     this.powerUpType = PowerUpType;
     this.xCoord = xCoord;
     this.yCoord = yCoord;
     this.time = time;
+    this.texture = texture;
     this.active = false;
     PowerUps.add(this);
     }

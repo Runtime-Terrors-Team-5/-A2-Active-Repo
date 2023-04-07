@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -37,12 +36,6 @@ public class GameScreen extends ScreenAdapter {
     Texture selectedTexture;
     Texture recipes;
 
-    ///I'll fix this later
-    Texture doubleMoneyIcon;
-    Texture fastIcon;
-    Texture frzTimeIcon;
-    Texture moneyIcon;
-    Texture repIcon;
 
     Music music_background;
     public GameScreen(PiazzaPanicGame game, int level) {
@@ -51,11 +44,6 @@ public class GameScreen extends ScreenAdapter {
         fontGreen = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
         fontGreen.setColor(0,250,0,50);
         //bg = new Texture(Gdx.files.internal("title_screen_large.png"));
-        doubleMoneyIcon = new Texture(Gdx.files.internal("icons/doubleMoneyIcon.png"));
-        fastIcon = new Texture(Gdx.files.internal("icons/fastIcon.png"));
-        frzTimeIcon = new Texture(Gdx.files.internal("icons/frzTimeIcon.png"));
-        moneyIcon = new Texture(Gdx.files.internal("icons/moneyIcon.png"));
-        repIcon = new Texture(Gdx.files.internal("icons/repIcon.png"));
         this.INITIAL_WIDTH = Gdx.graphics.getWidth();
         this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
         if (level == 1) {
@@ -170,19 +158,19 @@ public class GameScreen extends ScreenAdapter {
             if(!inst.getActive()) {
                 switch (inst.getType()) {
                     case "cookSpeed":
-                        game.batch.draw(fastIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+                        game.batch.draw(inst.texture, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
                         break;
                     case "rep":
-                        game.batch.draw(repIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+                        game.batch.draw(inst.texture, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
                         break;
                     case "doubleEarns":
-                        game.batch.draw(doubleMoneyIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+                        game.batch.draw(inst.texture, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
                         break;
                     case "pauseTime":
-                        game.batch.draw(frzTimeIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+                        game.batch.draw(inst.texture, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
                         break;
                     case "money":
-                        game.batch.draw(moneyIcon, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
+                        game.batch.draw(inst.texture, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
                         break;
                 }
             }
