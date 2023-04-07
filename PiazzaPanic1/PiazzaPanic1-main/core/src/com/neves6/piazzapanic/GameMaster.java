@@ -50,6 +50,7 @@ class ScenarioGameMaster extends GameMaster {
     int repPoint;
     ArrayList<String> validOrder;
     int powerUpCount;
+    Texture repIcon;
 
 
     /**
@@ -66,6 +67,7 @@ class ScenarioGameMaster extends GameMaster {
         settings = Utility.getSettings();
         this.map = map;
         this.powerUpCount = 0;
+        this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints3.png"));
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
         if (this.level == 1){
             validOrder = new ArrayList<>();
@@ -500,6 +502,9 @@ class ScenarioGameMaster extends GameMaster {
 
     public void generatePowerUp(){
         if(powerUpCount < 2){
+            boolean powerUpCollisionCheck = false;
+            int tempX = 0;
+            int tempY = 0;
             Random rand = new Random();
             int randomInt = rand.nextInt(500);
             if (randomInt == 49){
@@ -528,8 +533,19 @@ class ScenarioGameMaster extends GameMaster {
                     powerUpType = "money";
                     texture = new Texture(Gdx.files.internal("icons/moneyIcon.png"));
                 }
-                int xCoord = rand.nextInt(13) + 1;
-                int yCoord = rand.nextInt(3) + 4;
+
+                while (powerUpCollisionCheck == false) {
+                    tempX = rand.nextInt(13) + 1;
+                    tempY = rand.nextInt(3) + 4;
+                    if ((tempX == chefs.get(0).getxCoord() && tempY == chefs.get(0).getyCoord()) ||
+                            (tempX == chefs.get(1).getxCoord() && tempY == chefs.get(1).getyCoord()) ||
+                            (tempX == chefs.get(2).getxCoord() && tempY == chefs.get(2).getyCoord()))
+                    { powerUpCollisionCheck = false; }
+                    else { powerUpCollisionCheck = true; }
+                }
+
+                int xCoord = tempX;
+                int yCoord = tempY;
                 new PowerUp(powerUpType,xCoord,yCoord,time,texture);
                 powerUpCount += 1;
             }
@@ -562,5 +578,9 @@ class ScenarioGameMaster extends GameMaster {
     //rep decrease()
     public void repDecrease(){
         repPoint -= 1;
+        if (repPoint == 3) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints3.png"));}
+        if (repPoint == 2) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints2.png"));}
+        if (repPoint == 1) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints1.png"));}
+        if (repPoint == 0) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints0.png"));}
     }
 }

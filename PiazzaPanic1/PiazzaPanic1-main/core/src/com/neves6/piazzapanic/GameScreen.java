@@ -156,29 +156,15 @@ public class GameScreen extends ScreenAdapter {
         }
         for(PowerUp inst: PowerUp.PowerUps){
             if(!inst.getActive()) {
-                switch (inst.getType()) {
-                    case "cookSpeed":
-                        game.batch.draw(inst.texture, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-                        break;
-                    case "rep":
-                        game.batch.draw(inst.texture, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-                        break;
-                    case "doubleEarns":
-                        game.batch.draw(inst.texture, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-                        break;
-                    case "pauseTime":
-                        game.batch.draw(inst.texture, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-                        break;
-                    case "money":
-                        game.batch.draw(inst.texture, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-                        break;
-                }
+                game.batch.draw(inst.texture, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
             }
         }
 
         gm.generatePowerUp();
         gm.clearPowerUp();
         gm.getPowerUp();
+
+        game.batch.draw(gm.repIcon, 16 * wScale, 7 * hScale, 93 * unitScale, 45 * unitScale);
 
         game.batch.draw(selectedTexture, gm.getChef(gm.getSelectedChef()).getxCoord() * wScale,
             gm.getChef(gm.getSelectedChef()).getyCoord() * hScale, 32 * unitScale,
