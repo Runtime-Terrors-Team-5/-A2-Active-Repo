@@ -46,7 +46,8 @@ jobs:
       with:
     # Name or regex of artifact containing test results
     # Name of the check run
+        artifact: test-results
         name: Test Result
-        path: reports/junit-*.xml
+        path: '*.xml' 
         reporter: java-junit
 
