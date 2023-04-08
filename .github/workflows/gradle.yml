@@ -37,17 +37,23 @@ jobs:
         arguments: build
         build-root-directory: PiazzaPanic1/PiazzaPanic1-main
         
-
-    - name: Test Reporter
-  # You may pin to the exact commit or the version.
-  # uses: dorny/test-reporter@c9b3d0e2bd2a4e96aaf424dbaa31c46b42318226
-      uses: dorny/test-reporter@v1.6.0
-      if: success() || failure()  
-      with:
-    # Name or regex of artifact containing test results
-    # Name of the check run
-        artifact: test-results
-        name: Test Result
-        path: '*.xml' 
-        reporter: java-junit
+  build-test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2     # checkout the repo
+      - run: npm ci                   # install packages
+      - run: npm test                 
+      - name: Test Reporter
+    # You may pin to the exact commit or the version.
+    # uses: dorny/test-reporter@c9b3d0e2bd2a4e96aaf424dbaa31c46b42318226
+        uses: dorny/test-reporter@v1.6.0
+        if: success() || failure()  
+        with:
+      # Name or regex of artifact containing test results
+      # Name of the check run
+          artifact: test-results
+          name: Test Result
+          path: '*.xml' 
+          reporter: java-junit
 
