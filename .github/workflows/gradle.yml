@@ -36,3 +36,17 @@ jobs:
       with:
         arguments: build
         build-root-directory: PiazzaPanic1/PiazzaPanic1-main
+        
+
+    - name: Test Reporter
+  # You may pin to the exact commit or the version.
+  # uses: dorny/test-reporter@c9b3d0e2bd2a4e96aaf424dbaa31c46b42318226
+      uses: dorny/test-reporter@v1.6.0
+      if: success() || failure()  
+      with:
+    # Name or regex of artifact containing test results
+    # Name of the check run
+        name: Test Result
+        path: reports/junit-*.xml
+        reporter: java-junit
+
