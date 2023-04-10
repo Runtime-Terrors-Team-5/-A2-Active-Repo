@@ -57,11 +57,11 @@ public class LevelSelectorScreen extends ScreenAdapter {
         buttonStyle.up = skin.getDrawable("black_alpha_square");
         buttonStyle.down = skin.getDrawable("black_alpha_square");
         buttonStyle.checked = skin.getDrawable("black_alpha_square");
-        level1Button = new TextButton("Level 1", buttonStyle);
+        level1Button = new TextButton("Easy", buttonStyle);
         level1Button.setPosition(Gdx.graphics.getWidth()/2f - level1Button.getWidth()/2 - level1Button.getWidth()*1.5f, Gdx.graphics.getHeight()/2f - level1Button.getHeight()/2);
-        level2Button = new TextButton("Level 2", buttonStyle);
+        level2Button = new TextButton("Medium", buttonStyle);
         level2Button.setPosition(Gdx.graphics.getWidth()/2f - level1Button.getWidth()/2, Gdx.graphics.getHeight()/2f - level1Button.getHeight()/2);
-        level3Button = new TextButton("Level 3", buttonStyle);
+        level3Button = new TextButton("Hard", buttonStyle);
         level3Button.setPosition(Gdx.graphics.getWidth()/2f - level1Button.getWidth()/2 + level3Button.getWidth()*1.5f, Gdx.graphics.getHeight()/2f - level1Button.getHeight()/2);
 
         loadButton = new TextButton("Load", buttonStyle);
@@ -83,12 +83,14 @@ public class LevelSelectorScreen extends ScreenAdapter {
         level2Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new TutorialScreen(game, "game2"));
                 // game.setScreen(new GameScreen(game, 2));
             }
         });
         level3Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new TutorialScreen(game, "game3"));
                 // game.setScreen(new GameScreen(game, 3));
             }
         });
@@ -123,8 +125,6 @@ public class LevelSelectorScreen extends ScreenAdapter {
                 bg.getHeight() * bgScaleFactor);
         font.draw(game.batch, "LEVEL SELECTION", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
         stage.draw();
-        game.batch.draw(lock, level2Button.getX(), level2Button.getY(), level2Button.getWidth(), level2Button.getHeight());
-        game.batch.draw(lock, level3Button.getX(), level3Button.getY(), level3Button.getWidth(), level3Button.getHeight());
         game.batch.end();
     }
 
