@@ -675,4 +675,6 @@ class ScenarioGameMaster extends GameMaster {
     }
 
     public void IncreasePowerUpCount(){this.powerUpCount += 1;}
+
+    public float getTotalTimer(){return this.totalTimer;}
 }
