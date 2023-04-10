@@ -583,4 +583,12 @@ class ScenarioGameMaster extends GameMaster {
         if (repPoint == 1) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints1.png"));}
         if (repPoint == 0) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints0.png"));}
     }
+
+    public void reIncrease(){
+        repPoint += 1;
+    }
+
+    public int getRepPoint(){
+        return this.repPoint;
+    }
 }
