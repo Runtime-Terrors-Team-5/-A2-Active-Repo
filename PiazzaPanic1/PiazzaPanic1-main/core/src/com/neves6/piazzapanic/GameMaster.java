@@ -539,8 +539,20 @@ class ScenarioGameMaster extends GameMaster {
         } else if (targetx == 1 && targety == 5) {
             chef.removeTopFromInventory();
             trash.play(soundVolume);
-        } else if (targetx == 8 && targety == 3) {
+        } else if (targetx == 12 && targety == 3) {
             addToTray();
+        } else if (targetx == 8 && targety == 3) {
+            if (Objects.equals(invTop, "completed burger")) {
+                customers.remove(0);
+                chef.getInventory().pop();
+                repIncrease();
+                serving.play(soundVolume);
+            } else if (Objects.equals(invTop, "completed salad")) {
+                customers.remove(0);
+                chef.getInventory().pop();
+                repIncrease();
+                serving.play(soundVolume);
+            }
         }
     }
 
@@ -559,11 +571,12 @@ class ScenarioGameMaster extends GameMaster {
                 tray.add("toastedbun");
             }
             if (tray.contains("burger") && tray.contains("toastedbun")){
-                customers.remove(0);
+                //customers.remove(0);
                 tray.clear();
-                repIncrease();
+                //repIncrease();
+                inv.push("completed burger");
 
-                serving.play(soundVolume);
+                //serving.play(soundVolume);
             }
         } else if (Objects.equals(customers.get(0).getOrder(), "salad")){
             if (Objects.equals(inv.peek(), "choppedtomato")){
@@ -577,9 +590,12 @@ class ScenarioGameMaster extends GameMaster {
                 tray.add("choppedonion");
             }
             if (tray.contains("choppedtomato") && tray.contains("choppedlettuce") && tray.contains("choppedonion")){
-                customers.remove(0);
+                //customers.remove(0);
                 tray.clear();
-                serving.play(soundVolume);
+                //repIncrease();
+                inv.push("completed salad");
+
+                //serving.play(soundVolume);
             }
         }
         if (customers.size() == 0 && cusomerRemaining == 0){
