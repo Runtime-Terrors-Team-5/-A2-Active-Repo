@@ -163,6 +163,7 @@ public class GameScreen extends ScreenAdapter {
         gm.generatePowerUp();
         gm.clearPowerUp();
         gm.getPowerUp();
+        gm.powerUpEffect();
 
         game.batch.draw(gm.repIcon, 16 * wScale, 7 * hScale, 93 * unitScale, 45 * unitScale);
 

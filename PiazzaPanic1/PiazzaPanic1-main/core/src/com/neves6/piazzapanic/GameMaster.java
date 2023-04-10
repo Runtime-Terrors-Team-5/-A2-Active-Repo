@@ -43,6 +43,7 @@ class ScenarioGameMaster extends GameMaster {
     Sound fridge;
     Sound forming;
     Sound trash;
+    Sound ding;
     float soundVolume;
     ArrayList<String> settings;
     Random rand;
@@ -119,6 +120,7 @@ class ScenarioGameMaster extends GameMaster {
         fridge = Gdx.audio.newSound(Gdx.files.internal("sounds/fridge.mp3"));
         forming = Gdx.audio.newSound(Gdx.files.internal("sounds/forming.mp3"));
         trash = Gdx.audio.newSound(Gdx.files.internal("sounds/trash.mp3"));
+        ding = Gdx.audio.newSound(Gdx.files.internal("sounds/ding.mp3"));
 
         switch (settings.get(1).strip()){
             case "full":
@@ -173,6 +175,7 @@ class ScenarioGameMaster extends GameMaster {
         fridge = Gdx.audio.newSound(Gdx.files.internal("sounds/fridge.mp3"));
         forming = Gdx.audio.newSound(Gdx.files.internal("sounds/forming.mp3"));
         trash = Gdx.audio.newSound(Gdx.files.internal("sounds/trash.mp3"));
+        ding = Gdx.audio.newSound(Gdx.files.internal("sounds/ding.mp3"));
 
         switch (settings.get(1).strip()){
             case "full":
@@ -605,6 +608,28 @@ class ScenarioGameMaster extends GameMaster {
             if(inst.getxCoord() == chefs.get(getSelectedChef()-1).getxCoord() &&
                     inst.getyCoord() == chefs.get(getSelectedChef()-1).getyCoord()){
                 inst.setActive();
+                inst.clearxCoord();
+                inst.clearyCoord();
+                ding.play(1);
+            }
+        }
+    }
+
+    public void powerUpEffect(){
+        for(PowerUp inst: PowerUp.PowerUps){
+            if(inst.active == true){
+                if (inst.powerUpType == "cookSpeed"){}
+                else if (inst.powerUpType == "rep"){
+                    repPoint += 1;
+                    if (repPoint == 3) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints3.png"));}
+                    if (repPoint == 2) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints2.png"));}
+                    if (repPoint == 1) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints1.png"));}
+                    if (repPoint == 0) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints0.png"));}
+                }
+                else if (inst.powerUpType == "doubleEarns"){}
+                else if (inst.powerUpType == "pauseTime"){}
+                if (inst.powerUpType == "money"){}
+
             }
         }
     }
@@ -616,5 +641,13 @@ class ScenarioGameMaster extends GameMaster {
         if (repPoint == 2) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints2.png"));}
         if (repPoint == 1) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints1.png"));}
         if (repPoint == 0) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints0.png"));}
+    }
+
+    public void reIncrease(){
+        repPoint += 1;
+    }
+
+    public int getRepPoint(){
+        return this.repPoint;
     }
 }
