@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PowerUp {
-    private String powerUpType;
+    public String powerUpType;
     private int xCoord;
     private int yCoord;
     private int time;
-    private boolean active;
+    public boolean active;
     public Texture texture;
     public static List<PowerUp> PowerUps = new ArrayList<>();
 
@@ -39,6 +39,8 @@ public class PowerUp {
     public int getyCoord(){
         return this.yCoord;
     }
+    public void clearxCoord() {this.xCoord = 1000;}
+    public void clearyCoord() {this.yCoord = 1000;}
 
     public void incrementTime(){
         this.time -= 1;
