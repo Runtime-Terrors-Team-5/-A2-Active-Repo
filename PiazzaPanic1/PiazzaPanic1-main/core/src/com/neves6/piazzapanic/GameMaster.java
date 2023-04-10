@@ -375,8 +375,14 @@ class ScenarioGameMaster extends GameMaster {
             }
         }
         //for customer timer increase
+        boolean pauseTime = false;
         for (int i = 0; i < customers.size(); i++) {
-            customers.get(i).timerDecrease(delta);
+            for(PowerUp inst: PowerUp.PowerUps){
+                if (inst.powerUpType == "pauseTime" && inst.active){
+                    pauseTime = true;
+                }
+            }
+            if (pauseTime == false){ customers.get(i).timerDecrease(delta); }
             if (customers.get(i).getTimer() < 0 ){
                 repDecrease();
                 customers.remove(i);
@@ -626,6 +632,9 @@ class ScenarioGameMaster extends GameMaster {
                     inst.getyCoord() == chefs.get(getSelectedChef()-1).getyCoord()){
                 inst.clearxCoord();
                 inst.clearyCoord();
+                if(inst.powerUpType == "pauseTime"){
+                    inst.setTime();
+                }
                 inst.setActive();
                 ding.play(1);
             }
@@ -644,8 +653,7 @@ class ScenarioGameMaster extends GameMaster {
                     repDecrease();
                     inst.clearTime();
                 }
-                else if (inst.powerUpType == "pauseTime"){}
-                if (inst.powerUpType == "money"){
+                else if (inst.powerUpType == "money"){
                     inst.clearTime();
                 }
 
