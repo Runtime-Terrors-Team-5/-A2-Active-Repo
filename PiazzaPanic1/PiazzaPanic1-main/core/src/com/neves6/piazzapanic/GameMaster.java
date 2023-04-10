@@ -51,6 +51,8 @@ class ScenarioGameMaster extends GameMaster {
     ArrayList<String> validOrder;
     int powerUpCount;
     Texture repIcon;
+    int cusomerRemaining;
+    private float customerSpawnTimer;
 
 
     /**
@@ -69,7 +71,9 @@ class ScenarioGameMaster extends GameMaster {
         this.powerUpCount = 0;
         this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints3.png"));
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
+
         if (this.level == 1){
+            this.customerSpawnTimer = 5;
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
@@ -78,13 +82,11 @@ class ScenarioGameMaster extends GameMaster {
             chefs.add(new Chef("Chef", 6+i, 5, 1, 1, 1, false, new Stack<String>(), i+1));
         }
         this.rand = new Random();
-        for (int i = 0; i < custno; i++) {
 
-            String order = validOrder.get(rand.nextInt((validOrder.size())));
-            customers.add(new Customer("Customer"+i+1, -1, -1, order));
+        String order = validOrder.get(rand.nextInt((validOrder.size())));
+        customers.add(new Customer("Customer"+1, -1, -1, order));
+        this.cusomerRemaining = custno-1;
 
-
-        }
         totalTimer = 0f;
         machines.add(new Machine("fridgemeat", "", "meat", 0, false));
         machines.add(new Machine("fridgetomato", "", "tomato", 0, false));
@@ -149,7 +151,10 @@ class ScenarioGameMaster extends GameMaster {
                 (int) customer.getValue1(), (String) customer.getValue2(),
                 (Float) customer.getValue3()));
         }
+        this.cusomerRemaining = data.getCustumerRemaining();
         this.selectedChef = data.getSelectedChef();
+
+        this.customerSpawnTimer = data.getCustomerSpawnTimer();
 
         totalTimer = 0f;
 
@@ -183,7 +188,8 @@ class ScenarioGameMaster extends GameMaster {
     }
 
     public saveData generateSaveData(){
-        return new saveData(chefs, level, customers,selectedChef,machines,tray,totalTimer,repPoint);
+        return new saveData(chefs, level, customers,selectedChef,machines,tray,totalTimer,
+            repPoint,cusomerRemaining, customerSpawnTimer);
     }
     public void setSelectedChef(int selectedChef) {
         this.selectedChef = selectedChef - 1;
@@ -331,6 +337,28 @@ class ScenarioGameMaster extends GameMaster {
         return customers.get(0);
     }
 
+    public void spawnCustomer(){
+        if (cusomerRemaining <= 0){return;}
+        String order = validOrder.get(rand.nextInt((validOrder.size())));
+        customers.add(new Customer("Customer"+1, -1, -1, order));
+        this.cusomerRemaining -= 1;
+
+        switch (this.level) {
+            case 1:
+                this.customerSpawnTimer = 5;
+                break;
+            case 2:
+                this.customerSpawnTimer = 5;
+                break;
+            case 3:
+                this.customerSpawnTimer = 5;
+                break;
+            case -1:
+                this.customerSpawnTimer = 5;
+                break;
+        }
+    }
+
     /**
      * Updates timers on all machines and the total timer.
      * To be called every frame render.
@@ -348,6 +376,12 @@ class ScenarioGameMaster extends GameMaster {
         if (getFirstCustomer().getTimer() < 0 ){
             repDecrease();
             customers.remove(0);
+        }
+
+        this.customerSpawnTimer -= delta;
+        System.out.println(this.customerSpawnTimer);
+        if (customerSpawnTimer < 0){
+            spawnCustomer();
         }
 
 
@@ -495,7 +529,7 @@ class ScenarioGameMaster extends GameMaster {
                 serving.play(soundVolume);
             }
         }
-        if (customers.size() == 0){
+        if (customers.size() == 0 && cusomerRemaining == 0){
             game.setScreen(new GameWinScreen(game, (int) totalTimer));
         }
     }
