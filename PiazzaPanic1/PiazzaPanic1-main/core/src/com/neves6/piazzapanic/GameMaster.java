@@ -425,24 +425,24 @@ class ScenarioGameMaster extends GameMaster {
                 break;
         }
         //System.out.println("Target: " + targetx + ", " + targety + "\nFacing: " + chef.getFacing());
-        if (chef.getInventory().empty()) {
-            if (targetx == 1 && targety == 10) {
-                machines.get(0).process(chef);
-                fridge.play(soundVolume);
-            } else if (targetx == 2 && targety == 10) {
-                machines.get(1).process(chef);
-                fridge.play(soundVolume);
-            } else if (targetx == 3 && targety == 10) {
-                machines.get(2).process(chef);
-                fridge.play(soundVolume);
-            } else if (targetx == 4 && targety == 10) {
-                machines.get(3).process(chef);
-                fridge.play(soundVolume);
-            } else if (targetx == 1 && targety == 8) {
-                machines.get(4).process(chef);
-                fridge.play(soundVolume);
-            } else { return; }
+
+        if (targetx == 1 && targety == 10) {
+            machines.get(0).process(chef);
+            fridge.play(soundVolume);
+        } else if (targetx == 2 && targety == 10) {
+            machines.get(1).process(chef);
+            fridge.play(soundVolume);
+        } else if (targetx == 3 && targety == 10) {
+            machines.get(2).process(chef);
+            fridge.play(soundVolume);
+        } else if (targetx == 4 && targety == 10) {
+            machines.get(3).process(chef);
+            fridge.play(soundVolume);
+        } else if (targetx == 1 && targety == 8) {
+            machines.get(4).process(chef);
+            fridge.play(soundVolume);
         }
+
         String invTop = chef.getInventory().peek();
         if (targetx == 6 && targety == 7) {
 
