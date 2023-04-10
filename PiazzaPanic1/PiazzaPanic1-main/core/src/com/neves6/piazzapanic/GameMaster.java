@@ -388,6 +388,11 @@ class ScenarioGameMaster extends GameMaster {
         for (Machine machine : machines) {
             if (machine.getActive()) {
                 machine.incrementRuntime(delta);
+                for(PowerUp inst: PowerUp.PowerUps) {
+                    if (inst.powerUpType == "cookSpeed" && inst.active) {
+                        machine.incrementRuntime(delta);
+                    }
+                }
                 machine.attemptGetOutput(selectedChef);
             }
         }
@@ -649,7 +654,7 @@ class ScenarioGameMaster extends GameMaster {
                     inst.getyCoord() == chefs.get(getSelectedChef()-1).getyCoord()){
                 inst.clearxCoord();
                 inst.clearyCoord();
-                if(inst.powerUpType == "pauseTime"){
+                if(inst.powerUpType == "pauseTime" || inst.powerUpType == "cookSpeed"){
                     inst.setTime();
                 }
                 inst.setActive();
@@ -661,8 +666,7 @@ class ScenarioGameMaster extends GameMaster {
     public void powerUpEffect(){
         for(PowerUp inst: PowerUp.PowerUps){
             if(inst.active == true){
-                if (inst.powerUpType == "cookSpeed"){}
-                else if (inst.powerUpType == "rep"){
+                if (inst.powerUpType == "rep"){
                     repIncrease();
                     inst.clearTime();
                 }
