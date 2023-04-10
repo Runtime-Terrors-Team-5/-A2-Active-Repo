@@ -74,11 +74,28 @@ class ScenarioGameMaster extends GameMaster {
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
 
         if (this.level == 1){
+            this.customerSpawnTimer = 15;
+            validOrder = new ArrayList<>();
+            validOrder.add("salad");
+            validOrder.add("burger");
+        }
+
+        if (this.level == 2){
+            this.customerSpawnTimer = 10;
+            validOrder = new ArrayList<>();
+            validOrder.add("salad");
+            validOrder.add("burger");
+        }
+
+        if (this.level == 3){
             this.customerSpawnTimer = 5;
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
         }
+
+
+
         for (int i = 0; i < chefno; i++) {
             chefs.add(new Chef("Chef", 6+i, 5, 1, 1, 1, false, new Stack<String>(), i+1));
         }
