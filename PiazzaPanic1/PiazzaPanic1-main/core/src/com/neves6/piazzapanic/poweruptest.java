@@ -2,6 +2,7 @@ package com.neves6.piazzapanic;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.concurrent.TimeUnit;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import org.junit.Test;
@@ -9,6 +10,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import org.junit.runner.RunWith;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Tests whether the interacted power ups collected by
@@ -56,12 +59,20 @@ public class poweruptest {
     @Test
     public void testFastIcon(){
 
+        map = new TmxMapLoader().load("tilemaps/level1.tmx");
+        PiazzaPanicGame A = new PiazzaPanicGame();
+        ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
+
     }
     /**
      * Tests that money is increased for each customer served
      */
     @Test
     public void testMoneyIcon(){
+
+        map = new TmxMapLoader().load("tilemaps/level1.tmx");
+        PiazzaPanicGame A = new PiazzaPanicGame();
+        ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
 
     }
 
@@ -72,17 +83,27 @@ public class poweruptest {
     @Test
     public void testDoubleMoney(){
 
+        map = new TmxMapLoader().load("tilemaps/level1.tmx");
+        PiazzaPanicGame A = new PiazzaPanicGame();
+        ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
+
     }
     /**
      * Tests that time is freezed for a set time
      */
     @Test
-    public void testFreezeTime(){
+    public void testFreezeTime() throws InterruptedException {
 
         map = new TmxMapLoader().load("tilemaps/level1.tmx");
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
-        
+        // insert time freeze here
+        float lastTime = game.getTotalTimer();
+
+        TimeUnit.SECONDS.sleep(4);
+
+        assertEquals(game.getTotalTimer(),  lastTime);
+
 
     }
 
