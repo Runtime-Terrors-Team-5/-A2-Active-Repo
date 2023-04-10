@@ -608,9 +608,9 @@ class ScenarioGameMaster extends GameMaster {
         for(PowerUp inst: PowerUp.PowerUps){
             if(inst.getxCoord() == chefs.get(getSelectedChef()-1).getxCoord() &&
                     inst.getyCoord() == chefs.get(getSelectedChef()-1).getyCoord()){
-                inst.setActive();
                 inst.clearxCoord();
                 inst.clearyCoord();
+                inst.setActive();
                 ding.play(1);
             }
         }
@@ -619,17 +619,26 @@ class ScenarioGameMaster extends GameMaster {
     public void powerUpEffect(){
         for(PowerUp inst: PowerUp.PowerUps){
             if(inst.active == true){
-                if (inst.powerUpType == "cookSpeed"){}
-                else if (inst.powerUpType == "rep"){
-                    repPoint += 1;
-                    if (repPoint == 3) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints3.png"));}
-                    if (repPoint == 2) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints2.png"));}
-                    if (repPoint == 1) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints1.png"));}
-                    if (repPoint == 0) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints0.png"));}
+                if (inst.powerUpType == "cookSpeed"){
+                    repDecrease();
+                    inst.clearTime();
                 }
-                else if (inst.powerUpType == "doubleEarns"){}
-                else if (inst.powerUpType == "pauseTime"){}
-                if (inst.powerUpType == "money"){}
+                else if (inst.powerUpType == "rep"){
+                    repIncrease();
+                    inst.clearTime();
+                }
+                else if (inst.powerUpType == "doubleEarns"){
+                    repIncrease();
+                    inst.clearTime();
+                }
+                else if (inst.powerUpType == "pauseTime"){
+                    repDecrease();
+                    inst.clearTime();
+                }
+                if (inst.powerUpType == "money"){
+                    repDecrease();
+                    inst.clearTime();
+                }
 
             }
         }
@@ -639,13 +648,17 @@ class ScenarioGameMaster extends GameMaster {
     public void repDecrease(){
         repPoint -= 1;
         if (repPoint == 3) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints3.png"));}
-        if (repPoint == 2) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints2.png"));}
-        if (repPoint == 1) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints1.png"));}
-        if (repPoint == 0) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints0.png"));}
+        else if (repPoint == 2) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints2.png"));}
+        else if (repPoint == 1) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints1.png"));}
+        else if (repPoint == 0) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints0.png"));}
     }
 
     public void repIncrease(){
-        repPoint += 1;
+        if (repPoint < 3) {repPoint += 1;}
+        if (repPoint == 3) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints3.png"));}
+        else if (repPoint == 2) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints2.png"));}
+        else if (repPoint == 1) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints1.png"));}
+        else if (repPoint == 0) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints0.png"));}
     }
 
     public int getRepPoint(){

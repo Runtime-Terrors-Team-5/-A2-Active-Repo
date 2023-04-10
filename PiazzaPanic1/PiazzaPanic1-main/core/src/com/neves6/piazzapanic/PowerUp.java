@@ -45,6 +45,7 @@ public class PowerUp {
     public void incrementTime(){
         this.time -= 1;
     }
+    public void clearTime() {this.time = 0;}
 
     public boolean getActive(){
         return this.active;
