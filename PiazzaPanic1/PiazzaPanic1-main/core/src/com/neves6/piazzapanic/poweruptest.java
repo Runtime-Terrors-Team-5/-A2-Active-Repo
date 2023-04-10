@@ -87,6 +87,8 @@ public class poweruptest {
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
 
+        assertEquals(game.getRepPoint(),  5);
+
     }
     /**
      * Tests that time is freezed for a set time
