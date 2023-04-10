@@ -76,7 +76,7 @@ class Customer extends Person{
     public Customer(String name, int xCoord, int yCoord, String order){
         super(name, xCoord, yCoord);
         this.order = order;
-        this.timer = 100000;
+        this.timer = 20;
         this.txUp = new Texture("people/cust1up.png");
         this.txLeft = new Texture("people/cust1left.png");
     }

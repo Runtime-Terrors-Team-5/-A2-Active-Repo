@@ -375,14 +375,15 @@ class ScenarioGameMaster extends GameMaster {
             }
         }
         //for customer timer increase
-        getFirstCustomer().timerDecrease(delta);
-        if (getFirstCustomer().getTimer() < 0 ){
-            repDecrease();
-            customers.remove(0);
+        for (int i = 0; i < customers.size(); i++) {
+            customers.get(i).timerDecrease(delta);
+            if (customers.get(i).getTimer() < 0 ){
+                repDecrease();
+                customers.remove(i);
+            }
         }
 
         this.customerSpawnTimer -= delta;
-        System.out.println(this.customerSpawnTimer);
         if (customerSpawnTimer < 0){
             spawnCustomer();
         }
@@ -643,7 +644,7 @@ class ScenarioGameMaster extends GameMaster {
         if (repPoint == 0) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints0.png"));}
     }
 
-    public void reIncrease(){
+    public void repIncrease(){
         repPoint += 1;
     }
 
