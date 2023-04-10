@@ -664,4 +664,6 @@ class ScenarioGameMaster extends GameMaster {
     public int getRepPoint(){
         return this.repPoint;
     }
+
+    public void IncreasePowerUpCount(){this.powerUpCount += 1;}
 }
