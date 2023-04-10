@@ -143,7 +143,7 @@ class ScenarioGameMaster extends GameMaster {
         if (this.level == 1) {
             this.map = new TmxMapLoader().load("tilemaps/level1.tmx");}
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
-
+        this.rand = new Random();
         for (Sextet chef: data.getChefdata()) {
             this.chefs.add(new Chef("Chef",chef));
         }
@@ -332,7 +332,7 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 
-    public int getCustomersRemining(){
+    public int getCustomersSize(){
         return customers.size();
     }
 
@@ -385,10 +385,26 @@ class ScenarioGameMaster extends GameMaster {
 
         this.customerSpawnTimer -= delta;
         if (customerSpawnTimer < 0){
-            spawnCustomer();
+            if (cusomerRemaining >=3){
+                if (rand.nextInt(100) > 90){
+                    //System.out.println("SPawn 3");
+                    spawnCustomer();
+                    spawnCustomer();
+                    spawnCustomer();
+                }
+                else{spawnCustomer();}
+            }
+            else if (cusomerRemaining >=2){
+                if (rand.nextInt(100) > 50){
+                    //System.out.println("SPawn 2");
+                    spawnCustomer();
+                    spawnCustomer();
+                }
+                else{spawnCustomer();}
+            }
+            else{spawnCustomer();}
         }
-
-
+        
         totalTimer += delta;
     }
 
