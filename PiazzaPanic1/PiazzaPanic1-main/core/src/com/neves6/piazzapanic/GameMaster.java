@@ -364,7 +364,7 @@ class ScenarioGameMaster extends GameMaster {
     public void spawnCustomer(){
         if (cusomerRemaining <= 0){return;}
         String order = validOrder.get(rand.nextInt((validOrder.size())));
-        customers.add(new Customer("Customer"+1, -1, -1, order));
+        customers.add(new Customer("Customer"+1, -1, -1, order, customerPersonalTimer));
         this.cusomerRemaining -= 1;
 
         switch (this.level) {
@@ -561,6 +561,7 @@ class ScenarioGameMaster extends GameMaster {
             if (tray.contains("burger") && tray.contains("toastedbun")){
                 customers.remove(0);
                 tray.clear();
+                repIncrease();
 
                 serving.play(soundVolume);
             }
