@@ -560,8 +560,8 @@ class ScenarioGameMaster extends GameMaster {
                     texture = new Texture(Gdx.files.internal("icons/repIcon.png"));
                 }
                 else if (randomInt == 2){
-                    powerUpType = "doubleEarns";
-                    texture = new Texture(Gdx.files.internal("icons/doubleMoneyIcon.png"));
+                    powerUpType = "minusRep";
+                    texture = new Texture(Gdx.files.internal("icons/minusRepIcon.png"));
                 }
                 else if (randomInt == 3){
                     powerUpType = "pauseTime";
@@ -619,24 +619,17 @@ class ScenarioGameMaster extends GameMaster {
     public void powerUpEffect(){
         for(PowerUp inst: PowerUp.PowerUps){
             if(inst.active == true){
-                if (inst.powerUpType == "cookSpeed"){
-                    repDecrease();
-                    inst.clearTime();
-                }
+                if (inst.powerUpType == "cookSpeed"){}
                 else if (inst.powerUpType == "rep"){
                     repIncrease();
                     inst.clearTime();
                 }
-                else if (inst.powerUpType == "doubleEarns"){
-                    repIncrease();
-                    inst.clearTime();
-                }
-                else if (inst.powerUpType == "pauseTime"){
+                else if (inst.powerUpType == "minusRep"){
                     repDecrease();
                     inst.clearTime();
                 }
+                else if (inst.powerUpType == "pauseTime"){}
                 if (inst.powerUpType == "money"){
-                    repDecrease();
                     inst.clearTime();
                 }
 
