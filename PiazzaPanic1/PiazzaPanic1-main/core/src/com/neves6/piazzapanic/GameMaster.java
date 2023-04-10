@@ -54,6 +54,7 @@ class ScenarioGameMaster extends GameMaster {
     Texture repIcon;
     int cusomerRemaining;
     private float customerSpawnTimer;
+    int customerPersonalTimer; //this sets the timer of the customer til they reduce the players reputation points
 
 
     /**
@@ -75,6 +76,7 @@ class ScenarioGameMaster extends GameMaster {
 
         if (this.level == 1){
             this.customerSpawnTimer = 15;
+            customerPersonalTimer = 40;
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
@@ -82,6 +84,7 @@ class ScenarioGameMaster extends GameMaster {
 
         if (this.level == 2){
             this.customerSpawnTimer = 10;
+            customerPersonalTimer = 30;
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
@@ -89,6 +92,7 @@ class ScenarioGameMaster extends GameMaster {
 
         if (this.level == 3){
             this.customerSpawnTimer = 5;
+            customerPersonalTimer = 20;
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
@@ -102,7 +106,7 @@ class ScenarioGameMaster extends GameMaster {
         this.rand = new Random();
 
         String order = validOrder.get(rand.nextInt((validOrder.size())));
-        customers.add(new Customer("Customer"+1, -1, -1, order));
+        customers.add(new Customer("Customer"+1, -1, -1, order, customerPersonalTimer));
         this.cusomerRemaining = custno-1;
 
         totalTimer = 0f;
