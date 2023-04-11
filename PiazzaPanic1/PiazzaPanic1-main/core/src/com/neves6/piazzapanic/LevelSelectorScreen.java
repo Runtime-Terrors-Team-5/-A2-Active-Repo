@@ -30,6 +30,7 @@ public class LevelSelectorScreen extends ScreenAdapter {
     TextButton level2Button;
     TextButton level3Button;
     TextButton loadButton;
+    TextButton endlessButton;
     TextButton.TextButtonStyle buttonStyle;
     Skin skin;
     TextureAtlas atlas;
@@ -67,10 +68,14 @@ public class LevelSelectorScreen extends ScreenAdapter {
         loadButton = new TextButton("Load", buttonStyle);
         loadButton.setPosition(Gdx.graphics.getWidth()/2f - level1Button.getWidth()/2, Gdx.graphics.getHeight()/5f - level1Button.getHeight()/2);
 
+        endlessButton = new TextButton("Endless", buttonStyle);
+        endlessButton.setPosition(Gdx.graphics.getWidth()/2f - level1Button.getWidth()/2 + level3Button.getWidth()*1.5f, Gdx.graphics.getHeight()/5f - level1Button.getHeight()/2);
+
         stage.addActor(level1Button);
         stage.addActor(level2Button);
         stage.addActor(level3Button);
         stage.addActor(loadButton);
+        stage.addActor(endlessButton);
         level1Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -100,6 +105,14 @@ public class LevelSelectorScreen extends ScreenAdapter {
             public void changed(ChangeEvent event, Actor actor) {
                 //game.setScreen(new GameScreen(game, 1));
                 game.setScreen(new GameScreen(game));
+            }
+        });
+
+        endlessButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new TutorialScreen(game, "game4"));
+                // game.setScreen(new GameScreen(game, 3));
             }
         });
     }
@@ -135,12 +148,14 @@ public class LevelSelectorScreen extends ScreenAdapter {
         level2Button.setPosition(width/2f - level1Button.getWidth()/2, height/2f - level1Button.getHeight()/2);
         level3Button.setPosition(width/2f - level1Button.getWidth()/2 + level3Button.getWidth()*1.5f, height/2f - level1Button.getHeight()/2);
         loadButton.setPosition(width/2f - level1Button.getWidth()/2, height/5f - level1Button.getHeight()/2);
+        endlessButton.setPosition(width/2f - level1Button.getWidth()/2 + level3Button.getWidth()*1.5f, height/5f - level1Button.getHeight()/2);
 
         stage.clear();
         stage.addActor(level1Button);
         stage.addActor(level2Button);
         stage.addActor(level3Button);
         stage.addActor(loadButton);
+        stage.addActor(endlessButton);
         stage.getViewport().update(width, height);
         camera.setToOrtho(false, width, height);
     }

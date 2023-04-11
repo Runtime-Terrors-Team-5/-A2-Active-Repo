@@ -44,6 +44,9 @@ public class TutorialScreen extends ScreenAdapter {
                     case "game3":
                         game.setScreen(new GameScreen(game, 3));
                         break;
+                    case "game4":
+                        game.setScreen(new GameScreen(game, 4));
+                        break;
                     default:
                         game.setScreen(new TitleScreen(game));
                         break;

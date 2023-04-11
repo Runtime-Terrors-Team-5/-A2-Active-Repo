@@ -60,6 +60,8 @@ class ScenarioGameMaster extends GameMaster {
 
     boolean formingStationUnlocked = true; //defaults to true til we figure out how to unlock it
 
+    boolean endless;
+
 
     /**
      * ScenarioGameMaster constructor.
@@ -84,6 +86,7 @@ class ScenarioGameMaster extends GameMaster {
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
+            endless = false;
         }
 
         if (this.level == 2){
@@ -92,6 +95,7 @@ class ScenarioGameMaster extends GameMaster {
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
+            endless = false;
         }
 
         if (this.level == 3){
@@ -100,6 +104,16 @@ class ScenarioGameMaster extends GameMaster {
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
+            endless = false;
+        }
+
+        if (this.level == 4){
+            this.customerSpawnTimer = 5;
+            customerPersonalTimer = 40;
+            validOrder = new ArrayList<>();
+            validOrder.add("salad");
+            validOrder.add("burger");
+            endless = true;
         }
 
 
@@ -111,7 +125,12 @@ class ScenarioGameMaster extends GameMaster {
 
         String order = validOrder.get(rand.nextInt((validOrder.size())));
         customers.add(new Customer("Customer"+1, -1, -1, order, customerPersonalTimer));
-        this.cusomerRemaining = custno-1;
+
+        if (!endless) {
+            this.cusomerRemaining = custno - 1;
+        } else {
+            this.cusomerRemaining = custno;
+        }
 
         totalTimer = 0f;
         machines.add(new Machine("fridgemeat", "", "meat", 0, false));
@@ -375,8 +394,9 @@ class ScenarioGameMaster extends GameMaster {
         if (cusomerRemaining <= 0){return;}
         String order = validOrder.get(rand.nextInt((validOrder.size())));
         customers.add(new Customer("Customer"+1, -1, -1, order, customerPersonalTimer));
-        this.cusomerRemaining -= 1;
-
+        if (!endless) {
+            this.cusomerRemaining -= 1;
+        }
         switch (this.level) {
             case 1:
                 this.customerSpawnTimer = 5;
@@ -387,7 +407,7 @@ class ScenarioGameMaster extends GameMaster {
             case 3:
                 this.customerSpawnTimer = 5;
                 break;
-            case -1:
+            case 4:
                 this.customerSpawnTimer = 5;
                 break;
         }
@@ -568,11 +588,17 @@ class ScenarioGameMaster extends GameMaster {
                 chef.getInventory().pop();
                 repIncrease();
                 serving.play(soundVolume);
+                if (customers.size() == 0 && cusomerRemaining == 0){
+                    game.setScreen(new GameWinScreen(game, (int) totalTimer));
+                }
             } else if (Objects.equals(invTop, "completed salad")) {
                 customers.remove(0);
                 chef.getInventory().pop();
                 repIncrease();
                 serving.play(soundVolume);
+                if (customers.size() == 0 && cusomerRemaining == 0){
+                    game.setScreen(new GameWinScreen(game, (int) totalTimer));
+                }
             }
         } else if (targetx == 14 && targety == 5 && goldGrillUnlocked) { //this is the gold grill
             if (Objects.equals(invTop, "patty")) {
@@ -632,9 +658,6 @@ class ScenarioGameMaster extends GameMaster {
 
                 //serving.play(soundVolume);
             }
-        }
-        if (customers.size() == 0 && cusomerRemaining == 0){
-            game.setScreen(new GameWinScreen(game, (int) totalTimer));
         }
     }
 
