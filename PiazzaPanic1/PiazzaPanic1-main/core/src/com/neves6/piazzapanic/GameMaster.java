@@ -152,9 +152,9 @@ class ScenarioGameMaster extends GameMaster {
         machines.add(new Machine("chopping2onion", "onion", "choppedonion", 3, true));
 
         // new machines for assessment 2
-        machines.add(new Machine("Pizza", "uncooked_pizza", "pizza", 3, true));
-        machines.add(new Machine("fridgecheese", "", "cheese", 0, false));
-        machines.add(new Machine("fridgedough", "", "dough", 0, false));
+        machines.add(new Machine("Pizza", "uncooked_pizza", "pizza", 3, true)); //machine 17
+        machines.add(new Machine("fridgecheese", "", "cheese", 0, false)); //machine 18
+        machines.add(new Machine("fridgedough", "", "dough", 0, false)); //machine 19
 
         //gold cooking machine (unlockable)
         machines.add(new Machine("grill3bun", "bun", "toastedbun", 3, true)); //machine 20
@@ -519,6 +519,12 @@ class ScenarioGameMaster extends GameMaster {
         } else if (targetx == 1 && targety == 8) {
             machines.get(4).process(chef);
             fridge.play(soundVolume);
+        } else if (targetx == 0 && targety == 9) {
+            machines.get(18).process(chef);
+            fridge.play(soundVolume);
+        } else if (targetx == 5 && targety == 9) {
+            machines.get(19).process(chef);
+            fridge.play(soundVolume);
         }
         String invTop = "null";
 
@@ -612,6 +618,10 @@ class ScenarioGameMaster extends GameMaster {
             if (Objects.equals(invTop, "meat")) {
                 machines.get(22).process(chef);
                 forming.play(soundVolume);
+            }
+        } else if (targetx == 14 && targety == 6) { //this is the unlockable forming station
+            if (Objects.equals(invTop, "uncooked_pizza")) {
+                machines.get(17).process(chef);
             }
         }
 
