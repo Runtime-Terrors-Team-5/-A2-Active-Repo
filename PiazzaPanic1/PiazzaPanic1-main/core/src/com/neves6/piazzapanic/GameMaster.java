@@ -56,6 +56,10 @@ class ScenarioGameMaster extends GameMaster {
     private float customerSpawnTimer;
     int customerPersonalTimer; //this sets the timer of the customer til they reduce the players reputation points
 
+    boolean goldGrillUnlocked = true; //defaults to true until we figure out how to "unlock" it
+
+    boolean formingStationUnlocked = true; //defaults to true til we figure out how to unlock it
+
 
     /**
      * ScenarioGameMaster constructor.
@@ -133,8 +137,14 @@ class ScenarioGameMaster extends GameMaster {
         machines.add(new Machine("fridgecheese", "", "cheese", 0, false));
         machines.add(new Machine("fridgedough", "", "dough", 0, false));
 
-        // disposal and tray/serving handled separately
+        //gold cooking machine (unlockable)
+        machines.add(new Machine("grill3bun", "bun", "toastedbun", 3, true)); //machine 20
+        machines.add(new Machine("grill3patty", "patty", "burger", 3, true)); //machine 21
 
+        //unlockable forming machine
+        machines.add(new Machine("forming3", "meat", "patty", 3, true)); //machine 22
+
+        // disposal and tray/serving handled separately
         grill = Gdx.audio.newSound(Gdx.files.internal("sounds/grill.mp3"));
         chopping = Gdx.audio.newSound(Gdx.files.internal("sounds/chopping.mp3"));
         serving = Gdx.audio.newSound(Gdx.files.internal("sounds/serving.mp3"));
@@ -519,11 +529,15 @@ class ScenarioGameMaster extends GameMaster {
                 grill.play(soundVolume);
             }
         } else if (targetx == 9 && targety == 7) {
-            machines.get(9).process(chef);
-            forming.play(soundVolume);
+            if (Objects.equals(invTop, "meat")) {
+                machines.get(9).process(chef);
+                forming.play(soundVolume);
+            }
         } else if (targetx == 10 && targety == 7) {
-            machines.get(10).process(chef);
-            forming.play(soundVolume);
+            if (Objects.equals(invTop, "meat")) {
+                machines.get(10).process(chef);
+                forming.play(soundVolume);
+            }
         } else if (targetx == 11 && targety == 7) {
             if (Objects.equals(invTop, "tomato")) {
                 machines.get(11).process(chef);
@@ -560,7 +574,21 @@ class ScenarioGameMaster extends GameMaster {
                 repIncrease();
                 serving.play(soundVolume);
             }
+        } else if (targetx == 14 && targety == 5 && goldGrillUnlocked) { //this is the gold grill
+            if (Objects.equals(invTop, "patty")) {
+                machines.get(21).process(chef);
+                grill.play(soundVolume);
+            } else if (Objects.equals(invTop, "bun")) {
+                machines.get(20).process(chef);
+                grill.play(soundVolume);
+            }
+        } else if (targetx == 14 && targety == 4 && formingStationUnlocked) { //this is the unlockable forming station
+            if (Objects.equals(invTop, "meat")) {
+                machines.get(22).process(chef);
+                forming.play(soundVolume);
+            }
         }
+
     }
 
     /**
