@@ -490,8 +490,15 @@ class ScenarioGameMaster extends GameMaster {
             machines.get(4).process(chef);
             fridge.play(soundVolume);
         }
+        String invTop = "null";
 
-        String invTop = chef.getInventory().peek();
+        if (chef.getInventory().empty()) {
+            invTop = "null";
+        }
+
+        if (!chef.getInventory().empty()) {
+            invTop = chef.getInventory().peek();
+        }
         if (targetx == 6 && targety == 7) {
 
 
