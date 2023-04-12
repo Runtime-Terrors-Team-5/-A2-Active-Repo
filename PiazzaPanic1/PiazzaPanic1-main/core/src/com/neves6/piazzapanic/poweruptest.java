@@ -41,7 +41,7 @@ public class poweruptest {
         Texture texture = new Texture(Gdx.files.internal("icons/repIcon.png"));
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
-
+        // move to the real file otherwise it's not connected
         new PowerUp("rep",1,1,1,texture );
         game.IncreasePowerUpCount();
         game.chefs.get(0).setxCoord(1);
@@ -59,9 +59,18 @@ public class poweruptest {
     @Test
     public void testFastIcon(){
 
+        Texture texture = new Texture(Gdx.files.internal("icons/fastIcon.png"));
         map = new TmxMapLoader().load("tilemaps/level1.tmx");
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
+
+        new PowerUp("cookSpeed",1,1,1,texture );
+
+        game.chefs.get(0).setxCoord(1);
+        game.chefs.get(0).setyCoord(1);
+        game.getPowerUp();
+        game.powerUpEffect();
+
 
     }
     /**
@@ -73,6 +82,13 @@ public class poweruptest {
         map = new TmxMapLoader().load("tilemaps/level1.tmx");
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
+        Texture texture = new Texture(Gdx.files.internal("icons/fastIcon.png"));
+        new PowerUp("cookSpeed",1,1,1,texture );
+
+        game.chefs.get(0).setxCoord(1);
+        game.chefs.get(0).setyCoord(1);
+        game.getPowerUp();
+        game.powerUpEffect();
 
     }
 
@@ -83,9 +99,16 @@ public class poweruptest {
     @Test
     public void testDoubleMoney(){
 
+        Texture texture = new Texture(Gdx.files.internal("icons/fastIcon.png"));
         map = new TmxMapLoader().load("tilemaps/level1.tmx");
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
+        new PowerUp("cookSpeed",1,1,1,texture );
+
+        game.chefs.get(0).setxCoord(1);
+        game.chefs.get(0).setyCoord(1);
+        game.getPowerUp();
+        game.powerUpEffect();
 
         assertEquals(game.getRepPoint(),  5);
 
@@ -96,15 +119,24 @@ public class poweruptest {
     @Test
     public void testFreezeTime() throws InterruptedException {
 
+        Texture texture = new Texture(Gdx.files.internal("icons/frzTimeIcon.png"));
         map = new TmxMapLoader().load("tilemaps/level1.tmx");
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
         // insert time freeze here
+
+        new PowerUp("pauseTime",1,1,1,texture );
+
+        game.chefs.get(0).setxCoord(1);
+        game.chefs.get(0).setyCoord(1);
+        game.getPowerUp();
+        game.powerUpEffect();
+
         float lastTime = game.getTotalTimer();
 
         TimeUnit.SECONDS.sleep(4);
 
-        assertEquals(game.getTotalTimer(),  lastTime);
+        assertEquals(game.getTotalTimer(),  lastTime, 0.1);
 
 
     }
