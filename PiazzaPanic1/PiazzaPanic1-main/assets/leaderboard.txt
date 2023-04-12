@@ -3,35 +3,4 @@ mark  	400
 greg  	220
 john    200
 dave    180
-hcfjh 40
-aoudgbv 0
-oswg 0
-ibfibed 0
-ghjl 0
-ghjl 15
-ghjl 0
-null 0
-null 0
-null 0
-null 0
-null 0
-null 0
-<<<<<<< Updated upstream
-=======
-lol 0
->>>>>>> Stashed changes
-null 0
-null 0
-null 0
-null 0
-eee 0
-null 0
-null 0
-null 0
-null 0
-null 0
-null 0
-null 0
-null 0
-null 0
-null 0
+jeff 95

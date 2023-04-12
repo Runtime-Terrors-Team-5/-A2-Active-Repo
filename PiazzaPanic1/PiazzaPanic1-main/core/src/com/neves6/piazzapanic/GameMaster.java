@@ -35,6 +35,7 @@ class ScenarioGameMaster extends GameMaster {
     Stack<Customer> customers = new Stack<>();
     ArrayList<Machine> machines = new ArrayList<>();
     ArrayList<String> tray = new ArrayList<>();
+    ArrayList<String> pizzatray = new ArrayList<>();
     int selectedChef;
     float totalTimer;
     Sound grill;
@@ -86,6 +87,7 @@ class ScenarioGameMaster extends GameMaster {
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
+            validOrder.add("pizza");
             endless = false;
         }
 
@@ -95,6 +97,7 @@ class ScenarioGameMaster extends GameMaster {
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
+            validOrder.add("pizza");
             endless = false;
         }
 
@@ -104,6 +107,7 @@ class ScenarioGameMaster extends GameMaster {
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
+            validOrder.add("pizza");
             endless = false;
         }
 
@@ -113,6 +117,7 @@ class ScenarioGameMaster extends GameMaster {
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
+            validOrder.add("pizza");
             endless = true;
         }
 
@@ -444,7 +449,7 @@ class ScenarioGameMaster extends GameMaster {
             }
         }
 
-        if (!pauseTime){ customers.get(0).timerDecrease(delta); }
+        if (!pauseTime && customers.size() > 0){ customers.get(0).timerDecrease(delta); }
 
         this.customerSpawnTimer -= delta;
         if (customerSpawnTimer < 0){
@@ -588,7 +593,7 @@ class ScenarioGameMaster extends GameMaster {
             chef.removeTopFromInventory();
             trash.play(soundVolume);
         } else if (targetx == 12 && targety == 3) {
-            addToTray();
+            addToTray(false);
         } else if (targetx == 8 && targety == 3) {
             if (Objects.equals(invTop, "completed burger")) {
                 customers.remove(0);
@@ -599,6 +604,14 @@ class ScenarioGameMaster extends GameMaster {
                     game.setScreen(new GameWinScreen(game, (int) totalTimer));
                 }
             } else if (Objects.equals(invTop, "completed salad")) {
+                customers.remove(0);
+                chef.getInventory().pop();
+                repIncrease();
+                serving.play(soundVolume);
+                if (customers.size() == 0 && cusomerRemaining == 0){
+                    game.setScreen(new GameWinScreen(game, (int) totalTimer));
+                }
+            } else if (Objects.equals(invTop, "pizza")) {
                 customers.remove(0);
                 chef.getInventory().pop();
                 repIncrease();
@@ -624,6 +637,8 @@ class ScenarioGameMaster extends GameMaster {
             if (Objects.equals(invTop, "uncooked_pizza")) {
                 machines.get(17).process(chef);
             }
+        } else if (targetx == 11 && targety == 3) {
+            addToTray(true);
         }
 
     }
@@ -631,43 +646,59 @@ class ScenarioGameMaster extends GameMaster {
     /**
      * Adds the top item from the currently selected chef's inventory to the tray.
      */
-    private void addToTray() {
+    private void addToTray(boolean isItPizza) {
         Chef chef = chefs.get(selectedChef);
         Stack<String> inv = chef.getInventory();
-        if (Objects.equals(customers.get(0).getOrder(), "burger")){
-            if (Objects.equals(inv.peek(), "burger")){
-                inv.pop();
-                tray.add("burger");
-            } else if (Objects.equals(inv.peek(), "toastedbun")){
-                inv.pop();
-                tray.add("toastedbun");
-            }
-            if (tray.contains("burger") && tray.contains("toastedbun")){
-                //customers.remove(0);
-                tray.clear();
-                //repIncrease();
-                inv.push("completed burger");
+        if (!isItPizza) {
+            if (Objects.equals(customers.get(0).getOrder(), "burger")) {
+                if (Objects.equals(inv.peek(), "burger")) {
+                    inv.pop();
+                    tray.add("burger");
+                } else if (Objects.equals(inv.peek(), "toastedbun")) {
+                    inv.pop();
+                    tray.add("toastedbun");
+                }
+                if (tray.contains("burger") && tray.contains("toastedbun")) {
+                    //customers.remove(0);
+                    tray.clear();
+                    //repIncrease();
+                    inv.push("completed burger");
 
-                //serving.play(soundVolume);
-            }
-        } else if (Objects.equals(customers.get(0).getOrder(), "salad")){
-            if (Objects.equals(inv.peek(), "choppedtomato")){
-                inv.pop();
-                tray.add("choppedtomato");
-            } else if (Objects.equals(inv.peek(), "choppedlettuce")){
-                inv.pop();
-                tray.add("choppedlettuce");
-            } else if (Objects.equals(inv.peek(), "choppedonion")){
-                inv.pop();
-                tray.add("choppedonion");
-            }
-            if (tray.contains("choppedtomato") && tray.contains("choppedlettuce") && tray.contains("choppedonion")){
-                //customers.remove(0);
-                tray.clear();
-                //repIncrease();
-                inv.push("completed salad");
+                    //serving.play(soundVolume);
+                }
+            } else if (Objects.equals(customers.get(0).getOrder(), "salad")) {
+                if (Objects.equals(inv.peek(), "choppedtomato")) {
+                    inv.pop();
+                    tray.add("choppedtomato");
+                } else if (Objects.equals(inv.peek(), "choppedlettuce")) {
+                    inv.pop();
+                    tray.add("choppedlettuce");
+                } else if (Objects.equals(inv.peek(), "choppedonion")) {
+                    inv.pop();
+                    tray.add("choppedonion");
+                }
+                if (tray.contains("choppedtomato") && tray.contains("choppedlettuce") && tray.contains("choppedonion")) {
+                    //customers.remove(0);
+                    tray.clear();
+                    //repIncrease();
+                    inv.push("completed salad");
 
-                //serving.play(soundVolume);
+                    //serving.play(soundVolume);
+                }
+            }
+        } else {
+            if (Objects.equals(customers.get(0).getOrder(), "pizza")) {
+                if (Objects.equals(inv.peek(), "cheese")) {
+                    inv.pop();
+                    pizzatray.add("cheese");
+                } else if (Objects.equals(inv.peek(), "dough")) {
+                    inv.pop();
+                    pizzatray.add("dough");
+                }
+                if (pizzatray.contains("cheese") && pizzatray.contains("dough")) {
+                    pizzatray.clear();
+                    inv.push("uncooked_pizza");
+                }
             }
         }
     }

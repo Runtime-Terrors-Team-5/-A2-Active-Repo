@@ -197,7 +197,7 @@ public class GameScreen extends ScreenAdapter {
         }
 
         game.batch.draw(recipes, 20, 20);
-        fontBlack.draw(game.batch, gm.generateHoldingsText(), winWidth - (6*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
+        fontBlack.draw(game.batch, gm.generateHoldingsText(), winWidth - (6*(winWidth/8f)) + 35, winHeight - 20, (3*(winWidth/8f)), -1, true);
         fontBlack.draw(game.batch, gm.generateCustomersTrayText(), winWidth - (3*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
         fontBlack.draw(game.batch, gm.generateTimerText(), winWidth - (winWidth/3f), 40, (winWidth/3f), -1, false);
         game.batch.end();
