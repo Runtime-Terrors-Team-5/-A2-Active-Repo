@@ -438,12 +438,13 @@ class ScenarioGameMaster extends GameMaster {
                     pauseTime = true;
                 }
             }
-            if (pauseTime == false){ customers.get(i).timerDecrease(delta); }
             if (customers.get(i).getTimer() < 0 ){
                 repDecrease();
                 customers.remove(i);
             }
         }
+
+        if (!pauseTime){ customers.get(0).timerDecrease(delta); }
 
         this.customerSpawnTimer -= delta;
         if (customerSpawnTimer < 0){
