@@ -801,6 +801,7 @@ class ScenarioGameMaster extends GameMaster {
                     inst.clearTime();
                 }
                 else if (inst.powerUpType == "money"){
+                    money += 5;
                     inst.clearTime();
                 }
 
