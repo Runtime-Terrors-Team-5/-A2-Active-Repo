@@ -120,9 +120,7 @@ class ScenarioGameMaster extends GameMaster {
             validOrder.add("pizza");
             endless = true;
         }
-
-
-
+        
         for (int i = 0; i < chefno; i++) {
             chefs.add(new Chef("Chef", 6+i, 5, 1, 1, 1, false, new Stack<String>(), i+1));
         }
@@ -137,6 +135,26 @@ class ScenarioGameMaster extends GameMaster {
             this.cusomerRemaining = custno;
         }
 
+        machines.add(new Machine("chopping1tomato", "tomato", "choppedtomato", 3, true));
+        machines.add(new Machine("chopping2tomato", "tomato", "choppedtomato", 3, true));
+        machines.add(new Machine("chopping1lettuce", "lettuce", "choppedlettuce", 3, true));
+        machines.add(new Machine("chopping2lettuce", "lettuce", "choppedlettuce", 3, true));
+        machines.add(new Machine("chopping1onion", "onion", "choppedonion", 3, true));
+        machines.add(new Machine("chopping2onion", "onion", "choppedonion", 3, true));
+        System.out.println(map.getLayers().get(4).getName());
+        TiledMapTileLayer workingLayer = (TiledMapTileLayer) map.getLayers().get(4);
+        for (int i = 0; i < workingLayer.getHeight(); i++) {
+            for (int j = 0; j < workingLayer.getWidth(); j++) {
+                if (workingLayer.getCell(j,i) != null){
+                    //j i add to dict
+
+                }
+            }
+        }
+
+
+
+        System.out.println(workingLayer.getCell(12,7));
         totalTimer = 0f;
         machines.add(new Machine("fridgemeat", "", "meat", 0, false));
         machines.add(new Machine("fridgetomato", "", "tomato", 0, false));
@@ -149,12 +167,7 @@ class ScenarioGameMaster extends GameMaster {
         machines.add(new Machine("grill2bun", "bun", "toastedbun", 3, true));
         machines.add(new Machine("forming1", "meat", "patty", 3, true));
         machines.add(new Machine("forming2", "meat", "patty", 3, true));
-        machines.add(new Machine("chopping1tomato", "tomato", "choppedtomato", 3, true));
-        machines.add(new Machine("chopping2tomato", "tomato", "choppedtomato", 3, true));
-        machines.add(new Machine("chopping1lettuce", "lettuce", "choppedlettuce", 3, true));
-        machines.add(new Machine("chopping2lettuce", "lettuce", "choppedlettuce", 3, true));
-        machines.add(new Machine("chopping1onion", "onion", "choppedonion", 3, true));
-        machines.add(new Machine("chopping2onion", "onion", "choppedonion", 3, true));
+
 
         // new machines for assessment 2
         machines.add(new Machine("Pizza", "uncooked_pizza", "pizza", 3, true)); //machine 17
