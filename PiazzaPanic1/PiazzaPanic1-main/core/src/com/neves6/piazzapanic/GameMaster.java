@@ -64,8 +64,8 @@ class ScenarioGameMaster extends GameMaster {
     boolean formingStationUnlocked = true; //defaults to true til we figure out how to unlock it
 
     boolean endless;
-
     HashMap<Pair<Integer, Integer>, ArrayList<Machine>> machineLocation;
+    int money = 0;
 
 
     /**
@@ -406,6 +406,12 @@ class ScenarioGameMaster extends GameMaster {
         comp += " s";
         return comp;
     }
+    public String generateMoneyText() {
+        String comp = "";
+        comp += "£";
+        comp += (int) money;
+        return comp;
+    }
 
     /**
      * Generates the display text for the chef's timer.
@@ -598,6 +604,7 @@ class ScenarioGameMaster extends GameMaster {
         } else if (targetx == 8 && targety == 3) {
             if (Objects.equals(invTop, "completed burger")) {
                 customers.remove(0);
+                money += 5;
                 chef.getInventory().pop();
                 repIncrease();
                 serving.play(soundVolume);
@@ -606,6 +613,7 @@ class ScenarioGameMaster extends GameMaster {
                 }
             } else if (Objects.equals(invTop, "completed salad")) {
                 customers.remove(0);
+                money += 5;
                 chef.getInventory().pop();
                 repIncrease();
                 serving.play(soundVolume);
@@ -614,6 +622,7 @@ class ScenarioGameMaster extends GameMaster {
                 }
             } else if (Objects.equals(invTop, "pizza")) {
                 customers.remove(0);
+                money += 5;
                 chef.getInventory().pop();
                 repIncrease();
                 serving.play(soundVolume);
