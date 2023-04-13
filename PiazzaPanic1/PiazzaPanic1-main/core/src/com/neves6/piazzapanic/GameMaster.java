@@ -186,26 +186,20 @@ class ScenarioGameMaster extends GameMaster {
             }
         }
 
-        totalTimer = 0f;
-        // legacy to be removed
-        machines.add(new Machine("fridgemeat", "", "meat", 0, false));
-        machines.add(new Machine("fridgetomato", "", "tomato", 0, false));
-        machines.add(new Machine("fridgelettuce", "", "lettuce", 0, false));
-        machines.add(new Machine("fridgeonion", "", "onion", 0, false));
-        machines.add(new Machine("fridgebun", "", "bun", 0, false));
-        machines.add(new Machine("grill1patty", "patty", "burger", 3, true));
-        machines.add(new Machine("grill2patty", "patty", "burger", 3, true));
-        machines.add(new Machine("grill1bun", "bun", "toastedbun", 3, true));
-        machines.add(new Machine("grill2bun", "bun", "toastedbun", 3, true));
-        machines.add(new Machine("forming1", "meat", "patty", 3, true));
-        machines.add(new Machine("forming2", "meat", "patty", 3, true));
-        machines.add(new Machine("chopping1tomato", "tomato", "choppedtomato", 3, true));
-        machines.add(new Machine("chopping2tomato", "tomato", "choppedtomato", 3, true));
-        machines.add(new Machine("chopping1lettuce", "lettuce", "choppedlettuce", 3, true));
-        machines.add(new Machine("chopping2lettuce", "lettuce", "choppedlettuce", 3, true));
-        machines.add(new Machine("chopping1onion", "onion", "choppedonion", 3, true));
-        machines.add(new Machine("chopping2onion", "onion", "choppedonion", 3, true));
+        for (int k=7;k<=11;k++){
+            workingLayer = (TiledMapTileLayer) map.getLayers().get(k);
+            for (int i = 0; i < workingLayer.getHeight(); i++) {
+                for (int j = 0; j < workingLayer.getWidth(); j++) {
+                    if (workingLayer.getCell(j,i) != null){
+                        tempArray.add(new Machine("dispenser", "", workingLayer.getName(), 0, false));
+                        machineLocation.put(new Pair<>(j,i),tempArray);
+                        tempArray = new ArrayList<>();
+                    }
+                }
+            }
+        }
 
+        totalTimer = 0f;
 
         // new machines for assessment 2
         machines.add(new Machine("Pizza", "uncooked_pizza", "pizza", 3, true)); //machine 17
@@ -475,17 +469,6 @@ class ScenarioGameMaster extends GameMaster {
      * @param delta time since last frame.
      */
     public void tickUpdate(float delta) {
-        for (Machine machine : machines) {
-            if (machine.getActive()) {
-                machine.incrementRuntime(delta);
-                for(PowerUp inst: PowerUp.PowerUps) {
-                    if (inst.powerUpType == "cookSpeed" && inst.active) {
-                        machine.incrementRuntime(delta);
-                    }
-                }
-                machine.attemptGetOutput(selectedChef);
-            }
-        }
         
         for (Pair tempPair: machineLocation.keySet()){
             for (Machine mac :
@@ -576,28 +559,7 @@ class ScenarioGameMaster extends GameMaster {
         }
         //System.out.println("Target: " + targetx + ", " + targety + "\nFacing: " + chef.getFacing());
 
-        if (targetx == 1 && targety == 10) {
-            machines.get(0).process(chef);
-            fridge.play(soundVolume);
-        } else if (targetx == 2 && targety == 10) {
-            machines.get(1).process(chef);
-            fridge.play(soundVolume);
-        } else if (targetx == 3 && targety == 10) {
-            machines.get(2).process(chef);
-            fridge.play(soundVolume);
-        } else if (targetx == 4 && targety == 10) {
-            machines.get(3).process(chef);
-            fridge.play(soundVolume);
-        } else if (targetx == 1 && targety == 8) {
-            machines.get(4).process(chef);
-            fridge.play(soundVolume);
-        } else if (targetx == 0 && targety == 9) {
-            machines.get(18).process(chef);
-            fridge.play(soundVolume);
-        } else if (targetx == 5 && targety == 9) {
-            machines.get(19).process(chef);
-            fridge.play(soundVolume);
-        }
+
         String invTop = "null";
 
         if (chef.getInventory().empty()) {
@@ -608,72 +570,23 @@ class ScenarioGameMaster extends GameMaster {
             invTop = chef.getInventory().peek();
         }
 
-        /**
-         */
         Pair target = new Pair(targetx,targety);
         try{
         ArrayList<Machine> targetMachines = machineLocation.get(target);
+        System.out.println(targetMachines);
         for (Machine mac :
             targetMachines) {
             if (mac.getInput().equals(invTop)){
+                mac.process(chef);
+            } else if (mac.getInput().equals("")) {
                 mac.process(chef);
             }
         }
         }
         catch (Exception e){
-
-        }
-        /*
-        if (targetx == 6 && targety == 7) {
-            if (Objects.equals(invTop, "patty")) {
-                machines.get(5).process(chef);
-                grill.play(soundVolume);
-            } else if (Objects.equals(invTop, "bun")) {
-                machines.get(7).process(chef);
-                grill.play(soundVolume);
-            }
-        } else if (targetx == 7 && targety == 7) {
-
-            if (Objects.equals(invTop, "patty")) {
-                machines.get(6).process(chef);
-                grill.play(soundVolume);
-            } else if (Objects.equals(invTop, "bun")) {
-                machines.get(8).process(chef);
-                grill.play(soundVolume);
-            }
-        } else if (targetx == 9 && targety == 7) {
-            if (Objects.equals(invTop, "meat")) {
-                machines.get(9).process(chef);
-                forming.play(soundVolume);
-            }
-        } else if (targetx == 10 && targety == 7) {
-            if (Objects.equals(invTop, "meat")) {
-                machines.get(10).process(chef);
-                forming.play(soundVolume);
-            }
-        } else if (targetx == 11 && targety == 7) {
-            if (Objects.equals(invTop, "tomato")) {
-                machines.get(11).process(chef);
-                chopping.play(soundVolume);
-            } else if (Objects.equals(invTop, "lettuce")) {
-                machines.get(13).process(chef);
-                chopping.play(soundVolume);
-            } else if (Objects.equals(invTop, "onion")) {
-                machines.get(15).process(chef);
-                chopping.play(soundVolume);
-            }
-        } else if (targetx == 12 && targety == 7) {
-            if (Objects.equals(invTop, "tomato")) {
-                machines.get(12).process(chef);
-            } else if (Objects.equals(invTop, "lettuce")) {
-                machines.get(14).process(chef);
-            } else if (Objects.equals(invTop, "onion")) {
-                machines.get(16).process(chef);
-            }
+            System.out.println("error");
         }
 
-
-         */
 
         if (targetx == 1 && targety == 5) {
             chef.removeTopFromInventory();
