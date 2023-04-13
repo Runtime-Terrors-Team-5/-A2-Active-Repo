@@ -596,7 +596,7 @@ class ScenarioGameMaster extends GameMaster {
         }
 
 
-        if (targetx == 1 && targety == 5) {
+        if (targetx == 1 && targety == 5 && invTop != "null") {
             chef.removeTopFromInventory();
             trash.play(soundVolume);
         } else if (targetx == 12 && targety == 3) {
