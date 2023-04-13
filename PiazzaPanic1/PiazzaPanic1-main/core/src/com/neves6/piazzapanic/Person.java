@@ -62,6 +62,7 @@ class Customer extends Person{
 
     private float timer;
     private float maxTimer;
+    private Texture orderTexture;
 
     /**
      * Customer constructor.
@@ -77,6 +78,7 @@ class Customer extends Person{
         this.maxTimer = timer;
         this.txUp = new Texture("people/cust1up.png");
         this.txLeft = new Texture("people/cust1left.png");
+
     }
     public Customer(String name, int xCoord, int yCoord, String order,float timer){
         super(name, xCoord, yCoord);
@@ -85,6 +87,15 @@ class Customer extends Person{
         this.maxTimer = timer;
         this.txUp = new Texture("people/cust1up.png");
         this.txLeft = new Texture("people/cust1left.png");
+        if (order == "salad"){
+            this.orderTexture = new Texture("foods/salad.png");
+        }
+        else if (order == "burger") {
+            this.orderTexture = new Texture("foods/hamburger.png");
+        }
+        else if (order == "pizza"){
+            this.orderTexture = new Texture("foods/toastedbun.png");
+        }
     }
 
     public String getOrder(){
@@ -97,6 +108,10 @@ class Customer extends Person{
 
     public Texture getTxLeft(){
         return txLeft;
+    }
+
+    public Texture getOrderTexture(){
+        return orderTexture;
     }
 
     public void timerDecrease(float delta){this.timer -= delta;}
