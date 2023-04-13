@@ -390,6 +390,7 @@ class ScenarioGameMaster extends GameMaster {
     public int getCustomersSize(){
         return customers.size();
     }
+    public int getCustomerRemainingTime() { return Math.round(getFirstCustomer().getTimer()/getFirstCustomer().getMaxTimer() * 60); }
 
     public Customer getFirstCustomer() {
         return customers.get(0);
@@ -443,6 +444,7 @@ class ScenarioGameMaster extends GameMaster {
                     pauseTime = true;
                 }
             }
+            System.out.println(customers.get(i).getTimer());
             if (customers.get(i).getTimer() < 0 ){
                 repDecrease();
                 customers.remove(i);

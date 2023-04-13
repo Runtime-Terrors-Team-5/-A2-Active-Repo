@@ -1,16 +1,12 @@
 package com.neves6.piazzapanic;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import org.javatuples.Quartet;
+import org.javatuples.Sextet;
 
-import java.io.Serializable;
 import java.util.Objects;
 import java.util.Stack;
-import org.javatuples.Quartet;
-import org.javatuples.Quintet;
-import org.javatuples.Sextet;
-import org.javatuples.Triplet;
 
 /**
  * Base person class.
@@ -65,6 +61,7 @@ class Customer extends Person{
     private final Texture txLeft;
 
     private float timer;
+    private float maxTimer;
 
     /**
      * Customer constructor.
@@ -77,6 +74,7 @@ class Customer extends Person{
         super(name, xCoord, yCoord);
         this.order = order;
         this.timer = 20;
+        this.maxTimer = timer;
         this.txUp = new Texture("people/cust1up.png");
         this.txLeft = new Texture("people/cust1left.png");
     }
@@ -84,6 +82,7 @@ class Customer extends Person{
         super(name, xCoord, yCoord);
         this.order = order;
         this.timer = timer;
+        this.maxTimer = timer;
         this.txUp = new Texture("people/cust1up.png");
         this.txLeft = new Texture("people/cust1left.png");
     }
@@ -104,6 +103,7 @@ class Customer extends Person{
 
 
     public float getTimer() {return timer;}
+    public float getMaxTimer() {return maxTimer;}
 
     public Quartet getCustomerData(){
         return new Quartet(getxCoord(),getyCoord(),getOrder(),getTimer());

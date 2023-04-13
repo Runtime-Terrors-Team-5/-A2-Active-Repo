@@ -35,6 +35,8 @@ public class GameScreen extends ScreenAdapter {
     int[] renderableLayers = { 0, 1, 2 };
     Texture selectedTexture;
     Texture recipes;
+    Texture bar1;
+    Texture bar2;
 
 
     Music music_background;
@@ -56,6 +58,8 @@ public class GameScreen extends ScreenAdapter {
         }
         selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
         recipes = new Texture(Gdx.files.internal("recipes.png"));
+        bar2 = new Texture(Gdx.files.internal("icons/bar2.png"));
+        bar1 = new Texture(Gdx.files.internal("icons/bar1.png"));
         music_background = Gdx.audio.newMusic(Gdx.files.internal("sounds/background.mp3"));
         music_background.setLooping(true);
         music_background.play();
@@ -172,6 +176,8 @@ public class GameScreen extends ScreenAdapter {
             32 * unitScale);
 
         if (gm.getCustomersSize() >= 1) {
+            game.batch.draw(bar2,  8 * wScale, 3 * hScale, 32 * unitScale, 10 * unitScale);
+            game.batch.draw(bar1,  8 * wScale, 3 * hScale, (gm.getCustomerRemainingTime()), 10 * unitScale);
             game.batch.draw(gm.getFirstCustomer().getTxUp(), 8 * wScale, 2 * hScale, 32 * unitScale, 32 * unitScale);
             for (int i = 1; i < gm.getCustomersSize(); i++) {
                 game.batch.draw(gm.getFirstCustomer().getTxLeft(), (8+i) * wScale, 2 * hScale, 32 * unitScale, 32 * unitScale);
