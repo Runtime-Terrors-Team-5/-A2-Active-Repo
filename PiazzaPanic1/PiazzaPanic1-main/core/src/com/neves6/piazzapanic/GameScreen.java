@@ -179,8 +179,10 @@ public class GameScreen extends ScreenAdapter {
             game.batch.draw(bar2,  8 * wScale, 3 * hScale, 32 * unitScale, 10 * unitScale);
             game.batch.draw(bar1,  8 * wScale, 3 * hScale, (gm.getCustomerRemainingTime()), 10 * unitScale);
             game.batch.draw(gm.getFirstCustomer().getTxUp(), 8 * wScale, 2 * hScale, 32 * unitScale, 32 * unitScale);
+            game.batch.draw(gm.getFirstCustomer().getOrderTexture(), 8 * wScale, (2 * hScale) -20, 27 * unitScale, 27 * unitScale);
             for (int i = 1; i < gm.getCustomersSize(); i++) {
                 game.batch.draw(gm.getFirstCustomer().getTxLeft(), (8+i) * wScale, 2 * hScale, 32 * unitScale, 32 * unitScale);
+                game.batch.draw(gm.customers.get(i).getOrderTexture(), (8+i) * wScale, (2 * hScale) -20, 27 * unitScale, 27 * unitScale);
             }
         }
 
