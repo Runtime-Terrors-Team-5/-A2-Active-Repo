@@ -127,6 +127,12 @@ public class GameScreen extends ScreenAdapter {
                 if (keyCode == Input.Keys.O){
                     SaveAndLoadHandler.setSave(gm);
                 }
+                if (keyCode == Input.Keys.C) {
+                    gm.unlockMachine(1); //unlocks the grill
+                }
+                if (keyCode == Input.Keys.V) {
+                    gm.unlockMachine(2); //unlocks the forming station
+                }
                 return true;
             }
         });
@@ -204,6 +210,7 @@ public class GameScreen extends ScreenAdapter {
         //game.batch.draw(recipes, 20, 20);
         fontBlack.draw(game.batch, gm.generateHoldingsText(), winWidth - (6*(winWidth/8f)) + 35, winHeight - 20, (3*(winWidth/8f)), -1, true);
         fontBlack.draw(game.batch, gm.generateCustomersTrayText(), winWidth - (3*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
+        fontBlack.draw(game.batch, gm.generateMoneyText(), winWidth - (3*(winWidth/8f)), winHeight - 200, (3*(winWidth/8f)), -1, true);
         fontBlack.draw(game.batch, gm.generateTimerText(), winWidth - (winWidth/3f), 40, (winWidth/3f), -1, false);
         game.batch.end();
 

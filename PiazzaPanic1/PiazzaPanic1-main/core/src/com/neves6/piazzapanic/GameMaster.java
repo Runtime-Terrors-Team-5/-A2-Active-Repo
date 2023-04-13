@@ -54,13 +54,13 @@ class ScenarioGameMaster extends GameMaster {
     private float customerSpawnTimer;
     int customerPersonalTimer; //this sets the timer of the customer til they reduce the players reputation points
 
-    boolean goldGrillUnlocked = true; //defaults to true until we figure out how to "unlock" it
+    boolean goldGrillUnlocked = false; //defaults to true until we figure out how to "unlock" it
 
-    boolean formingStationUnlocked = true; //defaults to true til we figure out how to unlock it
+    boolean formingStationUnlocked = false; //defaults to true til we figure out how to unlock it
 
     boolean endless;
-
     HashMap<Pair<Integer, Integer>, ArrayList<Machine>> machineLocation;
+    int money = 0;
 
 
     /**
@@ -401,6 +401,12 @@ class ScenarioGameMaster extends GameMaster {
         comp += " s";
         return comp;
     }
+    public String generateMoneyText() {
+        String comp = "";
+        comp += "£";
+        comp += (int) money;
+        return comp;
+    }
 
     /**
      * Generates the display text for the chef's timer.
@@ -488,7 +494,7 @@ class ScenarioGameMaster extends GameMaster {
                     pauseTime = true;
                 }
             }
-            System.out.println(customers.get(i).getTimer());
+            //System.out.println(customers.get(i).getTimer());
             if (customers.get(i).getTimer() < 0 ){
                 repDecrease();
                 customers.remove(i);
@@ -585,7 +591,7 @@ class ScenarioGameMaster extends GameMaster {
         }
 
 
-        if (targetx == 1 && targety == 5) {
+        if (targetx == 1 && targety == 5 && invTop != "null") {
             chef.removeTopFromInventory();
             trash.play(soundVolume);
         } else if (targetx == 12 && targety == 3) {
@@ -593,6 +599,7 @@ class ScenarioGameMaster extends GameMaster {
         } else if (targetx == 8 && targety == 3) {
             if (Objects.equals(invTop, "completed burger")) {
                 customers.remove(0);
+                money += 5;
                 chef.getInventory().pop();
                 repIncrease();
                 serving.play(soundVolume);
@@ -601,6 +608,7 @@ class ScenarioGameMaster extends GameMaster {
                 }
             } else if (Objects.equals(invTop, "completed salad")) {
                 customers.remove(0);
+                money += 5;
                 chef.getInventory().pop();
                 repIncrease();
                 serving.play(soundVolume);
@@ -609,6 +617,7 @@ class ScenarioGameMaster extends GameMaster {
                 }
             } else if (Objects.equals(invTop, "pizza")) {
                 customers.remove(0);
+                money += 5;
                 chef.getInventory().pop();
                 repIncrease();
                 serving.play(soundVolume);
@@ -618,20 +627,20 @@ class ScenarioGameMaster extends GameMaster {
             }
         } else if (targetx == 14 && targety == 5 && goldGrillUnlocked) { //this is the gold grill
             if (Objects.equals(invTop, "patty")) {
-                machines.get(21).process(chef);
+                machines.get(4).process(chef);
                 grill.play(soundVolume);
             } else if (Objects.equals(invTop, "bun")) {
-                machines.get(20).process(chef);
+                machines.get(3).process(chef);
                 grill.play(soundVolume);
             }
         } else if (targetx == 14 && targety == 4 && formingStationUnlocked) { //this is the unlockable forming station
             if (Objects.equals(invTop, "meat")) {
-                machines.get(22).process(chef);
+                machines.get(5).process(chef);
                 forming.play(soundVolume);
             }
         } else if (targetx == 14 && targety == 6) { //this is the unlockable forming station
             if (Objects.equals(invTop, "uncooked_pizza")) {
-                machines.get(17).process(chef);
+                machines.get(0).process(chef);
             }
         } else if (targetx == 11 && targety == 3) {
             addToTray(true);
@@ -823,4 +832,20 @@ class ScenarioGameMaster extends GameMaster {
     public void IncreasePowerUpCount(){this.powerUpCount += 1;}
 
     public float getTotalTimer(){return this.totalTimer;}
+
+    public void unlockMachine (int machine) {
+        switch (machine) {
+            case 1:
+                if (money > 5 && !goldGrillUnlocked) {
+                    goldGrillUnlocked = true;
+                    money -= 5;
+                }
+            case 2:
+                if (money > 5 && !formingStationUnlocked) {
+                    formingStationUnlocked = true;
+                    money -= 5;
+                }
+        }
+
+    }
 }
