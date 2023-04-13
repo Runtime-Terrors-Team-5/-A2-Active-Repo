@@ -113,6 +113,8 @@ public class Machine{
         return processingTime;
     }
 
+    public String getInput() {return input;}
+
     public String getOutput(){
         return output;
     }  // game test

@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import java.util.HashMap;
+import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Septet;
 import org.javatuples.Sextet;
@@ -62,6 +64,8 @@ class ScenarioGameMaster extends GameMaster {
     boolean formingStationUnlocked = true; //defaults to true til we figure out how to unlock it
 
     boolean endless;
+
+    HashMap<Pair<Integer, Integer>, ArrayList<Machine>> machineLocation;
 
 
     /**
@@ -135,27 +139,55 @@ class ScenarioGameMaster extends GameMaster {
             this.cusomerRemaining = custno;
         }
 
-        machines.add(new Machine("chopping1tomato", "tomato", "choppedtomato", 3, true));
-        machines.add(new Machine("chopping2tomato", "tomato", "choppedtomato", 3, true));
-        machines.add(new Machine("chopping1lettuce", "lettuce", "choppedlettuce", 3, true));
-        machines.add(new Machine("chopping2lettuce", "lettuce", "choppedlettuce", 3, true));
-        machines.add(new Machine("chopping1onion", "onion", "choppedonion", 3, true));
-        machines.add(new Machine("chopping2onion", "onion", "choppedonion", 3, true));
-        System.out.println(map.getLayers().get(4).getName());
+        machineLocation = new HashMap<>();
+
+        ArrayList<Machine> tempArray = new ArrayList<>();
+
+
+        // Cutting board from map
         TiledMapTileLayer workingLayer = (TiledMapTileLayer) map.getLayers().get(4);
         for (int i = 0; i < workingLayer.getHeight(); i++) {
             for (int j = 0; j < workingLayer.getWidth(); j++) {
                 if (workingLayer.getCell(j,i) != null){
-                    //j i add to dict
-
+                    tempArray.add(new Machine("choppingTomato", "tomato", "choppedtomato", 3, true));
+                    tempArray.add(new Machine("choppingLettuce", "lettuce", "choppedlettuce", 3, true));
+                    tempArray.add(new Machine("choppingOnion", "onion", "choppedonion", 3, true));
+                    machineLocation.put(new Pair<>(j,i),tempArray);
+                    tempArray = new ArrayList<>();
                 }
             }
         }
 
 
 
-        System.out.println(workingLayer.getCell(12,7));
+        // making station turns meat -> patty
+        workingLayer = (TiledMapTileLayer) map.getLayers().get(5);
+        for (int i = 0; i < workingLayer.getHeight(); i++) {
+            for (int j = 0; j < workingLayer.getWidth(); j++) {
+                if (workingLayer.getCell(j,i) != null){
+                    tempArray.add(new Machine("forming", "meat", "patty", 3, true));
+                    machineLocation.put(new Pair<>(j,i),tempArray);
+                    tempArray = new ArrayList<>();
+                }
+            }
+        }
+
+
+        // grilling station
+        workingLayer = (TiledMapTileLayer) map.getLayers().get(6);
+        for (int i = 0; i < workingLayer.getHeight(); i++) {
+            for (int j = 0; j < workingLayer.getWidth(); j++) {
+                if (workingLayer.getCell(j,i) != null){
+                    tempArray.add(new Machine("grill1patty", "patty", "burger", 3, true));
+                    tempArray.add(new Machine("grill1bun", "bun", "toastedbun", 3, true));
+                    machineLocation.put(new Pair<>(j,i),tempArray);
+                    tempArray = new ArrayList<>();
+                }
+            }
+        }
+
         totalTimer = 0f;
+        // legacy to be removed
         machines.add(new Machine("fridgemeat", "", "meat", 0, false));
         machines.add(new Machine("fridgetomato", "", "tomato", 0, false));
         machines.add(new Machine("fridgelettuce", "", "lettuce", 0, false));
@@ -167,6 +199,12 @@ class ScenarioGameMaster extends GameMaster {
         machines.add(new Machine("grill2bun", "bun", "toastedbun", 3, true));
         machines.add(new Machine("forming1", "meat", "patty", 3, true));
         machines.add(new Machine("forming2", "meat", "patty", 3, true));
+        machines.add(new Machine("chopping1tomato", "tomato", "choppedtomato", 3, true));
+        machines.add(new Machine("chopping2tomato", "tomato", "choppedtomato", 3, true));
+        machines.add(new Machine("chopping1lettuce", "lettuce", "choppedlettuce", 3, true));
+        machines.add(new Machine("chopping2lettuce", "lettuce", "choppedlettuce", 3, true));
+        machines.add(new Machine("chopping1onion", "onion", "choppedonion", 3, true));
+        machines.add(new Machine("chopping2onion", "onion", "choppedonion", 3, true));
 
 
         // new machines for assessment 2
@@ -448,6 +486,21 @@ class ScenarioGameMaster extends GameMaster {
                 machine.attemptGetOutput(selectedChef);
             }
         }
+        
+        for (Pair tempPair: machineLocation.keySet()){
+            for (Machine mac :
+                machineLocation.get(tempPair)) {
+                if (mac.getActive()) {
+                    mac.incrementRuntime(delta);
+                    for(PowerUp inst: PowerUp.PowerUps) {
+                        if (inst.powerUpType == "cookSpeed" && inst.active) {
+                            mac.incrementRuntime(delta);
+                        }
+                    }
+                    mac.attemptGetOutput(selectedChef);
+                }
+            }
+        }
         //for customer timer increase
         boolean pauseTime = false;
         for (int i = 0; i < customers.size(); i++) {
@@ -554,9 +607,24 @@ class ScenarioGameMaster extends GameMaster {
         if (!chef.getInventory().empty()) {
             invTop = chef.getInventory().peek();
         }
+
+        /**
+         */
+        Pair target = new Pair(targetx,targety);
+        try{
+        ArrayList<Machine> targetMachines = machineLocation.get(target);
+        for (Machine mac :
+            targetMachines) {
+            if (mac.getInput().equals(invTop)){
+                mac.process(chef);
+            }
+        }
+        }
+        catch (Exception e){
+
+        }
+        /*
         if (targetx == 6 && targety == 7) {
-
-
             if (Objects.equals(invTop, "patty")) {
                 machines.get(5).process(chef);
                 grill.play(soundVolume);
@@ -602,7 +670,12 @@ class ScenarioGameMaster extends GameMaster {
             } else if (Objects.equals(invTop, "onion")) {
                 machines.get(16).process(chef);
             }
-        } else if (targetx == 1 && targety == 5) {
+        }
+
+
+         */
+
+        if (targetx == 1 && targety == 5) {
             chef.removeTopFromInventory();
             trash.play(soundVolume);
         } else if (targetx == 12 && targety == 3) {
