@@ -3,6 +3,7 @@ package com.neves6.piazzapanic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import java.util.ArrayList;
+import java.util.Objects;
 import org.javatuples.Septet;
 import org.javatuples.Sextet;
 
@@ -55,7 +56,7 @@ public class Machine{
     public void process(Chef chef){
         if (input == "" && processingTime == 0) {
             chef.addToInventory(output);
-        } else if (chef.getInventory().peek() == input) {
+        } else if (Objects.equals(chef.getInventory().peek(), input)) {
             active = true;
             chef.getInventory().pop();
             chef.setIsStickied(sticky);
@@ -112,6 +113,8 @@ public class Machine{
     public float getProcessingTime(){
         return processingTime;
     }
+
+    public String getInput() {return input;}
 
     public String getOutput(){
         return output;
