@@ -94,7 +94,7 @@ class Customer extends Person{
             this.orderTexture = new Texture("foods/hamburger.png");
         }
         else if (order == "pizza"){
-            this.orderTexture = new Texture("foods/toastedbun.png");
+            this.orderTexture = new Texture("foods/pizza.png");
         }
     }
 

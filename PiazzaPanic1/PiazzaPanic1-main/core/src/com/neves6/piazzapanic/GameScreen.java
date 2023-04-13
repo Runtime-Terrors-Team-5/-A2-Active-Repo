@@ -57,7 +57,6 @@ public class GameScreen extends ScreenAdapter {
             renderer = new OrthogonalTiledMapRenderer(map, unitScale);
         }
         selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
-        recipes = new Texture(Gdx.files.internal("recipes.png"));
         bar2 = new Texture(Gdx.files.internal("icons/bar2.png"));
         bar1 = new Texture(Gdx.files.internal("icons/bar1.png"));
         music_background = Gdx.audio.newMusic(Gdx.files.internal("sounds/background.mp3"));
@@ -79,9 +78,7 @@ public class GameScreen extends ScreenAdapter {
         wScale = unitScale * 32f;
         hScale = unitScale * 32f;
         renderer = new OrthogonalTiledMapRenderer(map, unitScale);
-
         selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
-        recipes = new Texture(Gdx.files.internal("recipes.png"));
     }
 
 
@@ -169,7 +166,7 @@ public class GameScreen extends ScreenAdapter {
         gm.getPowerUp();
         gm.powerUpEffect();
 
-        game.batch.draw(gm.repIcon, 16 * wScale, 7 * hScale, 93 * unitScale, 45 * unitScale);
+        game.batch.draw(gm.repIcon, 1 * wScale, 1 * hScale, 93 * unitScale, 45 * unitScale);
 
         game.batch.draw(selectedTexture, gm.getChef(gm.getSelectedChef()).getxCoord() * wScale,
             gm.getChef(gm.getSelectedChef()).getyCoord() * hScale, 32 * unitScale,
@@ -204,7 +201,7 @@ public class GameScreen extends ScreenAdapter {
             }
         }
 
-        game.batch.draw(recipes, 20, 20);
+        //game.batch.draw(recipes, 20, 20);
         fontBlack.draw(game.batch, gm.generateHoldingsText(), winWidth - (6*(winWidth/8f)) + 35, winHeight - 20, (3*(winWidth/8f)), -1, true);
         fontBlack.draw(game.batch, gm.generateCustomersTrayText(), winWidth - (3*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
         fontBlack.draw(game.batch, gm.generateTimerText(), winWidth - (winWidth/3f), 40, (winWidth/3f), -1, false);

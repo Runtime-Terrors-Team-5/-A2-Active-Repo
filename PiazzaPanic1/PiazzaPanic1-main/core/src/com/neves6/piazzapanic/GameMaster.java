@@ -6,17 +6,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import java.util.HashMap;
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Septet;
 import org.javatuples.Sextet;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * GameMaster class.
@@ -383,13 +378,13 @@ class ScenarioGameMaster extends GameMaster {
      */
     public String generateCustomersTrayText() {
         String comp = "";
-        comp += "Customers remaining: ";
-        comp += customers.size();
-        if (customers.size() > 0) {
-            comp += "\nOrder: ";
-            comp += customers.get(0).getOrder();
+        //comp += "Customers remaining: ";
+        //comp += customers.size();
+        //if (customers.size() > 0) {
+            //comp += "\nOrder: ";
+            //comp += customers.get(0).getOrder();
 
-        }
+        //}
         comp += "\nTray contents: ";
         comp += tray.toString();
         return comp;
