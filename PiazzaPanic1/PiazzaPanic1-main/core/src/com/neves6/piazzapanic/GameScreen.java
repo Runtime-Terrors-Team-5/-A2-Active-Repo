@@ -130,6 +130,12 @@ public class GameScreen extends ScreenAdapter {
                 if (keyCode == Input.Keys.O){
                     SaveAndLoadHandler.setSave(gm);
                 }
+                if (keyCode == Input.Keys.C) {
+                    gm.unlockMachine(1); //unlocks the grill
+                }
+                if (keyCode == Input.Keys.V) {
+                    gm.unlockMachine(2); //unlocks the forming station
+                }
                 return true;
             }
         });
