@@ -2,7 +2,9 @@ package com.neves6.piazzapanic;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
+import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Quintet;
 import org.javatuples.Septet;
@@ -11,8 +13,8 @@ import org.javatuples.Triplet;
 
 public class saveData implements Serializable {
 
-    private ArrayList<Sextet> chefdata;
-    private ArrayList<Septet> machinedata;
+    private final ArrayList<Sextet> chefdata;
+    private HashMap machinedata;
     private int level;
     private ArrayList<Quartet> customerdata;
     private int selectedChef;
@@ -21,12 +23,15 @@ public class saveData implements Serializable {
 
     private int repPoint;
 
-    private  int custumerRemaining;
+    private int customerRemaining;
     private float customerSpawnTimer;
+    private ArrayList validOrder;
 
     public saveData(ArrayList<Chef> chefs,int level, Stack<Customer> customers,int selectedChef,
-        ArrayList<Machine> machines, ArrayList<String> trayContent, float timeElapsed, int repPoint,
-        int custumerRemaining, float customerSpawnTimer){
+        HashMap<Pair<Integer, Integer>,ArrayList<Machine>> machines, ArrayList<String> trayContent,
+        float timeElapsed, int repPoint,
+        int customerRemaining, float customerSpawnTimer, ArrayList validOrder){
+
         this.chefdata = new ArrayList<>();
         for (Chef i:chefs) {
             System.out.println(i.getChefInfo());
@@ -39,16 +44,25 @@ public class saveData implements Serializable {
             customerdata.add(i.getCustomerData());
         }
         this.selectedChef = selectedChef;
-        this.machinedata = new ArrayList<>();
-        for (Machine i:machines){
-            machinedata.add(i.getMachineInfo());
+        this.machinedata = new HashMap();
+
+        ArrayList<Septet> tempMachineList;
+        for (Pair key: machines.keySet()){
+            tempMachineList = new ArrayList();
+            for (Machine mac:machines.get(key)){
+                tempMachineList.add(mac.getMachineInfo());
+            }
+            machinedata.put(key,tempMachineList);
         }
+
         this.trayContent = trayContent;
         this.timeElapled = timeElapsed;
 
         this.repPoint = repPoint;
-        this.custumerRemaining = custumerRemaining;
+        this.customerRemaining = customerRemaining;
         this.customerSpawnTimer = customerSpawnTimer;
+
+        this.validOrder = validOrder;
     }
 
     public ScenarioGameMaster loadGameMaster(PiazzaPanicGame game){
@@ -56,7 +70,7 @@ public class saveData implements Serializable {
         return gm;
     }
 
-    public ArrayList<Septet> getMachinedata() {return machinedata;}
+    public HashMap<Pair,ArrayList<Septet>> getMachinedata() {return machinedata;}
 
     public int getLevel() {return level;}
 
@@ -72,7 +86,9 @@ public class saveData implements Serializable {
 
     public int getRepPoint() {return repPoint;}
 
-    public int getCustumerRemaining() {return custumerRemaining;}
+    public int getCustomerRemaining() {return customerRemaining;}
 
     public float getCustomerSpawnTimer() {return customerSpawnTimer;}
+
+    public ArrayList getValidOrder(){return validOrder;}
 }

@@ -67,6 +67,8 @@ public class GameScreen extends ScreenAdapter {
     public GameScreen(PiazzaPanicGame game) {
         this.game = game;
         fontBlack = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
+        fontGreen = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
+        fontGreen.setColor(0,250,0,50);
         //bg = new Texture(Gdx.files.internal("title_screen_large.png"));
         this.INITIAL_WIDTH = Gdx.graphics.getWidth();
         this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
@@ -77,6 +79,8 @@ public class GameScreen extends ScreenAdapter {
         unitScale = Gdx.graphics.getHeight() / (12f*32f);
         wScale = unitScale * 32f;
         hScale = unitScale * 32f;
+        bar2 = new Texture(Gdx.files.internal("icons/bar2.png"));
+        bar1 = new Texture(Gdx.files.internal("icons/bar1.png"));
         renderer = new OrthogonalTiledMapRenderer(map, unitScale);
         selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
     }

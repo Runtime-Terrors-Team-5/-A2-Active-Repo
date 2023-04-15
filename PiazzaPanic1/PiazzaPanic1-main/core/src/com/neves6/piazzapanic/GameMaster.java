@@ -47,7 +47,7 @@ class ScenarioGameMaster extends GameMaster {
     Random rand;
     int level;
     int repPoint;
-    ArrayList<String> validOrder;
+    ArrayList validOrder;
     int powerUpCount;
     Texture repIcon;
     int cusomerRemaining;
@@ -125,7 +125,7 @@ class ScenarioGameMaster extends GameMaster {
         }
         this.rand = new Random();
 
-        String order = validOrder.get(rand.nextInt((validOrder.size())));
+        String order = (String) validOrder.get(rand.nextInt((validOrder.size())));
         customers.add(new Customer("Customer"+1, -1, -1, order, customerPersonalTimer));
 
         if (!endless) {
@@ -233,33 +233,51 @@ class ScenarioGameMaster extends GameMaster {
     public ScenarioGameMaster(saveData data, PiazzaPanicGame game) {
         this.game = game;
         this.repPoint = data.getRepPoint();
+        if (repPoint == 3) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints3.png"));}
+        else if (repPoint == 2) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints2.png"));}
+        else if (repPoint == 1) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints1.png"));}
+        else if (repPoint == 0) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints0.png"));}
+
         settings = Utility.getSettings();
         this.level = data.getLevel();
         if (this.level == 1) {
             this.map = new TmxMapLoader().load("tilemaps/level1.tmx");}
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
         this.rand = new Random();
+
+        chefs = new ArrayList<>();
         for (Sextet chef: data.getChefdata()) {
             this.chefs.add(new Chef("Chef",chef));
         }
 
+        customers = new Stack<>();
         for (Quartet customer: data.getCustomerdata()) {
             this.customers.add(new Customer("Customer", (int) customer.getValue0(),
                 (int) customer.getValue1(), (String) customer.getValue2(),
                 (Float) customer.getValue3()));
         }
-        this.cusomerRemaining = data.getCustumerRemaining();
+        this.cusomerRemaining = data.getCustomerRemaining();
         this.selectedChef = data.getSelectedChef();
 
         this.customerSpawnTimer = data.getCustomerSpawnTimer();
 
         totalTimer = 0f;
 
-        for (Septet machine: data.getMachinedata()) {
-            this.machines.add(new Machine(machine,chefs));
+        machineLocation = new HashMap<>();
+        HashMap<Pair,ArrayList<Septet>> machineData = data.getMachinedata();
+        ArrayList<Machine> tempMachine;
+        for (Pair key : machineData.keySet()) {
+            tempMachine = new ArrayList<Machine>();
+            for (Septet mac : machineData.get(key)) {
+                tempMachine.add(new Machine(mac,chefs));
+            }
+            machineLocation.put(key,tempMachine);
+
         }
 
+
         this.tray = data.getTrayContent();
+        this.validOrder = data.getValidOrder();
         this.totalTimer = data.getTimeElapled();
 
         // disposal and tray/serving handled separately
@@ -286,8 +304,8 @@ class ScenarioGameMaster extends GameMaster {
     }
 
     public saveData generateSaveData(){
-        return new saveData(chefs, level, customers,selectedChef,machines,tray,totalTimer,
-            repPoint,cusomerRemaining, customerSpawnTimer);
+        return new saveData(chefs, level, customers,selectedChef,machineLocation,tray,totalTimer,
+            repPoint,cusomerRemaining, customerSpawnTimer, validOrder);
     }
     public void setSelectedChef(int selectedChef) {
         this.selectedChef = selectedChef - 1;
@@ -444,7 +462,7 @@ class ScenarioGameMaster extends GameMaster {
 
     public void spawnCustomer(){
         if (cusomerRemaining <= 0){return;}
-        String order = validOrder.get(rand.nextInt((validOrder.size())));
+        String order = (String) validOrder.get(rand.nextInt((validOrder.size())));
         customers.add(new Customer("Customer"+1, -1, -1, order, customerPersonalTimer));
         if (!endless) {
             this.cusomerRemaining -= 1;
@@ -472,7 +490,7 @@ class ScenarioGameMaster extends GameMaster {
      */
     public void tickUpdate(float delta) {
         
-        for (Pair tempPair: machineLocation.keySet()){
+        for (Pair<Integer, Integer> tempPair: machineLocation.keySet()){
             for (Machine mac :
                 machineLocation.get(tempPair)) {
                 if (mac.getActive()) {
@@ -573,7 +591,7 @@ class ScenarioGameMaster extends GameMaster {
             invTop = chef.getInventory().peek();
         }
 
-        Pair target = new Pair(targetx,targety);
+        Pair<Integer, Integer> target = new Pair<>(targetx,targety);
         try{
         ArrayList<Machine> targetMachines = machineLocation.get(target);
         System.out.println(targetMachines);

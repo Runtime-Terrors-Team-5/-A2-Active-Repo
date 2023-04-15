@@ -87,13 +87,13 @@ class Customer extends Person{
         this.maxTimer = timer;
         this.txUp = new Texture("people/cust1up.png");
         this.txLeft = new Texture("people/cust1left.png");
-        if (order == "salad"){
+        if (Objects.equals(order, "salad")){
             this.orderTexture = new Texture("foods/salad.png");
         }
-        else if (order == "burger") {
+        else if (Objects.equals(order, "burger")) {
             this.orderTexture = new Texture("foods/hamburger.png");
         }
-        else if (order == "pizza"){
+        else if (Objects.equals(order, "pizza")){
             this.orderTexture = new Texture("foods/pizza.png");
         }
     }
@@ -120,8 +120,8 @@ class Customer extends Person{
     public float getTimer() {return timer;}
     public float getMaxTimer() {return maxTimer;}
 
-    public Quartet getCustomerData(){
-        return new Quartet(getxCoord(),getyCoord(),getOrder(),getTimer());
+    public Quartet<Integer, Integer, String, Float> getCustomerData(){
+        return new Quartet<>(getxCoord(),getyCoord(),getOrder(),getTimer());
     }
 
 }
@@ -253,7 +253,7 @@ class Chef extends Person {
 
     public int getChefNumb(){return chefNumb;}
 
-    public Sextet getChefInfo(){
-        return new Sextet(getxCoord(),getyCoord(),getFacing(),getInventory(),getIsStickied(),getChefNumb());
+    public Sextet<Integer, Integer, String, Stack<String>, Boolean, Integer> getChefInfo(){
+        return new Sextet<>(getxCoord(),getyCoord(),getFacing(),getInventory(),getIsStickied(),getChefNumb());
     }
 }
