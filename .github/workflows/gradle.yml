@@ -6,7 +6,7 @@
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
 
 name: Java CI with Gradle
-
+    
 on:
   push:
     branches: [ "main" ]
@@ -15,6 +15,8 @@ on:
 
 permissions:
   contents: read
+  checks: write
+  id-token: write
 
 jobs:
   build:
@@ -36,7 +38,7 @@ jobs:
       with:
         arguments: build --continue
         build-root-directory: PiazzaPanic1/PiazzaPanic1-main
-        
+      
   Test:
     name: Build and Run Tests
     runs-on: ubuntu-latest
@@ -49,8 +51,7 @@ jobs:
           gradle test
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v3
-        if: success() || failure() # always run even if the previous step fails
+        if: always() # always run even if the previous step fails
         with:
           report_paths: '**/build/test-results/test/TEST-*.xml'
           detailed_summary: True
-
