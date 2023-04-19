@@ -185,21 +185,8 @@ class ScenarioGameMaster extends GameMaster {
             }
         }
 
-//        workingLayer = (TiledMapTileLayer) map.getLayers().get(7);
-//        for (int i = 0; i < workingLayer.getHeight(); i++) {
-//            for (int j = 0; j < workingLayer.getWidth(); j++) {
-//                if (workingLayer.getCell(j,i) != null){
-//                    System.out.println("not null!");
-//                    tempArray.add(new Machine("grill3bun", "bun", "toastedbun", 3, true)); //machine 20
-//                    tempArray.add(new Machine("grill3patty", "patty", "burger", 3, true)); //machine 21
-//                    machineLocation.put(new Pair<>(j,i),tempArray);
-//                    tempArray = new ArrayList<>();
-//                }
-//            }
-//        }
-
         // loops through the dispenser layers to get the corresponding ingredient
-        for (int k=8;k<=14;k++){
+        for (int k=9;k<=15;k++){
             workingLayer = (TiledMapTileLayer) map.getLayers().get(k);
             for (int i = 0; i < workingLayer.getHeight(); i++) {
                 for (int j = 0; j < workingLayer.getWidth(); j++) {
@@ -218,11 +205,6 @@ class ScenarioGameMaster extends GameMaster {
         // new machines for assessment 2
         machines.add(new Machine("Pizza", "uncooked_pizza", "pizza", 3, true)); //machine 17
 
-
-        //gold cooking machine (unlockable)
-
-        //unlockable forming machine
-        machines.add(new Machine("forming3", "meat", "patty", 3, true)); //machine 22
 
         // disposal and tray/serving handled separately
         grill = Gdx.audio.newSound(Gdx.files.internal("sounds/grill.mp3"));
@@ -675,19 +657,6 @@ class ScenarioGameMaster extends GameMaster {
                     game.setScreen(new GameWinScreen(game, (int) totalTimer));
                 }
             }
-        //} else if (targetx == 14 && targety == 5 && goldGrillUnlocked) { //this is the gold grill
-        //    if (Objects.equals(invTop, "patty")) {
-        //        machines.get(4).process(chef);
-        //        grill.play(soundVolume);
-        //    } else if (Objects.equals(invTop, "bun")) {
-        //        machines.get(3).process(chef);
-        //        grill.play(soundVolume);
-        //    }
-        } else if (targetx == 14 && targety == 4 && formingStationUnlocked) { //this is the unlockable forming station
-            if (Objects.equals(invTop, "meat")) {
-                machines.get(5).process(chef);
-                forming.play(soundVolume);
-            }
         } else if (targetx == 14 && targety == 6) { //this is the unlockable forming station
             if (Objects.equals(invTop, "uncooked_pizza")) {
                 machines.get(0).process(chef);
@@ -921,30 +890,47 @@ class ScenarioGameMaster extends GameMaster {
     public float getTotalTimer(){return this.totalTimer;}
 
     public void unlockMachine (int machine) {
-        switch (machine) {
-            case 1:
-                if (money >= 5 && !goldGrillUnlocked) {
-                    goldGrillUnlocked = true;
-                    money -= 5;
-                    TiledMapTileLayer workingLayer = (TiledMapTileLayer) map.getLayers().get(7);
-                    ArrayList<Machine> tempArray = new ArrayList<>();
-                    for (int i = 0; i < workingLayer.getHeight(); i++) {
-                        for (int j = 0; j < workingLayer.getWidth(); j++) {
-                            if (workingLayer.getCell(j,i) != null){
-                                tempArray.add(new Machine("grill3bun", "bun", "toastedbun", 3, true)); //machine 20
-                                tempArray.add(new Machine("grill3patty", "patty", "burger", 3, true)); //machine 21
-                                machineLocation.put(new Pair<>(j,i),tempArray);
-                                tempArray = new ArrayList<>();
-                            }
+        if (machine == 1 && money >= 5) {
+            if (!goldGrillUnlocked) {
+                System.out.println("gold grill unlocked!");
+                goldGrillUnlocked = true;
+                money -= 5;
+                TiledMapTileLayer workingLayer = (TiledMapTileLayer) map.getLayers().get(7);
+                ArrayList<Machine> tempArray = new ArrayList<>();
+                for (int i = 0; i < workingLayer.getHeight(); i++) {
+                    for (int j = 0; j < workingLayer.getWidth(); j++) {
+                        if (workingLayer.getCell(j,i) != null){
+                            tempArray.add(new Machine("grill3bun", "bun", "toastedbun", 3, true)); //machine 20
+                            tempArray.add(new Machine("grill3patty", "patty", "burger", 3, true)); //machine 21
+                            machineLocation.put(new Pair<>(j,i),tempArray);
+                            System.out.println(tempArray);
+                            tempArray = new ArrayList<>();
                         }
                     }
                 }
-            case 2:
-                if (money >= 5 && !formingStationUnlocked) {
-                    formingStationUnlocked = true;
-                    money -= 5;
-                }
+            }
         }
+        if (machine == 2 && money >=5) {
+            if (!formingStationUnlocked) {
+                System.out.println("forming station unlocked!");
+                formingStationUnlocked = true;
+                money -= 5;
+                TiledMapTileLayer workingLayer = (TiledMapTileLayer) map.getLayers().get(8);
+                ArrayList<Machine> tempArray = new ArrayList<>();
+                for (int i = 0; i < workingLayer.getHeight(); i++) {
+                    for (int j = 0; j < workingLayer.getWidth(); j++) {
+                        if (workingLayer.getCell(j,i) != null){
+                            tempArray.add(new Machine("forming3", "meat", "patty", 3, true));
+                            machineLocation.put(new Pair<>(j,i),tempArray);
+                            System.out.println(tempArray);
+                            tempArray = new ArrayList<>();
+                        }
+                    }
+                }
+            }
+        }
+
+
 
     }
 }
