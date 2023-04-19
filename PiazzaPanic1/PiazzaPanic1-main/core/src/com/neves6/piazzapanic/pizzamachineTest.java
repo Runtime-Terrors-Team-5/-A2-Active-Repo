@@ -64,13 +64,14 @@ public class pizzamachineTest {
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
         game.chefs.get(0).addToInventory("uncooked_pizza");
-        game.machines.get(17).process(game.chefs.get(0));
-        System.out.println(game.machines.get(17).getRuntime());
+
+        game.machines.get(0).process(game.chefs.get(0));
+        System.out.println(game.machines.get(0).getRuntime());
         TimeUnit.SECONDS.sleep(4);
-        System.out.println(game.machines.get(17).getRuntime());
-        game.machines.get(17).fastForwardTime(true, 6);
-        System.out.println(game.machines.get(17).getRuntime());
-        game.machines.get(17).attemptGetOutput();
+        System.out.println(game.machines.get(0).getRuntime());
+        game.machines.get(0).fastForwardTime(true, 6);
+        System.out.println(game.machines.get(0).getRuntime());
+        game.machines.get(0).attemptGetOutput();
         assertEquals(game.chefs.get(0).getInventory().pop(),  "pizza");
 
 
