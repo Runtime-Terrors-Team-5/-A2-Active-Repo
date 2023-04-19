@@ -137,6 +137,7 @@ class Chef extends Person {
     private final Texture txDown;
     private final Texture txLeft;
     private final Texture txRight;
+    private final Texture uiIcon;
     private Texture txNow;
     private boolean isInteracting;
     private Machine machineInteractingWith;
@@ -167,6 +168,7 @@ class Chef extends Person {
         this.txDown =  new Texture("people/chef" + textureSet + "down.png");
         this.txLeft =  new Texture("people/chef" + textureSet + "left.png");
         this.txRight = new Texture("people/chef" + textureSet + "right.png");
+        this.uiIcon = new Texture("icons/chefmenu" + textureSet + ".png");
         this.txNow = txDown;
     }
 
@@ -187,12 +189,12 @@ class Chef extends Person {
         this.txDown =  new Texture("people/chef" + chef.getValue5() + "down.png");
         this.txLeft =  new Texture("people/chef" + chef.getValue5() + "left.png");
         this.txRight = new Texture("people/chef" + chef.getValue5() + "right.png");
+        this.uiIcon = new Texture("icons/chefmenu" + chef.getValue5() + ".png");
 
         if (Objects.equals(this.facing, "up")){this.txNow = txUp;}
         else if (Objects.equals(this.facing, "down")){this.txNow = txDown;}
         else if (Objects.equals(this.facing, "left")){this.txNow = txLeft;}
         else if (Objects.equals(this.facing, "right")){this.txNow = txRight;}
-
     }
 
 
@@ -203,6 +205,7 @@ class Chef extends Person {
     public Texture getTxNow(){
         return txNow;
     }
+    public Texture getUiIcon(){return uiIcon;}
     public void setIsStickied(boolean flag){
         this.isStickied = flag;
     }

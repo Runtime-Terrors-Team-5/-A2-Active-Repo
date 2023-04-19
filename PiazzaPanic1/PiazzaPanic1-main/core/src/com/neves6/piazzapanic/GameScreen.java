@@ -37,6 +37,7 @@ public class GameScreen extends ScreenAdapter {
     Texture recipes;
     Texture bar1;
     Texture bar2;
+    Texture chefselected;
 
 
     Music music_background;
@@ -182,6 +183,8 @@ public class GameScreen extends ScreenAdapter {
             gm.getChef(gm.getSelectedChef()).getyCoord() * hScale, 32 * unitScale,
             32 * unitScale);
 
+        game.batch.draw(gm.getChef(gm.getSelectedChef()).getUiIcon(), 15 * wScale,8 * wScale,150 * unitScale, 75 * unitScale);
+
         if (gm.getCustomersSize() >= 1) {
             game.batch.draw(bar2,  8 * wScale, 3 * hScale, 32 * unitScale, 10 * unitScale);
             game.batch.draw(bar1,  8 * wScale, 3 * hScale, (gm.getCustomerRemainingTime()), 10 * unitScale);
@@ -241,7 +244,7 @@ public class GameScreen extends ScreenAdapter {
         fontBlack.dispose();
         fontGreen.dispose();
         selectedTexture.dispose();
-        recipes.dispose();
+        //recipes.dispose();
         map.dispose();
     }
     @Override
@@ -253,6 +256,6 @@ public class GameScreen extends ScreenAdapter {
         map.dispose();
         renderer.dispose();
         selectedTexture.dispose();
-        recipes.dispose();
+        //recipes.dispose();
     }
 }
