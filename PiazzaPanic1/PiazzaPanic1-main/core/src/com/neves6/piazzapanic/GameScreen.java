@@ -241,7 +241,7 @@ public class GameScreen extends ScreenAdapter {
         fontBlack.dispose();
         fontGreen.dispose();
         selectedTexture.dispose();
-        recipes.dispose();
+        //recipes.dispose();
         map.dispose();
     }
     @Override
@@ -253,6 +253,6 @@ public class GameScreen extends ScreenAdapter {
         map.dispose();
         renderer.dispose();
         selectedTexture.dispose();
-        recipes.dispose();
+        //recipes.dispose();
     }
 }

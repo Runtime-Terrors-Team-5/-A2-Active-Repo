@@ -140,6 +140,10 @@ class ScenarioGameMaster extends GameMaster {
 
 
         // Cutting board from map
+        // subsequent loops work in similar fashion
+        // gets the layer from the tilemap, then loop through and when a tile is not empty
+        // use the x and y to form the key and add the machines into the dictionary as the values
+        // in an arraylist
         TiledMapTileLayer workingLayer = (TiledMapTileLayer) map.getLayers().get(4);
         for (int i = 0; i < workingLayer.getHeight(); i++) {
             for (int j = 0; j < workingLayer.getWidth(); j++) {
@@ -152,8 +156,6 @@ class ScenarioGameMaster extends GameMaster {
                 }
             }
         }
-
-
 
         // making station turns meat -> patty
         workingLayer = (TiledMapTileLayer) map.getLayers().get(5);
@@ -181,6 +183,7 @@ class ScenarioGameMaster extends GameMaster {
             }
         }
 
+        // loops through the dispenser layers to get the corresponding ingredient
         for (int k=7;k<=11;k++){
             workingLayer = (TiledMapTileLayer) map.getLayers().get(k);
             for (int i = 0; i < workingLayer.getHeight(); i++) {
@@ -229,7 +232,9 @@ class ScenarioGameMaster extends GameMaster {
                 break;
         }
     }
-
+    /**
+     * signiture for loading feature
+     */
     public ScenarioGameMaster(saveData data, PiazzaPanicGame game) {
         this.game = game;
         this.repPoint = data.getRepPoint();
@@ -609,7 +614,7 @@ class ScenarioGameMaster extends GameMaster {
         }
 
 
-        if (targetx == 1 && targety == 5 && invTop != "null") {
+        if (targetx == 1 && targety == 5 && !Objects.equals(invTop, "null")) {
             chef.removeTopFromInventory();
             trash.play(soundVolume);
         } else if (targetx == 12 && targety == 3) {
