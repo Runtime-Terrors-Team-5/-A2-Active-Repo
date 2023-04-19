@@ -185,8 +185,21 @@ class ScenarioGameMaster extends GameMaster {
             }
         }
 
+//        workingLayer = (TiledMapTileLayer) map.getLayers().get(7);
+//        for (int i = 0; i < workingLayer.getHeight(); i++) {
+//            for (int j = 0; j < workingLayer.getWidth(); j++) {
+//                if (workingLayer.getCell(j,i) != null){
+//                    System.out.println("not null!");
+//                    tempArray.add(new Machine("grill3bun", "bun", "toastedbun", 3, true)); //machine 20
+//                    tempArray.add(new Machine("grill3patty", "patty", "burger", 3, true)); //machine 21
+//                    machineLocation.put(new Pair<>(j,i),tempArray);
+//                    tempArray = new ArrayList<>();
+//                }
+//            }
+//        }
+
         // loops through the dispenser layers to get the corresponding ingredient
-        for (int k=7;k<=13;k++){
+        for (int k=8;k<=14;k++){
             workingLayer = (TiledMapTileLayer) map.getLayers().get(k);
             for (int i = 0; i < workingLayer.getHeight(); i++) {
                 for (int j = 0; j < workingLayer.getWidth(); j++) {
@@ -198,6 +211,7 @@ class ScenarioGameMaster extends GameMaster {
                 }
             }
         }
+        System.out.println(machineLocation);
 
         totalTimer = 0f;
 
@@ -206,8 +220,6 @@ class ScenarioGameMaster extends GameMaster {
 
 
         //gold cooking machine (unlockable)
-        machines.add(new Machine("grill3bun", "bun", "toastedbun", 3, true)); //machine 20
-        machines.add(new Machine("grill3patty", "patty", "burger", 3, true)); //machine 21
 
         //unlockable forming machine
         machines.add(new Machine("forming3", "meat", "patty", 3, true)); //machine 22
@@ -663,14 +675,14 @@ class ScenarioGameMaster extends GameMaster {
                     game.setScreen(new GameWinScreen(game, (int) totalTimer));
                 }
             }
-        } else if (targetx == 14 && targety == 5 && goldGrillUnlocked) { //this is the gold grill
-            if (Objects.equals(invTop, "patty")) {
-                machines.get(4).process(chef);
-                grill.play(soundVolume);
-            } else if (Objects.equals(invTop, "bun")) {
-                machines.get(3).process(chef);
-                grill.play(soundVolume);
-            }
+        //} else if (targetx == 14 && targety == 5 && goldGrillUnlocked) { //this is the gold grill
+        //    if (Objects.equals(invTop, "patty")) {
+        //        machines.get(4).process(chef);
+        //        grill.play(soundVolume);
+        //    } else if (Objects.equals(invTop, "bun")) {
+        //        machines.get(3).process(chef);
+        //        grill.play(soundVolume);
+        //    }
         } else if (targetx == 14 && targety == 4 && formingStationUnlocked) { //this is the unlockable forming station
             if (Objects.equals(invTop, "meat")) {
                 machines.get(5).process(chef);
@@ -860,7 +872,7 @@ class ScenarioGameMaster extends GameMaster {
 
     public void powerUpEffect(){
         for(PowerUp inst: PowerUp.PowerUps){
-            if(inst.active == true){
+            if(inst.active){
                 if (inst.powerUpType == "rep"){
                     repIncrease();
                     inst.clearTime();
@@ -911,12 +923,24 @@ class ScenarioGameMaster extends GameMaster {
     public void unlockMachine (int machine) {
         switch (machine) {
             case 1:
-                if (money > 5 && !goldGrillUnlocked) {
+                if (money >= 5 && !goldGrillUnlocked) {
                     goldGrillUnlocked = true;
                     money -= 5;
+                    TiledMapTileLayer workingLayer = (TiledMapTileLayer) map.getLayers().get(7);
+                    ArrayList<Machine> tempArray = new ArrayList<>();
+                    for (int i = 0; i < workingLayer.getHeight(); i++) {
+                        for (int j = 0; j < workingLayer.getWidth(); j++) {
+                            if (workingLayer.getCell(j,i) != null){
+                                tempArray.add(new Machine("grill3bun", "bun", "toastedbun", 3, true)); //machine 20
+                                tempArray.add(new Machine("grill3patty", "patty", "burger", 3, true)); //machine 21
+                                machineLocation.put(new Pair<>(j,i),tempArray);
+                                tempArray = new ArrayList<>();
+                            }
+                        }
+                    }
                 }
             case 2:
-                if (money > 5 && !formingStationUnlocked) {
+                if (money >= 5 && !formingStationUnlocked) {
                     formingStationUnlocked = true;
                     money -= 5;
                 }
