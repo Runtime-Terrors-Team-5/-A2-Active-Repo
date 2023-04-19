@@ -29,16 +29,6 @@ public class pizzamachineTest {
     TiledMap map;
 
     ArrayList<Chef> chefs = new ArrayList<>();
-    public pizzamachineTest(){
-
-
-        PiazzaPanicGame Game = new PiazzaPanicGame();
-        //GameScreen NewGame = new GameScreen(Game, 1);
-        //chefs.add(new Chef("A",1,1, Gdx.files.internal(filePath)));
-        //chefs.add(new Chef("Chef", 6, 5, 1, 1, 1, false, new Stack<String>(), 1));
-
-
-    }
 
 
     /**
