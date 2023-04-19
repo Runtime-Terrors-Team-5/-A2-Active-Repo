@@ -10,6 +10,7 @@ import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Septet;
 import org.javatuples.Sextet;
+import org.w3c.dom.Text;
 
 import java.util.*;
 
@@ -782,6 +783,37 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 
+    /**
+     * Used to generate the power ups non randomly, so they can be accessed by the chef
+     * during testing.
+     * @param powerupno
+     */
+    public void generatePowerUpTest(int powerupno){
+        if (powerupno == 0){
+            Texture texture = new Texture(Gdx.files.internal("icons/repIcon.png"));
+            new PowerUp("rep",6,5,1,texture );
+        }
+        else if (powerupno == 1){
+            Texture texture = new Texture(Gdx.files.internal("icons/fastIcon.png"));
+            new PowerUp("cookSpeed",6,1,1,texture );
+        }
+        else if (powerupno == 2){
+            Texture texture = new Texture(Gdx.files.internal("icons/moneyIcon.png"));
+            new PowerUp("money",6,5,1,texture );
+        }
+        else if (powerupno == 3) {
+            Texture texture = new Texture(Gdx.files.internal("icons/minusRepIcon.png"));
+            new PowerUp("minusRep",6,5,1,texture );
+
+        }
+        else if (powerupno == 4){
+            Texture texture = new Texture(Gdx.files.internal("icons/frzTimeIcon.png"));
+            new PowerUp("pauseTime",6,5,1,texture );
+        }
+
+
+
+    }
     public void clearPowerUp(){
         List<PowerUp> found = new ArrayList<>();
         for(PowerUp inst: PowerUp.PowerUps)
@@ -852,7 +884,12 @@ class ScenarioGameMaster extends GameMaster {
         return this.repPoint;
     }
 
-    public void IncreasePowerUpCount(){this.powerUpCount += 1;}
+    /**
+     * Used for testing
+     * @return int money value
+     */
+    public int getMoney(){return this.money;}
+
 
     public float getTotalTimer(){return this.totalTimer;}
 

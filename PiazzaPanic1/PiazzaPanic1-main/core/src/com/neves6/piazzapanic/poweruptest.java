@@ -3,6 +3,7 @@ package com.neves6.piazzapanic;
 import static org.junit.Assert.assertEquals;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeUnit;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Tests whether the interacted power ups collected by
  * the user are applied to the correct chef
+ *
  * heart - increase rep by 1
  * fastIcon - increases cooking/interact speed
  * MoneyIcon - lump increase in money
@@ -41,40 +43,48 @@ public class poweruptest {
         Texture texture = new Texture(Gdx.files.internal("icons/repIcon.png"));
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
-        // move to the real file otherwise it's not connected
-        new PowerUp("rep",1,1,1,texture );
-        game.IncreasePowerUpCount();
-        game.chefs.get(0).setxCoord(1);
-        game.chefs.get(0).setyCoord(1);
+
+        game.generatePowerUpTest(0);
         game.getPowerUp();
         game.powerUpEffect();
-        //game.repIncrease();
         assertEquals(game.getRepPoint(),  3);
 
 
     }
     /**
-     * Tests that speed is increased
+     * Tests that speed is increased by checking the processing time of the machine once the power up is collected
+     * the time waited is 3 seconds compared to 6 seconds for the same pizza test in
+     * pizzamachineTest.testPizzaAddedToChefInventory()s
+     * this means that the power up worked as it took half the time to process the pizza
      */
     @Test
-    public void testFastIcon(){
+    public void testFastIcon() throws InterruptedException {
 
         Texture texture = new Texture(Gdx.files.internal("icons/fastIcon.png"));
         map = new TmxMapLoader().load("tilemaps/level1.tmx");
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
 
-        new PowerUp("cookSpeed",1,1,1,texture );
+        game.generatePowerUpTest(1);
 
-        game.chefs.get(0).setxCoord(1);
-        game.chefs.get(0).setyCoord(1);
         game.getPowerUp();
         game.powerUpEffect();
+
+        game.chefs.get(0).addToInventory("uncooked_pizza");
+
+        game.machines.get(0).process(game.chefs.get(0));
+        System.out.println(game.machines.get(0).getRuntime());
+        TimeUnit.SECONDS.sleep(4);
+        System.out.println(game.machines.get(0).getRuntime());
+        game.machines.get(0).fastForwardTime(true, 3);
+        System.out.println(game.machines.get(0).getRuntime());
+        game.machines.get(0).attemptGetOutput();
+        assertEquals(game.chefs.get(0).getInventory().pop(),  "pizza");
 
 
     }
     /**
-     * Tests that money is increased for each customer served
+     * Tests that money is increased for each customer served, +5 in int money value
      */
     @Test
     public void testMoneyIcon(){
@@ -83,34 +93,33 @@ public class poweruptest {
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
         Texture texture = new Texture(Gdx.files.internal("icons/fastIcon.png"));
-        new PowerUp("cookSpeed",1,1,1,texture );
-
-        game.chefs.get(0).setxCoord(1);
-        game.chefs.get(0).setyCoord(1);
+        game.generatePowerUpTest(2);
         game.getPowerUp();
         game.powerUpEffect();
+
+        assertEquals(game.getMoney(),  5);
+
 
     }
 
 
     /**
-     * Tests that money is doubled for each customer served
+     * Tests that the reputation point is decreased if the power up is collected ( rep -1)
      */
     @Test
-    public void testDoubleMoney(){
+    public void testMinusReputation(){
 
-        Texture texture = new Texture(Gdx.files.internal("icons/fastIcon.png"));
         map = new TmxMapLoader().load("tilemaps/level1.tmx");
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
-        new PowerUp("cookSpeed",1,1,1,texture );
 
-        game.chefs.get(0).setxCoord(1);
-        game.chefs.get(0).setyCoord(1);
+        game.generatePowerUpTest(3);
+
+
         game.getPowerUp();
         game.powerUpEffect();
 
-        //assertEquals(game.getRepPoint(),  5);
+        assertEquals(game.getRepPoint(),  2);
 
     }
     /**
@@ -125,10 +134,8 @@ public class poweruptest {
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
         // insert time freeze here
 
-        new PowerUp("pauseTime",1,1,1,texture );
+        game.generatePowerUpTest(4);
 
-        game.chefs.get(0).setxCoord(1);
-        game.chefs.get(0).setyCoord(1);
         game.getPowerUp();
         game.powerUpEffect();
 
