@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Tests whether the interacted power ups collected by
  * the user are applied to the correct chef
+ *
  * heart - increase rep by 1
  * fastIcon - increases cooking/interact speed
  * MoneyIcon - lump increase in money
@@ -83,7 +84,7 @@ public class poweruptest {
 
     }
     /**
-     * Tests that money is increased for each customer served
+     * Tests that money is increased for each customer served, +5 in int money value
      */
     @Test
     public void testMoneyIcon(){
@@ -103,7 +104,7 @@ public class poweruptest {
 
 
     /**
-     * Tests that the reputation point is decreased if the power up is collected
+     * Tests that the reputation point is decreased if the power up is collected ( rep -1)
      */
     @Test
     public void testMinusReputation(){
