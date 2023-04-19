@@ -185,7 +185,7 @@ class ScenarioGameMaster extends GameMaster {
         }
 
         // loops through the dispenser layers to get the corresponding ingredient
-        for (int k=7;k<=11;k++){
+        for (int k=7;k<=13;k++){
             workingLayer = (TiledMapTileLayer) map.getLayers().get(k);
             for (int i = 0; i < workingLayer.getHeight(); i++) {
                 for (int j = 0; j < workingLayer.getWidth(); j++) {
@@ -202,8 +202,7 @@ class ScenarioGameMaster extends GameMaster {
 
         // new machines for assessment 2
         machines.add(new Machine("Pizza", "uncooked_pizza", "pizza", 3, true)); //machine 17
-        machines.add(new Machine("fridgecheese", "", "cheese", 0, false)); //machine 18
-        machines.add(new Machine("fridgedough", "", "dough", 0, false)); //machine 19
+
 
         //gold cooking machine (unlockable)
         machines.add(new Machine("grill3bun", "bun", "toastedbun", 3, true)); //machine 20
