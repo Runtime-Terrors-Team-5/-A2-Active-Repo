@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
+import org.javatuples.Quintet;
 import org.javatuples.Septet;
 import org.javatuples.Sextet;
 import org.w3c.dom.Text;
@@ -280,6 +281,14 @@ class ScenarioGameMaster extends GameMaster {
 
         }
 
+        ArrayList<Quintet> tempPowerUP = data.getPowerUPs();
+        for (Quintet power:tempPowerUP){
+            new PowerUp((String) power.getValue0(), (Integer) power.getValue1(),
+                (Integer) power.getValue2(),(Integer) power.getValue3(),
+                new Texture(Gdx.files.internal(String.format("icons/%sIcon.png",power.getValue0())))
+                ,(Boolean)power.getValue4());
+        }
+
 
         this.tray = data.getTrayContent();
         this.validOrder = data.getValidOrder();
@@ -308,9 +317,13 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 
+    /**
+     * Takes all important variables from GameMaster and creates a saveData using it
+     * @return saveData containing all variables to be used in save and loading
+     */
     public saveData generateSaveData(){
         return new saveData(chefs, level, customers,selectedChef,machineLocation,tray,totalTimer,
-            repPoint,cusomerRemaining, customerSpawnTimer, validOrder);
+            repPoint,cusomerRemaining, customerSpawnTimer, validOrder, PowerUp.generatePowerData());
     }
     public void setSelectedChef(int selectedChef) {
         this.selectedChef = selectedChef - 1;
@@ -602,8 +615,10 @@ class ScenarioGameMaster extends GameMaster {
         System.out.println(targetMachines);
         for (Machine mac :
             targetMachines) {
+            // does ingredient processing
             if (mac.getInput().equals(invTop)){
                 mac.process(chef);
+            // dispenses ingredient
             } else if (mac.getInput().equals("")) {
                 mac.process(chef);
             }
@@ -745,7 +760,7 @@ class ScenarioGameMaster extends GameMaster {
 
                 randomInt = rand.nextInt(5);
                 if (randomInt == 0){
-                    powerUpType = "cookSpeed";
+                    powerUpType = "fast";
                     texture = new Texture(Gdx.files.internal("icons/fastIcon.png"));
                 }
                 else if (randomInt == 1){
@@ -757,7 +772,7 @@ class ScenarioGameMaster extends GameMaster {
                     texture = new Texture(Gdx.files.internal("icons/minusRepIcon.png"));
                 }
                 else if (randomInt == 3){
-                    powerUpType = "pauseTime";
+                    powerUpType = "frzTime";
                     texture = new Texture(Gdx.files.internal("icons/frzTimeIcon.png"));
                 }
                 else if (randomInt == 4){

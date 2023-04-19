@@ -27,10 +27,12 @@ public class saveData implements Serializable {
     private float customerSpawnTimer;
     private ArrayList validOrder;
 
+    private ArrayList powerUPs;
+
     public saveData(ArrayList<Chef> chefs,int level, Stack<Customer> customers,int selectedChef,
         HashMap<Pair<Integer, Integer>,ArrayList<Machine>> machines, ArrayList<String> trayContent,
         float timeElapsed, int repPoint,
-        int customerRemaining, float customerSpawnTimer, ArrayList validOrder){
+        int customerRemaining, float customerSpawnTimer, ArrayList validOrder, ArrayList powerUps){
 
         this.chefdata = new ArrayList<>();
         for (Chef i:chefs) {
@@ -63,6 +65,8 @@ public class saveData implements Serializable {
         this.customerSpawnTimer = customerSpawnTimer;
 
         this.validOrder = validOrder;
+
+        this.powerUPs = powerUps;
     }
 
     public ScenarioGameMaster loadGameMaster(PiazzaPanicGame game){
@@ -91,4 +95,6 @@ public class saveData implements Serializable {
     public float getCustomerSpawnTimer() {return customerSpawnTimer;}
 
     public ArrayList getValidOrder(){return validOrder;}
+
+    public ArrayList getPowerUPs() {return powerUPs;}
 }
