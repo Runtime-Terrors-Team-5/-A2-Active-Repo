@@ -3,6 +3,7 @@ package com.neves6.piazzapanic;
 import static org.junit.Assert.assertEquals;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeUnit;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import org.junit.Test;
@@ -50,10 +51,13 @@ public class poweruptest {
 
     }
     /**
-     * Tests that speed is increased
+     * Tests that speed is increased by checking the processing time of the machine once the power up is collected
+     * the time waited is 3 seconds compared to 6 seconds for the same pizza test in
+     * pizzamachineTest.testPizzaAddedToChefInventory()s
+     * this means that the power up worked as it took half the time to process the pizza
      */
     @Test
-    public void testFastIcon(){
+    public void testFastIcon() throws InterruptedException {
 
         Texture texture = new Texture(Gdx.files.internal("icons/fastIcon.png"));
         map = new TmxMapLoader().load("tilemaps/level1.tmx");
@@ -62,11 +66,19 @@ public class poweruptest {
 
         game.generatePowerUpTest(1);
 
-
         game.getPowerUp();
         game.powerUpEffect();
 
-        assertEquals(game.getMoney(),  5);
+        game.chefs.get(0).addToInventory("uncooked_pizza");
+
+        game.machines.get(0).process(game.chefs.get(0));
+        System.out.println(game.machines.get(0).getRuntime());
+        TimeUnit.SECONDS.sleep(4);
+        System.out.println(game.machines.get(0).getRuntime());
+        game.machines.get(0).fastForwardTime(true, 3);
+        System.out.println(game.machines.get(0).getRuntime());
+        game.machines.get(0).attemptGetOutput();
+        assertEquals(game.chefs.get(0).getInventory().pop(),  "pizza");
 
 
     }

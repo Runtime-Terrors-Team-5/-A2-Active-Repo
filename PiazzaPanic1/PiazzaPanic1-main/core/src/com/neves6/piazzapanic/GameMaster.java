@@ -785,8 +785,8 @@ class ScenarioGameMaster extends GameMaster {
     }
 
     /**
-     * Used to generate the powerups non randomly so they can be accessed by the chef
-     * during testing
+     * Used to generate the power ups non randomly, so they can be accessed by the chef
+     * during testing.
      * @param powerupno
      */
     public void generatePowerUpTest(int powerupno){
@@ -885,9 +885,12 @@ class ScenarioGameMaster extends GameMaster {
         return this.repPoint;
     }
 
+    /**
+     * Used for testing
+     * @return int money value
+     */
     public int getMoney(){return this.money;}
 
-    public void IncreasePowerUpCount(){this.powerUpCount += 1;}
 
     public float getTotalTimer(){return this.totalTimer;}
 
