@@ -50,8 +50,15 @@ jobs:
           cd PiazzaPanic1/PiazzaPanic1-main/
           gradle test
       - name: Publish Test Report
-        uses: mikepenz/action-junit-report@v3
-        if: always() # always run even if the previous step fails
+        #mikepenz/action-junit-report@v3
+        uses: actions/upload-artifact@v3.1.1
         with:
-          report_paths: '**/build/test-results/test/TEST-*.xml'
-          detailed_summary: True
+            name: junit-report
+            report_paths: '**/build/test-results/test/TEST-*.xml'
+            detailed_summary: True
+        
+        # Temporarily removing code to try and convert existing solution into an artefact.
+        #if: always() # always run even if the previous step fails
+        #with:
+          #report_paths: '**/build/test-results/test/TEST-*.xml'
+          #detailed_summary: True
