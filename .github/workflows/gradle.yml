@@ -55,3 +55,9 @@ jobs:
         with:
           report_paths: '**/build/test-results/test/TEST-*.xml'
           detailed_summary: True
+      - name: Upload Library JAR
+        uses: actions/upload-artifact@v3.1.1
+        with:
+            name: lib.jar
+            path: PiazzaPanic1.jar
+
