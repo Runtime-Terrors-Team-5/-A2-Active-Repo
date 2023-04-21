@@ -161,7 +161,7 @@ public class GameScreen extends ScreenAdapter {
         renderer.render(renderableLayers);
 
         game.batch.begin();
-        for (int i=1;i<4;i++){
+        for (int i=1;i<=gm.getChefsLength();i++){
             game.batch.draw(gm.getChef(i).getTxNow(), gm.getChef(i).getxCoord() * wScale,
                 gm.getChef(i).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
 

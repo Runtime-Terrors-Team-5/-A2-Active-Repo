@@ -148,12 +148,12 @@ class Chef extends Person {
     /**
      * Chef constructor.
      * @param name
-     * @param xCoord
-     * @param yCoord
+     * @param xCoord x coordinate of the chef
+     * @param yCoord y coordinate of the chef
      * @param chopSpeed
      * @param frySpeed
      * @param bakeSpeed
-     * @param isStickied
+     * @param isStickied stickys the chef so they cannot move when interacting with a machine
      * @param inventory
      * @param textureSet
      */
@@ -173,9 +173,9 @@ class Chef extends Person {
     }
 
     /**
-     *
+     * constructor for use when loading the game from a file
      * @param name
-     * @param chef
+     * @param chef tuple containing the data for the chef
      */
 
     public Chef(String name,Sextet chef){
@@ -256,6 +256,10 @@ class Chef extends Person {
 
     public int getChefNumb(){return chefNumb;}
 
+    /**
+     * Takes the important variables from the chef and compiles into tuple for saveData
+     * @return Tuple of Chef variables
+     */
     public Sextet<Integer, Integer, String, Stack<String>, Boolean, Integer> getChefInfo(){
         return new Sextet<>(getxCoord(),getyCoord(),getFacing(),getInventory(),getIsStickied(),getChefNumb());
     }

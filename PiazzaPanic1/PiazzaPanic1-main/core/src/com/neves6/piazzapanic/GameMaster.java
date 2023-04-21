@@ -54,6 +54,7 @@ class ScenarioGameMaster extends GameMaster {
     Texture repIcon;
     int cusomerRemaining;
     private float customerSpawnTimer;
+    private float finalSpawnTimer;
     int customerPersonalTimer; //this sets the timer of the customer til they reduce the players reputation points
 
     boolean goldGrillUnlocked = false; //defaults to true until we figure out how to "unlock" it
@@ -83,7 +84,9 @@ class ScenarioGameMaster extends GameMaster {
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
 
         if (this.level == 1){
+
             this.customerSpawnTimer = 15;
+            this.finalSpawnTimer = customerSpawnTimer;
             customerPersonalTimer = 40;
             validOrder = new ArrayList<>();
             validOrder.add("salad");
@@ -94,6 +97,7 @@ class ScenarioGameMaster extends GameMaster {
 
         if (this.level == 2){
             this.customerSpawnTimer = 10;
+            this.finalSpawnTimer = customerSpawnTimer;
             customerPersonalTimer = 30;
             validOrder = new ArrayList<>();
             validOrder.add("salad");
@@ -104,6 +108,7 @@ class ScenarioGameMaster extends GameMaster {
 
         if (this.level == 3){
             this.customerSpawnTimer = 5;
+            this.finalSpawnTimer = customerSpawnTimer;
             customerPersonalTimer = 20;
             validOrder = new ArrayList<>();
             validOrder.add("salad");
@@ -198,7 +203,7 @@ class ScenarioGameMaster extends GameMaster {
                 }
             }
         }
-        System.out.println(machineLocation);
+        //System.out.println(machineLocation);
 
         totalTimer = 0f;
 
@@ -229,6 +234,7 @@ class ScenarioGameMaster extends GameMaster {
     }
     /**
      * signiture for loading feature
+     * loads all SCenarioGameMaster variables from data that is passed in
      */
     public ScenarioGameMaster(saveData data, PiazzaPanicGame game) {
         this.game = game;
@@ -472,6 +478,13 @@ class ScenarioGameMaster extends GameMaster {
         return customers.get(0);
     }
 
+    public int getChefsLength(){return chefs.size();}
+
+    /**
+     * Spawns a customer when called
+     * customer is added to the customer stack
+     * resets the customerSpawnTimer to finalSpawnTimer when called
+     */
     public void spawnCustomer(){
         if (cusomerRemaining <= 0){return;}
         String order = (String) validOrder.get(rand.nextInt((validOrder.size())));
@@ -479,20 +492,7 @@ class ScenarioGameMaster extends GameMaster {
         if (!endless) {
             this.cusomerRemaining -= 1;
         }
-        switch (this.level) {
-            case 1:
-                this.customerSpawnTimer = 5;
-                break;
-            case 2:
-                this.customerSpawnTimer = 5;
-                break;
-            case 3:
-                this.customerSpawnTimer = 5;
-                break;
-            case 4:
-                this.customerSpawnTimer = 5;
-                break;
-        }
+        this.customerSpawnTimer = finalSpawnTimer;
     }
 
     /**
@@ -501,14 +501,14 @@ class ScenarioGameMaster extends GameMaster {
      * @param delta time since last frame.
      */
     public void tickUpdate(float delta) {
-        
+        // loops through the dictionary to update the runtime of the machines which are active
         for (Pair<Integer, Integer> tempPair: machineLocation.keySet()){
             for (Machine mac :
                 machineLocation.get(tempPair)) {
                 if (mac.getActive()) {
                     mac.incrementRuntime(delta);
                     for(PowerUp inst: PowerUp.PowerUps) {
-                        if (inst.powerUpType == "cookSpeed" && inst.active) {
+                        if (Objects.equals(inst.powerUpType, "cookSpeed") && inst.active) {
                             mac.incrementRuntime(delta);
                         }
                     }
@@ -520,7 +520,7 @@ class ScenarioGameMaster extends GameMaster {
         boolean pauseTime = false;
         for (int i = 0; i < customers.size(); i++) {
             for(PowerUp inst: PowerUp.PowerUps){
-                if (inst.powerUpType == "pauseTime" && inst.active){
+                if (Objects.equals(inst.powerUpType, "pauseTime") && inst.active){
                     pauseTime = true;
                 }
             }
@@ -560,6 +560,7 @@ class ScenarioGameMaster extends GameMaster {
 
     /**
      * Attempts to cause an interaction between the currently selected chef and the machine in front of them.
+     * calls every time E is pressed
      */
     public void tryInteract() {
         Chef chef = chefs.get(selectedChef);
@@ -593,20 +594,21 @@ class ScenarioGameMaster extends GameMaster {
         //System.out.println("Target: " + targetx + ", " + targety + "\nFacing: " + chef.getFacing());
 
 
-        String invTop = "null";
 
+        String invTop;
         if (chef.getInventory().empty()) {
             invTop = "null";
         }
 
-        if (!chef.getInventory().empty()) {
+        else{
             invTop = chef.getInventory().peek();
         }
 
+        // key to query the dictionary with the location of the machine
         Pair<Integer, Integer> target = new Pair<>(targetx,targety);
         try{
         ArrayList<Machine> targetMachines = machineLocation.get(target);
-        System.out.println(targetMachines);
+        //System.out.println(targetMachines);
         for (Machine mac :
             targetMachines) {
             // does ingredient processing
@@ -669,6 +671,7 @@ class ScenarioGameMaster extends GameMaster {
 
     /**
      * Adds the top item from the currently selected chef's inventory to the tray.
+     * Returns the completed item to Chefs inventory if all required items are in the tray
      */
     private void addToTray(boolean isItPizza) {
         Chef chef = chefs.get(selectedChef);
@@ -761,7 +764,7 @@ class ScenarioGameMaster extends GameMaster {
                     texture = new Texture(Gdx.files.internal("icons/moneyIcon.png"));
                 }
 
-                while (powerUpCollisionCheck == false) {
+                while (!powerUpCollisionCheck) {
                     tempX = rand.nextInt(13) + 1;
                     tempY = rand.nextInt(3) + 4;
                     if ((tempX == chefs.get(0).getxCoord() && tempY == chefs.get(0).getyCoord()) ||
@@ -830,7 +833,8 @@ class ScenarioGameMaster extends GameMaster {
                     inst.getyCoord() == chefs.get(getSelectedChef()-1).getyCoord()){
                 inst.clearxCoord();
                 inst.clearyCoord();
-                if(inst.powerUpType == "pauseTime" || inst.powerUpType == "cookSpeed"){
+                if(Objects.equals(inst.powerUpType, "pauseTime") ||
+                    Objects.equals(inst.powerUpType, "cookSpeed")){
                     inst.setTime();
                 }
                 inst.setActive();
@@ -842,15 +846,15 @@ class ScenarioGameMaster extends GameMaster {
     public void powerUpEffect(){
         for(PowerUp inst: PowerUp.PowerUps){
             if(inst.active){
-                if (inst.powerUpType == "rep"){
+                if (Objects.equals(inst.powerUpType, "rep")){
                     repIncrease();
                     inst.clearTime();
                 }
-                else if (inst.powerUpType == "minusRep"){
+                else if (Objects.equals(inst.powerUpType, "minusRep")){
                     repDecrease();
                     inst.clearTime();
                 }
-                else if (inst.powerUpType == "money"){
+                else if (Objects.equals(inst.powerUpType, "money")){
                     money += 5;
                     inst.clearTime();
                 }
