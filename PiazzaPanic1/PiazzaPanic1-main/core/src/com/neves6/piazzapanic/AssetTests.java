@@ -14,8 +14,8 @@ public class AssetTests {
 
     @Test
     public void testLevelSelectorExists() {
-        assertTrue("levelselector.atlas", Gdx.files.internal("levelselector.atlas").exists());
-        assertTrue(" levelselector.png", Gdx.files.internal(" levelselector.png").exists());
+        assertTrue("levelselector.atlas", Gdx.files.internal("buttons/levelselector/levelselector.atlas").exists());
+        assertTrue(" levelselector.png", Gdx.files.internal("buttons/levelselector/levelselector.png").exists());
     }
     @Test
     public void testTitleAssetsExists() {
