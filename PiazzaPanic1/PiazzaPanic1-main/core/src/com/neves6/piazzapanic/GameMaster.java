@@ -6,12 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import org.javatuples.Pair;
-import org.javatuples.Quartet;
-import org.javatuples.Quintet;
-import org.javatuples.Septet;
-import org.javatuples.Sextet;
-import org.w3c.dom.Text;
+import org.javatuples.*;
 
 import java.util.*;
 
@@ -394,21 +389,6 @@ class ScenarioGameMaster extends GameMaster {
     }
 
     /**
-     * Generates the display text for the chefs' inventories.
-     * @return String containing the display text.
-     */
-    public String generateHoldingsText() {
-        String comp = "";
-        comp += "Chef 1 is holding:\n";
-        comp += chefs.get(0).getInventory().toString();
-        comp += "\nChef 2 is holding:\n";
-        comp += chefs.get(1).getInventory().toString();
-        comp += "\nChef 3 is holding:\n";
-        comp += chefs.get(2).getInventory().toString();
-        return comp;
-    }
-
-    /**
      * Generates the display text for the customers' tray and order.
      * @return String containing the display text.
      */
@@ -736,30 +716,30 @@ class ScenarioGameMaster extends GameMaster {
             int tempX = 0;
             int tempY = 0;
             Random rand = new Random();
-            int randomInt = rand.nextInt(500);
-            if (randomInt == 49){
-                int time = 200;
+            int randomInt = rand.nextInt(600);
+            if (randomInt == 0){
+                int time = 300;
                 String powerUpType = "";
                 Texture texture = new Texture(Gdx.files.internal("icons/fastIcon.png"));
 
-                randomInt = rand.nextInt(5);
-                if (randomInt == 0){
+                randomInt = rand.nextInt(100);
+                if (randomInt < 30){
                     powerUpType = "fast";
                     texture = new Texture(Gdx.files.internal("icons/fastIcon.png"));
                 }
-                else if (randomInt == 1){
+                else if (randomInt < 45){
                     powerUpType = "rep";
                     texture = new Texture(Gdx.files.internal("icons/repIcon.png"));
                 }
-                else if (randomInt == 2){
+                else if (randomInt < 55){
                     powerUpType = "minusRep";
                     texture = new Texture(Gdx.files.internal("icons/minusRepIcon.png"));
                 }
-                else if (randomInt == 3){
+                else if (randomInt < 85){
                     powerUpType = "frzTime";
                     texture = new Texture(Gdx.files.internal("icons/frzTimeIcon.png"));
                 }
-                else if (randomInt == 4){
+                else if (randomInt < 100){
                     powerUpType = "money";
                     texture = new Texture(Gdx.files.internal("icons/moneyIcon.png"));
                 }
@@ -769,7 +749,8 @@ class ScenarioGameMaster extends GameMaster {
                     tempY = rand.nextInt(3) + 4;
                     if ((tempX == chefs.get(0).getxCoord() && tempY == chefs.get(0).getyCoord()) ||
                             (tempX == chefs.get(1).getxCoord() && tempY == chefs.get(1).getyCoord()) ||
-                            (tempX == chefs.get(2).getxCoord() && tempY == chefs.get(2).getyCoord()))
+                            (tempX == chefs.get(2).getxCoord() && tempY == chefs.get(2).getyCoord()) ||
+                            (tempX == 1 && tempY == 5))
                     { powerUpCollisionCheck = false; }
                     else { powerUpCollisionCheck = true; }
                 }

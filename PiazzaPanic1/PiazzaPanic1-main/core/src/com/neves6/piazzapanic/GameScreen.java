@@ -34,10 +34,8 @@ public class GameScreen extends ScreenAdapter {
     int INITIAL_HEIGHT;
     int[] renderableLayers = { 0, 1, 2 };
     Texture selectedTexture;
-    Texture recipes;
     Texture bar1;
     Texture bar2;
-    Texture chefselected;
 
 
     Music music_background;
@@ -161,10 +159,15 @@ public class GameScreen extends ScreenAdapter {
         renderer.render(renderableLayers);
 
         game.batch.begin();
-        for (int i=1;i<=gm.getChefsLength();i++){
+        game.batch.draw(gm.getChef(gm.getSelectedChef()).getUiIcon(), 16 * wScale,7 * wScale,150 * unitScale, 140 * unitScale);
+        System.out.println(gm.getSelectedChef());
+        for (int i=1;i<4;i++){
             game.batch.draw(gm.getChef(i).getTxNow(), gm.getChef(i).getxCoord() * wScale,
                 gm.getChef(i).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
-
+            gm.getChef(i).setInventoryTextures();
+            for(int j=0;j<gm.getChef(i).getInvItems().size();j++){
+                if(!gm.getChef(i).getInvItems().isEmpty()){ game.batch.draw(gm.getChef(i).getInvItems().get(j), (19 - j) * wScale, (float) ((10 - ((i-1)*1.425)) * wScale),42 * unitScale, 42 * unitScale);}
+            }
         }
         for(PowerUp inst: PowerUp.PowerUps){
             if(!inst.getActive()) {
@@ -182,8 +185,6 @@ public class GameScreen extends ScreenAdapter {
         game.batch.draw(selectedTexture, gm.getChef(gm.getSelectedChef()).getxCoord() * wScale,
             gm.getChef(gm.getSelectedChef()).getyCoord() * hScale, 32 * unitScale,
             32 * unitScale);
-
-        game.batch.draw(gm.getChef(gm.getSelectedChef()).getUiIcon(), 15 * wScale,8 * wScale,150 * unitScale, 75 * unitScale);
 
         if (gm.getCustomersSize() >= 1) {
             game.batch.draw(bar2,  8 * wScale, 3 * hScale, 32 * unitScale, 10 * unitScale);
@@ -215,9 +216,8 @@ public class GameScreen extends ScreenAdapter {
         }
 
         //game.batch.draw(recipes, 20, 20);
-        fontBlack.draw(game.batch, gm.generateHoldingsText(), winWidth - (6*(winWidth/8f)) + 35, winHeight - 20, (3*(winWidth/8f)), -1, true);
-        fontBlack.draw(game.batch, gm.generateCustomersTrayText(), winWidth - (3*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
-        fontBlack.draw(game.batch, gm.generateMoneyText(), winWidth - (3*(winWidth/8f)), winHeight - 200, (3*(winWidth/8f)), -1, true);
+        fontBlack.draw(game.batch, gm.generateCustomersTrayText(), winWidth - (5*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
+        fontBlack.draw(game.batch, gm.generateMoneyText(), winWidth - (2*(winWidth/8f)), winHeight - 400, (3*(winWidth/8f)), -1, true);
         fontBlack.draw(game.batch, gm.generateTimerText(), winWidth - (winWidth/3f), 40, (winWidth/3f), -1, false);
         game.batch.end();
 

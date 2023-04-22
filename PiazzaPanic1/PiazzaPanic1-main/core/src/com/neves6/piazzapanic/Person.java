@@ -5,8 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import org.javatuples.Quartet;
 import org.javatuples.Sextet;
 
-import java.util.Objects;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Base person class.
@@ -144,6 +143,7 @@ class Chef extends Person {
     private int chefNumb;
     // holds textures so it can be run independently
     private FileHandle file;
+    private List<Texture> invItems;
 
     /**
      * Chef constructor.
@@ -168,8 +168,9 @@ class Chef extends Person {
         this.txDown =  new Texture("people/chef" + textureSet + "down.png");
         this.txLeft =  new Texture("people/chef" + textureSet + "left.png");
         this.txRight = new Texture("people/chef" + textureSet + "right.png");
-        this.uiIcon = new Texture("icons/chefmenu" + textureSet + ".png");
+        this.uiIcon = new Texture("icons/cheficons.png");
         this.txNow = txDown;
+        this.invItems = new ArrayList<>();
     }
 
     /**
@@ -189,12 +190,13 @@ class Chef extends Person {
         this.txDown =  new Texture("people/chef" + chef.getValue5() + "down.png");
         this.txLeft =  new Texture("people/chef" + chef.getValue5() + "left.png");
         this.txRight = new Texture("people/chef" + chef.getValue5() + "right.png");
-        this.uiIcon = new Texture("icons/chefmenu" + chef.getValue5() + ".png");
+        this.uiIcon = new Texture("icons/cheficons.png");
 
         if (Objects.equals(this.facing, "up")){this.txNow = txUp;}
         else if (Objects.equals(this.facing, "down")){this.txNow = txDown;}
         else if (Objects.equals(this.facing, "left")){this.txNow = txLeft;}
         else if (Objects.equals(this.facing, "right")){this.txNow = txRight;}
+        this.invItems = new ArrayList<>();
     }
 
 
@@ -216,6 +218,7 @@ class Chef extends Person {
         return machineInteractingWith;
     }
 
+    public List<Texture> getInvItems(){return invItems;}
     //Inventory management
     public Stack<String> getInventory(){
         return inventory;
@@ -251,6 +254,20 @@ class Chef extends Person {
             case "right":
                 this.txNow = txRight;
                 break;
+        }
+    }
+
+    public void setInventoryTextures(){
+        if(!invItems.isEmpty()) {
+            invItems.clear();
+        }
+        List<String> items = Arrays.asList(new String[]{"bun", "burger", "hamburger", "lettuce", "lettucechopped", "meat", "onion", "onionchopped", "patty", "pizza", "salad", "toastedbun", "tomato", "tomatochopped"});
+        for (int i=0;i<(this.inventory.size()) && i<3;i++){
+            for(int j = 0; j < items.size(); j++){
+                if (Objects.equals(this.inventory.get(i), items.get(j))){
+                    invItems.add(new Texture("foods/" + (items.get(j)) +".png"));
+                }
+            }
         }
     }
 
