@@ -6,12 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import org.javatuples.Pair;
-import org.javatuples.Quartet;
-import org.javatuples.Quintet;
-import org.javatuples.Septet;
-import org.javatuples.Sextet;
-import org.w3c.dom.Text;
+import org.javatuples.*;
 
 import java.util.*;
 
@@ -391,21 +386,6 @@ class ScenarioGameMaster extends GameMaster {
         }
         int tempCellTileID = collisionLayer.getCell(x, y).getTile().getId();
         return tempCellTileID != 37 && tempCellTileID != 39;
-    }
-
-    /**
-     * Generates the display text for the chefs' inventories.
-     * @return String containing the display text.
-     */
-    public String generateHoldingsText() {
-        String comp = "";
-        comp += "Chef 1 is holding:\n";
-        comp += chefs.get(0).getInventory().toString();
-        comp += "\nChef 2 is holding:\n";
-        comp += chefs.get(1).getInventory().toString();
-        comp += "\nChef 3 is holding:\n";
-        comp += chefs.get(2).getInventory().toString();
-        return comp;
     }
 
     /**
