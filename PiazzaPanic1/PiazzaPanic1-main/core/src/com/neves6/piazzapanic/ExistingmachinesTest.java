@@ -17,6 +17,11 @@ public class ExistingmachinesTest {
     ArrayList<Machine> machines = new ArrayList<>();
 
     TiledMap map;
+
+    /**
+     * Tests machine outputs are correct
+     * once a certain machine is instantiated so that it's been instantiated correctly
+     */
     @Test
     public void testMachineOutput(){
 
@@ -46,6 +51,8 @@ public class ExistingmachinesTest {
     /**
      * Old way of testing machines before code refactor
      * Test used for original machines
+     * Originally the machines were held in a machine type array in the GameMaster.java file
+     *
      * @throws InterruptedException
      */
     @Test
