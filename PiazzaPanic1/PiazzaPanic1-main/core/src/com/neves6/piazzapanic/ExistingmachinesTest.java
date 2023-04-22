@@ -41,4 +41,8 @@ public class ExistingmachinesTest {
         assertEquals(machines.get(8).getOutput(),  "onion");
     }
 
+    public void testAddItemToChefInventory(){
+        // waiting for new method  of machines and how to access them
+    }
+
 }
