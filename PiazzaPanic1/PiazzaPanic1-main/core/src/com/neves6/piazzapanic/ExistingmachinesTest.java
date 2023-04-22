@@ -74,4 +74,16 @@ public class ExistingmachinesTest {
         }
     }
 
+    /**
+     * New method of testing machines after code refactor
+     * @throws InterruptedException
+     */
+    @Test
+    public void testNewAddItemToChefInventory() throws InterruptedException {
+
+        map = new TmxMapLoader().load("tilemaps/level1.tmx");
+        PiazzaPanicGame A = new PiazzaPanicGame();
+        ScenarioGameMaster game = new ScenarioGameMaster(A, map, 1, 1, 1);
+    }
+
 }
