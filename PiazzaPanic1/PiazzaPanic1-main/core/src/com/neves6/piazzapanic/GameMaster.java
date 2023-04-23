@@ -185,8 +185,20 @@ class ScenarioGameMaster extends GameMaster {
             }
         }
 
+        //pizza grill
+        workingLayer = (TiledMapTileLayer) map.getLayers().get(9);
+        for (int i = 0; i < workingLayer.getHeight(); i++) {
+            for (int j = 0; j < workingLayer.getWidth(); j++) {
+                if (workingLayer.getCell(j,i) != null){
+                    tempArray.add(new Machine("Pizza", "uncooked_pizza", "pizza", 3, true));
+                    machineLocation.put(new Pair<>(j,i),tempArray);
+                    tempArray = new ArrayList<>();
+                }
+            }
+        }
+
         // loops through the dispenser layers to get the corresponding ingredient
-        for (int k=9;k<=15;k++){
+        for (int k=10;k<=16;k++){
             workingLayer = (TiledMapTileLayer) map.getLayers().get(k);
             for (int i = 0; i < workingLayer.getHeight(); i++) {
                 for (int j = 0; j < workingLayer.getWidth(); j++) {
@@ -201,9 +213,6 @@ class ScenarioGameMaster extends GameMaster {
         //System.out.println(machineLocation);
 
         totalTimer = 0f;
-
-        // new machines for assessment 2
-        machines.add(new Machine("Pizza", "uncooked_pizza", "pizza", 3, true)); //machine 17
 
 
         // disposal and tray/serving handled separately
@@ -638,10 +647,6 @@ class ScenarioGameMaster extends GameMaster {
                 if (customers.size() == 0 && cusomerRemaining == 0){
                     game.setScreen(new GameWinScreen(game, (int) totalTimer));
                 }
-            }
-        } else if (targetx == 14 && targety == 6) { //this is the unlockable forming station
-            if (Objects.equals(invTop, "uncooked_pizza")) {
-                machines.get(0).process(chef);
             }
         } else if (targetx == 11 && targety == 3) {
             addToTray(true);
