@@ -14,6 +14,7 @@ public class IntroScreen extends ScreenAdapter {
     PiazzaPanicGame game;
     OrthographicCamera camera;
     SpriteBatch batch;
+    Texture RuntimeTerrorLogo;
     Animation<TextureRegion> introAnimation;
     Texture introSheet;
     BitmapFont font;
@@ -46,6 +47,7 @@ public class IntroScreen extends ScreenAdapter {
             }
         }
         introAnimation = new Animation<TextureRegion>(0.125f, walkFrames);
+        RuntimeTerrorLogo = new Texture("Runtime_Terrors_Logo.png");
         batch = new SpriteBatch();
         stateTime = 0f;
     }
@@ -65,8 +67,9 @@ public class IntroScreen extends ScreenAdapter {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.batch.draw(currentFrame, winWidth / 2f - winWidth/10f, winHeight / 2f - winWidth/10f, winWidth/5f, winWidth/5f);
-        font.draw(game.batch, "NEVES6\nAssessment 1\nIndev Build", winWidth / 2f - winWidth/10f, winHeight / 2f - winWidth/9f, winWidth/5f, 1, false);
+        //game.batch.draw(currentFrame, winWidth / 2f - winWidth/10f, winHeight / 2f - winWidth/10f, winWidth/5f, winWidth/5f)
+        game.batch.draw(RuntimeTerrorLogo, winWidth / 2f - winWidth/10f, winHeight / 2f - winWidth/10f, winWidth/5f, winWidth/5f);
+        font.draw(game.batch, "Runtime Terrors\nAssessment 2", winWidth / 2f - winWidth/10f, winHeight / 2f - winWidth/9f, winWidth/5f, 1, false);
         game.batch.end();
 
         if (stateTime > 2f) {
