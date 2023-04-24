@@ -1,10 +1,10 @@
 package com.neves6.piazzapanic;
 
 import com.badlogic.gdx.graphics.Texture;
+import org.javatuples.Quintet;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.javatuples.Quintet;
 
 public class PowerUp {
 
@@ -77,14 +77,6 @@ public class PowerUp {
 
     public void setActive() {
         this.active = true;
-    }
-
-    public void powerUpEffect() {
-        for (PowerUp inst : PowerUp.PowerUps) {
-            if (inst.active == true) {
-                System.out.println("yay");
-            }
-        }
     }
 
     public static ArrayList<Quintet> generatePowerData() {
