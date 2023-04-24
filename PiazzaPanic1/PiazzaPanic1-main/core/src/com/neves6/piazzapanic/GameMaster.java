@@ -56,6 +56,8 @@ class ScenarioGameMaster extends GameMaster {
 
     boolean formingStationUnlocked = false; //defaults to true til we figure out how to unlock it
 
+    boolean pizzaStationUnlocked = false;
+
     boolean endless;
     HashMap<Pair<Integer, Integer>, ArrayList<Machine>> machineLocation;
     int money = 0;
@@ -88,7 +90,7 @@ class ScenarioGameMaster extends GameMaster {
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
-            validOrder.add("pizza");
+            //validOrder.add("pizza");
             endless = false;
         }
 
@@ -99,7 +101,6 @@ class ScenarioGameMaster extends GameMaster {
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
-            validOrder.add("pizza");
             endless = false;
         }
 
@@ -110,7 +111,6 @@ class ScenarioGameMaster extends GameMaster {
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
-            validOrder.add("pizza");
             endless = false;
         }
 
@@ -120,7 +120,6 @@ class ScenarioGameMaster extends GameMaster {
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
-            validOrder.add("pizza");
             endless = true;
         }
         
@@ -188,16 +187,7 @@ class ScenarioGameMaster extends GameMaster {
         }
 
         //pizza grill
-        workingLayer = (TiledMapTileLayer) map.getLayers().get(9);
-        for (int i = 0; i < workingLayer.getHeight(); i++) {
-            for (int j = 0; j < workingLayer.getWidth(); j++) {
-                if (workingLayer.getCell(j,i) != null){
-                    tempArray.add(new Machine("Pizza", "uncooked_pizza", "pizza", 3, true));
-                    machineLocation.put(new Pair<>(j,i),tempArray);
-                    tempArray = new ArrayList<>();
-                }
-            }
-        }
+
 
         // loops through the dispenser layers to get the corresponding ingredient
         for (int k=10;k<=16;k++){
@@ -923,7 +913,6 @@ class ScenarioGameMaster extends GameMaster {
                             tempArray.add(new Machine("grill3bun", "bun", "toastedbun", 3, true)); //machine 20
                             tempArray.add(new Machine("grill3patty", "patty", "burger", 3, true)); //machine 21
                             machineLocation.put(new Pair<>(j,i),tempArray);
-                            System.out.println(tempArray);
                             tempArray = new ArrayList<>();
                         }
                     }
@@ -942,7 +931,25 @@ class ScenarioGameMaster extends GameMaster {
                         if (workingLayer.getCell(j,i) != null){
                             tempArray.add(new Machine("forming3", "meat", "patty", 3, true));
                             machineLocation.put(new Pair<>(j,i),tempArray);
-                            System.out.println(tempArray);
+                            tempArray = new ArrayList<>();
+                        }
+                    }
+                }
+            }
+        }
+        if (machine == 3 && money >=5) {
+            if (!pizzaStationUnlocked) {
+                System.out.println("pizza station unlocked!");
+                validOrder.add("pizza");
+                pizzaStationUnlocked = true;
+                money -= 5;
+                TiledMapTileLayer workingLayer = (TiledMapTileLayer) map.getLayers().get(9);
+                ArrayList<Machine> tempArray = new ArrayList<>();
+                for (int i = 0; i < workingLayer.getHeight(); i++) {
+                    for (int j = 0; j < workingLayer.getWidth(); j++) {
+                        if (workingLayer.getCell(j, i) != null) {
+                            tempArray.add(new Machine("Pizza", "uncooked_pizza", "pizza", 3, true));
+                            machineLocation.put(new Pair<>(j, i), tempArray);
                             tempArray = new ArrayList<>();
                         }
                     }

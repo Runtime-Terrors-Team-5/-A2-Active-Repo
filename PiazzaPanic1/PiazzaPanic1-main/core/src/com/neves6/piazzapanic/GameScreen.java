@@ -139,6 +139,9 @@ public class GameScreen extends ScreenAdapter {
                 if (keyCode == Input.Keys.V) {
                     gm.unlockMachine(2); //unlocks the forming station
                 }
+                if (keyCode == Input.Keys.B) {
+                    gm.unlockMachine(3); //unlocks the forming station
+                }
                 return true;
             }
         });
@@ -163,7 +166,7 @@ public class GameScreen extends ScreenAdapter {
 
         game.batch.begin();
         game.batch.draw(gm.getChef(gm.getSelectedChef()).getUiIcon(), 16 * wScale,7 * wScale,150 * unitScale, 140 * unitScale);
-        System.out.println(gm.getSelectedChef());
+        //System.out.println(gm.getSelectedChef());
         for (int i=1;i<4;i++){
             game.batch.draw(gm.getChef(i).getTxNow(), gm.getChef(i).getxCoord() * wScale,
                 gm.getChef(i).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
