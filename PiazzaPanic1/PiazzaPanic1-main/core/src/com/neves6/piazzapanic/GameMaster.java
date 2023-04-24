@@ -734,6 +734,10 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 
+    /**
+     * used for testing as the method above is private
+     * @param isitpizza if pizza being tested
+     */
     public void UseAddToTray(boolean isitpizza){
         if (isitpizza){
             addToTray(true);

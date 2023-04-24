@@ -52,7 +52,7 @@ public class ExistingmachinesTest {
     }
 
     /**
-     * Old way of testing machines before code refactor
+     * Old way of testing machines before code refactored
      * Test used for original machines
      * Originally the machines were held in a machine type array in the GameMaster.java file
      *
@@ -169,7 +169,7 @@ public class ExistingmachinesTest {
      * @throws InterruptedException
      */
     @Test
-    public void testNewAddToChefInventory() throws InterruptedException {
+    public void testNewAddToChefInventory()  {
         // pizza grill
         assertEquals((getMachineFromGame("uncooked_pizza",9,"")),  "pizza");
         // making station turns meat -> patty
@@ -190,7 +190,7 @@ public class ExistingmachinesTest {
      * @throws InterruptedException
      */
     @Test
-    public void testNewAddDispensedItemsToChefInventory() throws InterruptedException {
+    public void testNewAddDispensedItemsToChefInventory()  {
 
         // dispensed items
         assertEquals((getMachineFromGame("",10,"tomato")),  "tomato");
@@ -207,7 +207,7 @@ public class ExistingmachinesTest {
     /**
      * Tests that the tray creates the right corresponding items once
      * it contains all the necessary ingredients.
-     * Also changes whats added to be checked based on the current customer
+     * Also changes what is added to be checked based on the current customer
      * order
      *
      */
