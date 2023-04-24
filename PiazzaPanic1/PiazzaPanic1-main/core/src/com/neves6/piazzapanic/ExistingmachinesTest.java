@@ -2,7 +2,9 @@ package com.neves6.piazzapanic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import org.javatuples.Pair;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -10,6 +12,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @RunWith(GdxTestRunner.class)
@@ -74,16 +77,97 @@ public class ExistingmachinesTest {
         }
     }
 
-    /**
-     * New method of testing machines after code refactor
-     * @throws InterruptedException
-     */
-    @Test
-    public void testNewAddItemToChefInventory() throws InterruptedException {
 
+    /**
+     * processes for testNewAddToChefInventory()
+     * finds machines in the map.layers and carries out the processing
+     * to get the output
+     * @param item  input string
+     * @param layer corresponding machine layer
+     * @return machine output
+     */
+    public String getMachineFromGame(String item, Integer layer){
         map = new TmxMapLoader().load("tilemaps/level1.tmx");
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map, 1, 1, 1);
+
+        game.chefs.get(0).addToInventory(item);
+
+        TiledMapTileLayer workingLayer = (TiledMapTileLayer) game.map.getLayers().get(layer);
+        for (int i = 0; i < workingLayer.getHeight(); i++) {
+            for (int j = 0; j < workingLayer.getWidth(); j++) {
+                if (workingLayer.getCell(j,i) != null){
+                    System.out.println(j);
+                    System.out.println(i);
+
+                    // key to query the dictionary with the location of the machine
+                    Pair<Integer, Integer> target = new Pair<>(j,i);
+                    try{
+                        ArrayList<Machine> targetMachines = game.machineLocation.get(target);
+                        //System.out.println(targetMachines);
+                        for (Machine mac :
+                                targetMachines) {
+                            System.out.println(mac.getOutput() + " machine output");
+                            System.out.println(game.chefs.get(0).getInventory().peek() + " machine output");
+
+                            // dispenses ingredient
+                            if (Objects.equals(game.chefs.get(0).getInventory().peek(), "")){
+                                mac.process(game.chefs.get(0));
+                                return game.chefs.get(0).getInventory().pop();
+                                // does ingredient processing and returns chef inventory contents
+                            } else if(Objects.equals(game.chefs.get(0).getInventory().peek(), mac.getInput())){
+                                System.out.println(game.chefs.get(0).getInventory().peek());
+                                mac.process(game.chefs.get(0));
+                                //TimeUnit.SECONDS.sleep(4);
+                                mac.fastForwardTime(true, 6);
+                                mac.attemptGetOutput();
+                                return game.chefs.get(0).getInventory().pop();
+                            }
+                        }
+                    } catch (Exception e){
+                        System.out.println("error");
+                    }
+                }
+            }
+
+        }
+        return "";
     }
+
+
+    /**
+     * New method of testing machines after code refactor
+     * tests if given the correct input in chef inventory the machines returns the correct output
+     * @throws InterruptedException
+     */
+    @Test
+    public void testNewAddToChefInventory() throws InterruptedException {
+        // pizza grill
+        assertEquals((getMachineFromGame("uncooked_pizza",9)),  "pizza");
+        // making station turns meat -> patty
+        assertEquals((getMachineFromGame("meat",5)),  "patty");
+
+        assertEquals((getMachineFromGame("patty",6)),   "burger");
+        assertEquals((getMachineFromGame("bun",6)),   "toastedbun");
+
+        assertEquals((getMachineFromGame("tomato",4)),  "choppedtomato");
+        assertEquals((getMachineFromGame("lettuce",4)),  "choppedlettuce");
+        assertEquals((getMachineFromGame("onion",4)),  "choppedonion");
+
+    }
+
+    public void testNewAddDispensedItemsToChefInventory() throws InterruptedException {
+
+        // dispensed items
+        assertEquals((getMachineFromGame("",9)),  "tomato");
+        assertEquals((getMachineFromGame("",9)),  "lettuce");
+        assertEquals((getMachineFromGame("",9)),  "onion");
+
+
+
+    }
+
+
+
 
 }

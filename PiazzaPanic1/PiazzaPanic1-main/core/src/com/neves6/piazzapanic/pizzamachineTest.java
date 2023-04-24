@@ -41,10 +41,11 @@ public class pizzamachineTest {
     }
 
     /**
+     * Test for old code before refactoring
      * tests if pizza is added to the chef stack, instantiates and adds machines/chefs to a stack
      * then adds the input to the chef inventory, runs the machine then checks for the expected item
      */
-    @Test
+
     public void testPizzaAddedToChefInventory() throws InterruptedException {
         //chefs.add(new Chef("Chef", 6, 5, 1, 1, 1, false, new Stack<String>(), 1));
         //chefs.get(0).addToInventory("uncooked_pizza");
