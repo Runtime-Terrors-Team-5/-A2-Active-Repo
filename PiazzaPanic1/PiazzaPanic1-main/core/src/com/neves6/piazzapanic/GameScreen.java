@@ -36,6 +36,7 @@ public class GameScreen extends ScreenAdapter {
     Texture selectedTexture;
     Texture bar1;
     Texture bar2;
+    Texture moneyUI;
 
 
     Music music_background;
@@ -58,6 +59,7 @@ public class GameScreen extends ScreenAdapter {
         selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
         bar2 = new Texture(Gdx.files.internal("icons/bar2.png"));
         bar1 = new Texture(Gdx.files.internal("icons/bar1.png"));
+        moneyUI = new Texture(Gdx.files.internal("icons/moneyUI.png"));
         music_background = Gdx.audio.newMusic(Gdx.files.internal("sounds/background.mp3"));
         music_background.setLooping(true);
         music_background.play();
@@ -80,6 +82,7 @@ public class GameScreen extends ScreenAdapter {
         hScale = unitScale * 32f;
         bar2 = new Texture(Gdx.files.internal("icons/bar2.png"));
         bar1 = new Texture(Gdx.files.internal("icons/bar1.png"));
+        moneyUI = new Texture(Gdx.files.internal("icons/moneyUI.png"));
         renderer = new OrthogonalTiledMapRenderer(map, unitScale);
         selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
     }
@@ -222,7 +225,8 @@ public class GameScreen extends ScreenAdapter {
 
         //game.batch.draw(recipes, 20, 20);
         //fontBlack.draw(game.batch, gm.generateCustomersTrayText(), winWidth - (5*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
-        fontBlack.draw(game.batch, gm.generateMoneyText(), winWidth - (2*(winWidth/8f)), winHeight - 400, (3*(winWidth/8f)), -1, true);
+        game.batch.draw(moneyUI,(16*wScale), (6 * hScale),150 * unitScale,32 * unitScale);
+        fontBlack.draw(game.batch, gm.generateMoneyText(), (float) (17.1*wScale), (float) (6.68 * hScale), (3*(winWidth/8f)), -1, true);
         fontBlack.draw(game.batch, gm.generateTimerText(), winWidth - (winWidth/3f), 40, (winWidth/3f), -1, false);
         game.batch.end();
 

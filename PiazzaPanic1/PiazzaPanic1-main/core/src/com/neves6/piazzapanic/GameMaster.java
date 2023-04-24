@@ -432,7 +432,7 @@ class ScenarioGameMaster extends GameMaster {
     }
     public String generateMoneyText() {
         String comp = "";
-        comp += "£";
+        comp += "";
         comp += (int) money;
         return comp;
     }
