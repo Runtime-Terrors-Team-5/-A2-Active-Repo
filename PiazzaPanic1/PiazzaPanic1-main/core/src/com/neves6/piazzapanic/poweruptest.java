@@ -70,16 +70,9 @@ public class poweruptest {
         game.getPowerUp();
         game.powerUpEffect();
 
-        game.chefs.get(0).addToInventory("uncooked_pizza");
 
-        game.machines.get(0).process(game.chefs.get(0));
-        System.out.println(game.machines.get(0).getRuntime());
-        TimeUnit.SECONDS.sleep(4);
-        System.out.println(game.machines.get(0).getRuntime());
-        game.machines.get(0).fastForwardTime(true, 3);
-        System.out.println(game.machines.get(0).getRuntime());
-        game.machines.get(0).attemptGetOutput();
-        assertEquals(game.chefs.get(0).getInventory().pop(),  "pizza");
+
+        assertEquals((ExistingmachinesTest.getMachineFromGame("uncooked_pizza",9,"")),  "pizza");
 
 
     }

@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 public class ExistingmachinesTest {
     ArrayList<Machine> machines = new ArrayList<>();
 
-    TiledMap map;
+    static TiledMap map;
 
     /**
      * Tests machine outputs are correct
@@ -86,7 +86,7 @@ public class ExistingmachinesTest {
      * @param layer corresponding machine layer
      * @return machine output
      */
-    public String getMachineFromGame(String item, Integer layer, String disoutput){
+    public static String getMachineFromGame(String item, Integer layer, String disoutput){
         map = new TmxMapLoader().load("tilemaps/level1.tmx");
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map, 1, 1, 1);
@@ -183,6 +183,12 @@ public class ExistingmachinesTest {
         assertEquals((getMachineFromGame("onion",4,"")),  "choppedonion");
 
     }
+
+    /**
+     * tests if given the correct input in chef inventory the machines returns the correct output
+     * for dispensers
+     * @throws InterruptedException
+     */
     @Test
     public void testNewAddDispensedItemsToChefInventory() throws InterruptedException {
 
@@ -198,7 +204,48 @@ public class ExistingmachinesTest {
 
     }
 
+    /**
+     * Tests that the tray creates the right corresponding items once
+     * it contains all the necessary ingredients.
+     * Also changes whats added to be checked based on the current customer
+     * order
+     *
+     */
+    @Test
+    public void testItemsAddedToTray()  {
+        map = new TmxMapLoader().load("tilemaps/level1.tmx");
+        PiazzaPanicGame A = new PiazzaPanicGame();
+        ScenarioGameMaster game = new ScenarioGameMaster(A, map, 1, 1, 1);
+        for (int i=0; i<3; i++) {
+            if (Objects.equals(game.customers.get(0).getOrder(), "salad")) {
+                game.chefs.get(0).addToInventory("choppedtomato");
+                game.UseAddToTray(false);
+                game.chefs.get(0).addToInventory("choppedlettuce");
+                game.UseAddToTray(false);
+                game.chefs.get(0).addToInventory("choppedonion");
+                game.UseAddToTray(false);
+                assertEquals(game.chefs.get(0).getInventory().pop(), "completed salad");
+            } else if(Objects.equals(game.customers.get(0).getOrder(), "burger")) {
+                // burger
+                game.chefs.get(0).addToInventory("burger");
+                game.UseAddToTray(false );
+                game.chefs.get(0).addToInventory("toastedbun");
+                game.UseAddToTray(false );
+                assertEquals(game.chefs.get(0).getInventory().pop(),  "completed burger");
+                // pizza
+            } else if (Objects.equals(game.customers.get(0).getOrder(), "pizza")) {
+                game.chefs.get(0).addToInventory("cheese");
+                game.UseAddToTray(true);
+                game.chefs.get(0).addToInventory("dough");
+                game.UseAddToTray(true);
+                assertEquals(game.chefs.get(0).getInventory().pop(),  "uncooked_pizza");
 
+
+            }
+
+        }
+
+    }
 
 
 }

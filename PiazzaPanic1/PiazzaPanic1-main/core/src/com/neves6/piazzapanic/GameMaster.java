@@ -734,6 +734,13 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 
+    public void UseAddToTray(boolean isitpizza){
+        if (isitpizza){
+            addToTray(true);
+        }else{
+            addToTray(false);
+        }
+    }
     public void generatePowerUp(){
         if(powerUpCount < 2){
             boolean powerUpCollisionCheck = false;
