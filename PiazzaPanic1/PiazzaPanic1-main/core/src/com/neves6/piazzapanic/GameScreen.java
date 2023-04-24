@@ -215,8 +215,13 @@ public class GameScreen extends ScreenAdapter {
             }
         }
 
+        for(int i=0;i<gm.trayTextures.size();i++){
+            game.batch.draw(gm.trayTextures.get(i),  12 * wScale, (float) (3.2 * hScale), 32 * unitScale, 32 * unitScale);
+        }
+
+
         //game.batch.draw(recipes, 20, 20);
-        fontBlack.draw(game.batch, gm.generateCustomersTrayText(), winWidth - (5*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
+        //fontBlack.draw(game.batch, gm.generateCustomersTrayText(), winWidth - (5*(winWidth/8f)), winHeight - 20, (3*(winWidth/8f)), -1, true);
         fontBlack.draw(game.batch, gm.generateMoneyText(), winWidth - (2*(winWidth/8f)), winHeight - 400, (3*(winWidth/8f)), -1, true);
         fontBlack.draw(game.batch, gm.generateTimerText(), winWidth - (winWidth/3f), 40, (winWidth/3f), -1, false);
         game.batch.end();

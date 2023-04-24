@@ -59,6 +59,7 @@ class ScenarioGameMaster extends GameMaster {
     boolean endless;
     HashMap<Pair<Integer, Integer>, ArrayList<Machine>> machineLocation;
     int money = 0;
+    List<Texture> trayTextures;
 
 
     /**
@@ -77,6 +78,7 @@ class ScenarioGameMaster extends GameMaster {
         this.powerUpCount = 0;
         this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints3.png"));
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
+        this.trayTextures = new ArrayList<>();
 
         if (this.level == 1){
 
@@ -298,6 +300,8 @@ class ScenarioGameMaster extends GameMaster {
         this.validOrder = data.getValidOrder();
         this.totalTimer = data.getTimeElapled();
 
+
+
         // disposal and tray/serving handled separately
 
         grill = Gdx.audio.newSound(Gdx.files.internal("sounds/grill.mp3"));
@@ -403,13 +407,13 @@ class ScenarioGameMaster extends GameMaster {
      */
     public String generateCustomersTrayText() {
         String comp = "";
-        //comp += "Customers remaining: ";
-        //comp += customers.size();
-        //if (customers.size() > 0) {
-            //comp += "\nOrder: ";
-            //comp += customers.get(0).getOrder();
+        comp += "Customers remaining: ";
+        comp += customers.size();
+        if (customers.size() > 0) {
+            comp += "\nOrder: ";
+            comp += customers.get(0).getOrder();
 
-        //}
+        }
         comp += "\nTray contents: ";
         comp += tray.toString();
         return comp;
@@ -651,7 +655,22 @@ class ScenarioGameMaster extends GameMaster {
         } else if (targetx == 11 && targety == 3) {
             addToTray(true);
         }
+        setTrayTextures();
 
+    }
+
+    private void setTrayTextures(){
+        if(!trayTextures.isEmpty()) {
+            trayTextures.clear();
+        }
+        List<String> items = Arrays.asList(new String[]{"bun", "burger", "completed burger", "choppedlettuce", "lettuce",  "meat", "onion", "choppedonion", "patty", "pizza", "completed salad", "toastedbun", "tomato", "choppedtomato","cheese","dough","uncooked_pizza"});
+        for(int i=0;i<tray.size();i++){
+            for(int j=0;j<items.size();j++){
+                if(this.tray.get(i) == items.get(j)){
+                    trayTextures.add(new Texture("foods/" + (items.get(j)) +".png"));
+                }
+            }
+        }
     }
 
     /**
