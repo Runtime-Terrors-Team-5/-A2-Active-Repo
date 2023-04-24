@@ -86,7 +86,7 @@ public class ExistingmachinesTest {
      * @param layer corresponding machine layer
      * @return machine output
      */
-    public String getMachineFromGame(String item, Integer layer){
+    public String getMachineFromGame(String item, Integer layer, String disoutput){
         map = new TmxMapLoader().load("tilemaps/level1.tmx");
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map, 1, 1, 1);
@@ -94,6 +94,34 @@ public class ExistingmachinesTest {
         game.chefs.get(0).addToInventory(item);
 
         TiledMapTileLayer workingLayer = (TiledMapTileLayer) game.map.getLayers().get(layer);
+
+        // for dispensers
+        if (Objects.equals(game.chefs.get(0).getInventory().peek(), "")){
+            for (int k=10;k<=16;k++){
+                workingLayer = (TiledMapTileLayer) map.getLayers().get(k);
+               // System.out.println(workingLayer.getName()); // get layer name
+                for (int i = 0; i < workingLayer.getHeight(); i++) {
+                    for (int j = 0; j < workingLayer.getWidth(); j++) {
+                        if (workingLayer.getCell(j,i) != null){
+                            Pair<Integer, Integer> target = new Pair<>(j,i);
+                            ArrayList<Machine> targetMachines = game.machineLocation.get(target);
+                            for (Machine mac :
+                                    targetMachines) {
+                                if(Objects.equals(disoutput, mac.getOutput())) {
+                                    return mac.getOutput();
+
+                                }
+                            }
+
+
+                        }
+                    }
+                }
+            }
+
+        }
+
+        // For non dispensers
         for (int i = 0; i < workingLayer.getHeight(); i++) {
             for (int j = 0; j < workingLayer.getWidth(); j++) {
                 if (workingLayer.getCell(j,i) != null){
@@ -143,25 +171,28 @@ public class ExistingmachinesTest {
     @Test
     public void testNewAddToChefInventory() throws InterruptedException {
         // pizza grill
-        assertEquals((getMachineFromGame("uncooked_pizza",9)),  "pizza");
+        assertEquals((getMachineFromGame("uncooked_pizza",9,"")),  "pizza");
         // making station turns meat -> patty
-        assertEquals((getMachineFromGame("meat",5)),  "patty");
+        assertEquals((getMachineFromGame("meat",5,"")),  "patty");
 
-        assertEquals((getMachineFromGame("patty",6)),   "burger");
-        assertEquals((getMachineFromGame("bun",6)),   "toastedbun");
+        assertEquals((getMachineFromGame("patty",6,"")),   "burger");
+        assertEquals((getMachineFromGame("bun",6,"")),   "toastedbun");
 
-        assertEquals((getMachineFromGame("tomato",4)),  "choppedtomato");
-        assertEquals((getMachineFromGame("lettuce",4)),  "choppedlettuce");
-        assertEquals((getMachineFromGame("onion",4)),  "choppedonion");
+        assertEquals((getMachineFromGame("tomato",4,"")),  "choppedtomato");
+        assertEquals((getMachineFromGame("lettuce",4,"")),  "choppedlettuce");
+        assertEquals((getMachineFromGame("onion",4,"")),  "choppedonion");
 
     }
-
+    @Test
     public void testNewAddDispensedItemsToChefInventory() throws InterruptedException {
 
         // dispensed items
-        assertEquals((getMachineFromGame("",9)),  "tomato");
-        assertEquals((getMachineFromGame("",9)),  "lettuce");
-        assertEquals((getMachineFromGame("",9)),  "onion");
+        assertEquals((getMachineFromGame("",10,"tomato")),  "tomato");
+        assertEquals((getMachineFromGame("",10,"lettuce")),  "lettuce");
+        assertEquals((getMachineFromGame("",10,"onion")),  "onion");
+        assertEquals((getMachineFromGame("",10,"meat")),  "meat");
+        assertEquals((getMachineFromGame("",10,"bun")),  "bun");
+        assertEquals((getMachineFromGame("",10,"onion")),  "onion");
 
 
 
