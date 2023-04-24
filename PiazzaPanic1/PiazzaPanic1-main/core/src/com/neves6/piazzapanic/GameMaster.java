@@ -497,7 +497,7 @@ class ScenarioGameMaster extends GameMaster {
                 if (mac.getActive()) {
                     mac.incrementRuntime(delta);
                     for(PowerUp inst: PowerUp.PowerUps) {
-                        if (Objects.equals(inst.powerUpType, "cookSpeed") && inst.active) {
+                        if (Objects.equals(inst.powerUpType, "fast") && inst.active) {
                             mac.incrementRuntime(delta);
                         }
                     }
@@ -509,7 +509,7 @@ class ScenarioGameMaster extends GameMaster {
         boolean pauseTime = false;
         for (int i = 0; i < customers.size(); i++) {
             for(PowerUp inst: PowerUp.PowerUps){
-                if (Objects.equals(inst.powerUpType, "pauseTime") && inst.active){
+                if (Objects.equals(inst.powerUpType, "frzTime") && inst.active){
                     pauseTime = true;
                 }
             }
