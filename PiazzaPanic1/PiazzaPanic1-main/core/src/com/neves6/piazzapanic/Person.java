@@ -101,6 +101,10 @@ class Customer extends Person{
         return order;
     }
 
+    public void setOrder(String inputOrder) {
+        this.order = inputOrder;
+    }
+
     public Texture getTxUp(){
         return txUp;
     }
