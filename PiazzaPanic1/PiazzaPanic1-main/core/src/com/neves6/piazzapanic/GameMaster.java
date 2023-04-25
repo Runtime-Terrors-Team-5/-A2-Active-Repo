@@ -476,6 +476,11 @@ class ScenarioGameMaster extends GameMaster {
             this.cusomerRemaining -= 1;
         }
         this.customerSpawnTimer = finalSpawnTimer;
+        for (int i = 0; i < customers.size(); i++) {
+            System.out.print(customers.get(i).getOrder());
+            System.out.print(", ");
+        }
+        System.out.println("");
     }
 
     /**
@@ -899,6 +904,18 @@ class ScenarioGameMaster extends GameMaster {
 
     public float getTotalTimer(){return this.totalTimer;}
 
+//    public void scrambleOrders() {
+//        Random rand = new Random();
+//        int custSize = customers.size();
+//        int n;
+//        for (int i = 1; i < custSize; i++) {
+//            n = rand.nextInt(100);
+//            if (n < 35) {
+//                customers.get(i).setOrder("pizza");
+//            }
+//        }
+//    }
+
     public void unlockMachine (int machine) {
         if (machine == 1 && money >= 5) {
             if (!goldGrillUnlocked) {
@@ -942,6 +959,7 @@ class ScenarioGameMaster extends GameMaster {
                 System.out.println("pizza station unlocked!");
                 validOrder.add("pizza");
                 pizzaStationUnlocked = true;
+                //scrambleOrders();
                 money -= 5;
                 TiledMapTileLayer workingLayer = (TiledMapTileLayer) map.getLayers().get(9);
                 ArrayList<Machine> tempArray = new ArrayList<>();
