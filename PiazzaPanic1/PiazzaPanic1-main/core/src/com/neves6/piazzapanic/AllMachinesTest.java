@@ -289,7 +289,49 @@ public class AllMachinesTest {
      * Tests if customers are removed from the queue once their order has been completed
      */
     @Test
-    public void testCustomerOrders(){
+    public void testCustomerOrdersRemovedOnceServed(){
+        map = new TmxMapLoader().load("tilemaps/level1.tmx");
+        PiazzaPanicGame A = new PiazzaPanicGame();
+        ScenarioGameMaster game = new ScenarioGameMaster(A, map, 1, 1, 1);
+        System.out.println(game.customers.get(0).getOrder());
+
+        System.out.println(game.customers.size());
+        int NumberOfOrders = game.customers.size();
+        for (int i=0; i<game.customers.size(); i++) {
+            if (Objects.equals(game.customers.get(0).getOrder(), "salad")) {
+                game.chefs.get(0).addToInventory("choppedtomato");
+                game.UseAddToTray(false);
+                game.chefs.get(0).addToInventory("choppedlettuce");
+                game.UseAddToTray(false);
+                game.chefs.get(0).addToInventory("choppedonion");
+                game.UseAddToTray(false);
+                game.chefs.get(0).getInventory().pop();
+                NumberOfOrders -=1;
+                game.customers.pop();
+                assertEquals(game.customers.size(), NumberOfOrders);
+            } else if(Objects.equals(game.customers.get(0).getOrder(), "burger")) {
+                // burger
+                game.chefs.get(0).addToInventory("burger");
+                game.UseAddToTray(false );
+                game.chefs.get(0).addToInventory("toastedbun");
+                game.UseAddToTray(false );
+                game.chefs.get(0).getInventory().pop();
+                NumberOfOrders -=1;
+                game.customers.pop();
+                assertEquals(game.customers.size(), NumberOfOrders);
+                // pizza
+            } else if (Objects.equals(game.customers.get(0).getOrder(), "pizza")) {
+                game.chefs.get(0).addToInventory("cheese");
+                game.UseAddToTray(true);
+                game.chefs.get(0).addToInventory("dough");
+                game.UseAddToTray(true);
+                game.chefs.get(0).getInventory().pop();
+                NumberOfOrders -=1;
+                game.customers.pop();
+                assertEquals(game.customers.size(), NumberOfOrders);
+            }
+
+        }
 
     }
 }
