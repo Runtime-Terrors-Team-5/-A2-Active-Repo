@@ -16,7 +16,7 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @RunWith(GdxTestRunner.class)
-public class ExistingmachinesTest {
+public class AllMachinesTest {
     ArrayList<Machine> machines = new ArrayList<>();
 
     static TiledMap map;
@@ -91,8 +91,18 @@ public class ExistingmachinesTest {
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map, 1, 1, 1);
         // unlocks pizza machine
-        game.setMoney(6);
-        game.unlockMachine (3);
+        if (Objects.equals(disoutput, "unlockPizza")){
+            game.setMoney(6);
+            game.unlockMachine (3);
+        }else if(Objects.equals(disoutput, "unlockGrill")){
+            game.setMoney(6);
+            game.unlockMachine (1);
+        }else if(Objects.equals(disoutput, "unlockForming")){
+            game.setMoney(6);
+            game.unlockMachine (2);
+
+        }
+
 
         game.chefs.get(0).addToInventory(item);
 
@@ -141,12 +151,8 @@ public class ExistingmachinesTest {
                             System.out.println(mac.getOutput() + " machine output");
                             System.out.println(game.chefs.get(0).getInventory().peek() + " machine output");
 
-                            // dispenses ingredient
-                            if (Objects.equals(game.chefs.get(0).getInventory().peek(), "")){
-                                mac.process(game.chefs.get(0));
-                                return game.chefs.get(0).getInventory().pop();
                                 // does ingredient processing and returns chef inventory contents
-                            } else if(Objects.equals(game.chefs.get(0).getInventory().peek(), mac.getInput())){
+                            if(Objects.equals(game.chefs.get(0).getInventory().peek(), mac.getInput())){
                                 System.out.println(game.chefs.get(0).getInventory().peek());
                                 mac.process(game.chefs.get(0));
                                 //TimeUnit.SECONDS.sleep(4);
@@ -157,6 +163,7 @@ public class ExistingmachinesTest {
                         }
                     } catch (Exception e){
                         System.out.println("error");
+                        return "error";
                     }
                 }
             }
@@ -170,14 +177,12 @@ public class ExistingmachinesTest {
      * New method of testing machines after code refactor
      * tests if given the correct input in chef inventory the machines returns the correct output
      *
-     * Also tests if the pizza machines under the correct conditions
+     *
      * @throws InterruptedException
      */
     @Test
     public void testNewAddToChefInventory()  {
 
-        // pizza grill
-        assertEquals((getMachineFromGame("uncooked_pizza",9,"")),  "pizza");
         // making station turns meat -> patty
         assertEquals((getMachineFromGame("meat",5,"")),  "patty");
 
@@ -193,7 +198,7 @@ public class ExistingmachinesTest {
     /**
      * tests if given the correct input in chef inventory the machines returns the correct output
      * for dispensers
-     * @throws InterruptedException
+     *
      */
     @Test
     public void testNewAddDispensedItemsToChefInventory()  {
@@ -253,5 +258,38 @@ public class ExistingmachinesTest {
 
     }
 
+    /**
+     * tests if machines are unlocked under the correct conditions
+     * Pizza, golden grill and former
+     * @throws InterruptedException
+     */
+    @Test
+    public void testUnlockableMachines()  throws InterruptedException{
+        // tests that it does not work before it is unlocked
+        assertEquals((getMachineFromGame("uncooked_pizza",9,"")),  "error");
+        assertEquals((getMachineFromGame("patty",7,"")),   "error");
+        assertEquals((getMachineFromGame("bun",7,"")),   "error");
+        assertEquals((getMachineFromGame("meat",8,"")),   "error");
+        // Tests after machine are unlocked
+        // pizza machine
+        assertEquals((getMachineFromGame("uncooked_pizza",9,"unlockPizza")),  "pizza");
 
+
+        // gold grill layer 7
+        assertEquals((getMachineFromGame("patty",7,"unlockGrill")),   "burger");
+        assertEquals((getMachineFromGame("bun",7,"unlockGrill")),   "toastedbun");
+
+
+        // forming station
+        assertEquals((getMachineFromGame("meat",8,"unlockForming")),   "patty");
+
+    }
+
+    /**
+     * Tests if customers are removed from the queue once their order has been completed
+     */
+    @Test
+    public void testCustomerOrders(){
+
+    }
 }
