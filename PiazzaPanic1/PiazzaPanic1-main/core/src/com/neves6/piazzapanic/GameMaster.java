@@ -901,6 +901,12 @@ class ScenarioGameMaster extends GameMaster {
      */
     public int getMoney(){return this.money;}
 
+    /**
+     * Test method for unlocking machines
+     * @param value
+     */
+    public void setMoney(int value){this.money += value;}
+
 
     public float getTotalTimer(){return this.totalTimer;}
 
@@ -915,6 +921,12 @@ class ScenarioGameMaster extends GameMaster {
 //            }
 //        }
 //    }
+
+    /**
+     * unlock machines once game conditions met
+     * @param machine
+     */
+
 
     public void unlockMachine (int machine) {
         if (machine == 1 && money >= 5) {

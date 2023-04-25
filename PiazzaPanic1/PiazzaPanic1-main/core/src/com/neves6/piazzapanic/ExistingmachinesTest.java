@@ -90,6 +90,9 @@ public class ExistingmachinesTest {
         map = new TmxMapLoader().load("tilemaps/level1.tmx");
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map, 1, 1, 1);
+        // unlocks pizza machine
+        game.setMoney(6);
+        game.unlockMachine (3);
 
         game.chefs.get(0).addToInventory(item);
 
@@ -166,10 +169,13 @@ public class ExistingmachinesTest {
     /**
      * New method of testing machines after code refactor
      * tests if given the correct input in chef inventory the machines returns the correct output
+     *
+     * Also tests if the pizza machines under the correct conditions
      * @throws InterruptedException
      */
     @Test
     public void testNewAddToChefInventory()  {
+
         // pizza grill
         assertEquals((getMachineFromGame("uncooked_pizza",9,"")),  "pizza");
         // making station turns meat -> patty
