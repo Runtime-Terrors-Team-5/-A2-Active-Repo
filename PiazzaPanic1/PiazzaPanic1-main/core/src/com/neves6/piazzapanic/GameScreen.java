@@ -37,6 +37,7 @@ public class GameScreen extends ScreenAdapter {
     Texture bar1;
     Texture bar2;
     Texture moneyUI;
+    Texture lock;
 
 
     Music music_background;
@@ -60,6 +61,7 @@ public class GameScreen extends ScreenAdapter {
         bar2 = new Texture(Gdx.files.internal("icons/bar2.png"));
         bar1 = new Texture(Gdx.files.internal("icons/bar1.png"));
         moneyUI = new Texture(Gdx.files.internal("icons/moneyUI.png"));
+        lock = new Texture(Gdx.files.internal("icons/locked.png"));
         music_background = Gdx.audio.newMusic(Gdx.files.internal("sounds/background.mp3"));
         music_background.setLooping(true);
         music_background.play();
@@ -185,6 +187,10 @@ public class GameScreen extends ScreenAdapter {
         gm.clearPowerUp();
         gm.getPowerUp();
         gm.powerUpEffect();
+
+        if(!gm.formingStationUnlocked){game.batch.draw(lock, 14 * wScale, 4 * hScale, 32 * unitScale, 32 * unitScale);}
+        if(!gm.goldGrillUnlocked){game.batch.draw(lock, 14 * wScale, 5 * hScale, 32 * unitScale, 32 * unitScale);}
+        if(!gm.pizzaStationUnlocked){game.batch.draw(lock, 14 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);}
 
         game.batch.draw(gm.repIcon, 1 * wScale, 1 * hScale, 93 * unitScale, 45 * unitScale);
 
