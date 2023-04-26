@@ -172,7 +172,7 @@ class Chef extends Person {
         this.txDown =  new Texture("people/chef" + textureSet + "down.png");
         this.txLeft =  new Texture("people/chef" + textureSet + "left.png");
         this.txRight = new Texture("people/chef" + textureSet + "right.png");
-        this.uiIcon = new Texture("icons/cheficons.png");
+        this.uiIcon = new Texture("icons/cheficons"+ textureSet +".png");
         this.txNow = txDown;
         this.invItems = new ArrayList<>();
     }
@@ -194,7 +194,7 @@ class Chef extends Person {
         this.txDown =  new Texture("people/chef" + chef.getValue5() + "down.png");
         this.txLeft =  new Texture("people/chef" + chef.getValue5() + "left.png");
         this.txRight = new Texture("people/chef" + chef.getValue5() + "right.png");
-        this.uiIcon = new Texture("icons/cheficons.png");
+        this.uiIcon = new Texture("icons/cheficons"+ chef.getValue5() +".png");
 
         if (Objects.equals(this.facing, "up")){this.txNow = txUp;}
         else if (Objects.equals(this.facing, "down")){this.txNow = txDown;}
