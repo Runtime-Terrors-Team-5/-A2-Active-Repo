@@ -3,6 +3,7 @@ package com.neves6.piazzapanic;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Stack;
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
@@ -36,11 +37,11 @@ public class saveData implements Serializable {
 
         this.chefdata = new ArrayList<>();
         for (Chef i:chefs) {
-            System.out.println(i.getChefInfo());
+            //System.out.println(i.getChefInfo());
             chefdata.add(i.getChefInfo());
         }
         this.level = level;
-        System.out.println(level);
+        //System.out.println(level);
         this.customerdata = new ArrayList<>();
         for (Customer i:customers) {
             customerdata.add(i.getCustomerData());
@@ -97,4 +98,33 @@ public class saveData implements Serializable {
     public ArrayList getValidOrder(){return validOrder;}
 
     public ArrayList getPowerUPs() {return powerUPs;}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof saveData)) {
+            return false;
+        }
+        saveData saveData = (saveData) o;
+        return getLevel() == saveData.getLevel() && getSelectedChef() == saveData.getSelectedChef()
+            && Float.compare(saveData.getTimeElapled(), getTimeElapled()) == 0
+            && getRepPoint() == saveData.getRepPoint()
+            && getCustomerRemaining() == saveData.getCustomerRemaining()
+            && Float.compare(saveData.getCustomerSpawnTimer(), getCustomerSpawnTimer()) == 0
+            && Objects.equals(getChefdata(), saveData.getChefdata())
+            && Objects.equals(getMachinedata(), saveData.getMachinedata())
+            && Objects.equals(getCustomerdata(), saveData.getCustomerdata())
+            && Objects.equals(getTrayContent(), saveData.getTrayContent())
+            && Objects.equals(getValidOrder(), saveData.getValidOrder())
+            && Objects.equals(getPowerUPs(), saveData.getPowerUPs());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getChefdata(), getMachinedata(), getLevel(), getCustomerdata(),
+            getSelectedChef(), getTrayContent(), getTimeElapled(), getRepPoint(),
+            getCustomerRemaining(), getCustomerSpawnTimer(), getValidOrder(), getPowerUPs());
+    }
 }

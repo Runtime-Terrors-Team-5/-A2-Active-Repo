@@ -23,20 +23,18 @@ public class testSaveLoad {
     public void testGameScreen(){
         map = new TmxMapLoader().load("tilemaps/level1.tmx");
         PiazzaPanicGame A = new PiazzaPanicGame();
+        PiazzaPanicGame B = new PiazzaPanicGame();
         // game before save
         //GameScreen game = new GameScreen(A,1);
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 3, 5, 1);
         SaveAndLoadHandler.setSave(game);
         System.out.println("Here");
 
-
         //game after save
         //GameScreen LoadGame = new GameScreen(A);
 
         saveData data = SaveAndLoadHandler.getSave(); // loads the save file
         ScenarioGameMaster gm = data.loadGameMaster(A);
-
-
         assertEquals(game.generateSaveData(),  gm.generateSaveData());
 
     }
