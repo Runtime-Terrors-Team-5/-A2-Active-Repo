@@ -116,7 +116,8 @@ class ScenarioGameMaster extends GameMaster {
         }
 
         if (this.level == 4){
-            this.customerSpawnTimer = 5;
+            this.customerSpawnTimer = 3;
+            this.finalSpawnTimer = customerSpawnTimer;
             customerPersonalTimer = 40;
             validOrder = new ArrayList<>();
             validOrder.add("salad");
@@ -471,7 +472,7 @@ class ScenarioGameMaster extends GameMaster {
      * resets the customerSpawnTimer to finalSpawnTimer when called
      */
     public void spawnCustomer(){
-        if (cusomerRemaining <= 0){return;}
+        if (cusomerRemaining <= 0 || customers.size() >= 10){return;}
         String order = (String) validOrder.get(rand.nextInt((validOrder.size())));
         customers.add(new Customer("Customer"+1, -1, -1, order, customerPersonalTimer));
         if (!endless) {
