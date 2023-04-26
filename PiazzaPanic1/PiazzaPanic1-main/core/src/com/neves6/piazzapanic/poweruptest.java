@@ -72,7 +72,7 @@ public class poweruptest {
 
 
 
-        assertEquals((AllMachinesTest.getMachineFromGame("uncooked_pizza",9,"")),  "pizza");
+        assertEquals((AllMachinesTest.getMachineFromGame("uncooked_pizza",9,"unlockPizza")),  "pizza");
 
 
     }
