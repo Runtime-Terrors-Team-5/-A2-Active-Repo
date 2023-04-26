@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.9" tiledversion="1.9.2" name="tiles" tilewidth="32" tileheight="32" tilecount="52" columns="0">
+<tileset version="1.5" tiledversion="2021.03.23" name="tiles" tilewidth="33" tileheight="32" tilecount="53" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
- <tile id="36">
-  <image width="32" height="32" source="tiles/collide.png"/>
+ <tile id="0">
+  <image width="32" height="32" source="tiles/cafeteria_floor.png"/>
  </tile>
- <tile id="37">
-  <image width="32" height="32" source="tiles/free.png"/>
+ <tile id="1">
+  <image width="32" height="32" source="tiles/cleaver.png"/>
  </tile>
- <tile id="38">
-  <image width="32" height="32" source="tiles/machine.png"/>
+ <tile id="2">
+  <image width="32" height="32" source="tiles/freezer_floor.png"/>
+ </tile>
+ <tile id="3">
+  <image width="32" height="32" source="tiles/fridgeclosed.png"/>
+ </tile>
+ <tile id="4">
+  <image width="32" height="32" source="tiles/fridgeopen.png"/>
+ </tile>
+ <tile id="5">
+  <image width="32" height="32" source="tiles/fryeroff.png"/>
+ </tile>
+ <tile id="6">
+  <image width="32" height="32" source="tiles/fryeron.gif"/>
+ </tile>
+ <tile id="7">
+  <image width="32" height="32" source="tiles/grilloff.png"/>
+ </tile>
+ <tile id="8">
+  <image width="32" height="32" source="tiles/grillon.gif"/>
+ </tile>
+ <tile id="9">
+  <image width="32" height="32" source="tiles/plastic_floor.png"/>
+ </tile>
+ <tile id="10">
+  <image width="32" height="32" source="tiles/tableleft.png"/>
+ </tile>
+ <tile id="11">
+  <image width="32" height="32" source="tiles/tablemid.png"/>
+ </tile>
+ <tile id="12">
+  <image width="32" height="32" source="tiles/tableright.png"/>
+ </tile>
+ <tile id="13">
+  <image width="32" height="32" source="tiles/white_floor.png"/>
  </tile>
  <tile id="14">
   <image width="32" height="32" source="tiles/wallleft.png"/>
@@ -67,41 +100,26 @@
  <tile id="32">
   <image width="32" height="32" source="tiles/wallfull.png"/>
  </tile>
- <tile id="13">
-  <image width="32" height="32" source="tiles/white_floor.png"/>
- </tile>
- <tile id="0">
-  <image width="32" height="32" source="tiles/cafeteria_floor.png"/>
- </tile>
- <tile id="2">
-  <image width="32" height="32" source="tiles/freezer_floor.png"/>
- </tile>
- <tile id="9">
-  <image width="32" height="32" source="tiles/plastic_floor.png"/>
- </tile>
- <tile id="10">
-  <image width="32" height="32" source="tiles/tableleft.png"/>
- </tile>
- <tile id="11">
-  <image width="32" height="32" source="tiles/tablemid.png"/>
- </tile>
- <tile id="45">
-  <image width="32" height="32" source="tiles/formingtable.png"/>
+ <tile id="33">
+  <image width="32" height="32" source="tiles/letthatsinkin.png"/>
  </tile>
  <tile id="34">
   <image width="32" height="32" source="tiles/choppingtable.png"/>
  </tile>
+ <tile id="35">
+  <image width="32" height="32" source="tiles/disposal.png"/>
+ </tile>
+ <tile id="36">
+  <image width="32" height="32" source="tiles/collide.png"/>
+ </tile>
+ <tile id="37">
+  <image width="32" height="32" source="tiles/free.png"/>
+ </tile>
+ <tile id="38">
+  <image width="32" height="32" source="tiles/machine.png"/>
+ </tile>
  <tile id="39">
   <image width="32" height="32" source="tiles/servingtable.png"/>
- </tile>
- <tile id="12">
-  <image width="32" height="32" source="tiles/tableright.png"/>
- </tile>
- <tile id="4">
-  <image width="32" height="32" source="tiles/fridgeopen.png"/>
- </tile>
- <tile id="3">
-  <image width="32" height="32" source="tiles/fridgeclosed.png"/>
  </tile>
  <tile id="40">
   <image width="32" height="32" source="tiles/fridgebun.png"/>
@@ -118,29 +136,8 @@
  <tile id="44">
   <image width="32" height="32" source="tiles/fridgetomato.png"/>
  </tile>
- <tile id="54">
-  <image width="32" height="32" source="tiles/fridgeCheese.png"/>
- </tile>
- <tile id="5">
-  <image width="32" height="32" source="tiles/fryeroff.png"/>
- </tile>
- <tile id="6">
-  <image width="32" height="32" source="tiles/fryeron.gif"/>
- </tile>
- <tile id="7">
-  <image width="32" height="32" source="tiles/grilloff.png"/>
- </tile>
- <tile id="8">
-  <image width="32" height="32" source="tiles/grillon.gif"/>
- </tile>
- <tile id="35">
-  <image width="32" height="32" source="tiles/disposal.png"/>
- </tile>
- <tile id="33">
-  <image width="32" height="32" source="tiles/letthatsinkin.png"/>
- </tile>
- <tile id="1">
-  <image width="32" height="32" source="tiles/cleaver.png"/>
+ <tile id="45">
+  <image width="32" height="32" source="tiles/formingtable.png"/>
  </tile>
  <tile id="47">
   <image width="32" height="32" source="tiles/goldgrill.png"/>
@@ -154,7 +151,13 @@
  <tile id="52">
   <image width="32" height="32" source="tiles/pizzatable.png"/>
  </tile>
+ <tile id="54">
+  <image width="32" height="32" source="tiles/fridgeCheese.png"/>
+ </tile>
  <tile id="55">
   <image width="32" height="32" source="tiles/fridgeDough.png"/>
+ </tile>
+ <tile id="56">
+  <image width="33" height="32" source="tiles/fridgepotato.png"/>
  </tile>
 </tileset>

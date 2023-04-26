@@ -190,7 +190,7 @@ class ScenarioGameMaster extends GameMaster {
 
 
         // loops through the dispenser layers to get the corresponding ingredient
-        for (int k=10;k<=16;k++){
+        for (int k=10;k<=17;k++){
             workingLayer = (TiledMapTileLayer) map.getLayers().get(k);
             for (int i = 0; i < workingLayer.getHeight(); i++) {
                 for (int j = 0; j < workingLayer.getWidth(); j++) {
@@ -504,6 +504,7 @@ class ScenarioGameMaster extends GameMaster {
                 }
             }
         }
+        //System.out.println(chefs.get(0).getInventory());
         //for customer timer increase
         boolean pauseTime = false;
         for (int i = 0; i < customers.size(); i++) {
