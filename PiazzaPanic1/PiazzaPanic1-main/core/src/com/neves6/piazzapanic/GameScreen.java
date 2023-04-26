@@ -276,4 +276,9 @@ public class GameScreen extends ScreenAdapter {
         selectedTexture.dispose();
         //recipes.dispose();
     }
+
+    // returns gm for testing
+    public ScenarioGameMaster returnGM(){
+        return this.gm;
+    }
 }
