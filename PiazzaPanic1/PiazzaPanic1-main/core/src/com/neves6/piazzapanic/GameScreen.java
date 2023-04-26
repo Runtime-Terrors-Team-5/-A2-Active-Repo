@@ -142,7 +142,7 @@ public class GameScreen extends ScreenAdapter {
                     gm.unlockMachine(2); //unlocks the forming station
                 }
                 if (keyCode == Input.Keys.B) {
-                    gm.unlockMachine(3); //unlocks the forming station
+                    gm.unlockMachine(3); //unlocks the pizza station
                 }
                 return true;
             }
@@ -151,7 +151,7 @@ public class GameScreen extends ScreenAdapter {
         gm.tickUpdate(delta);
         if (gm.repPoint==0){
             //this.dispose();
-            game.setScreen(new GameWinScreen(game,0));
+            game.setScreen(new GameWinScreen(game,0, gm.getCustomersServed()));
         }
 
         Gdx.gl20.glViewport( 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );

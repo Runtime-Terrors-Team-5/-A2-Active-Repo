@@ -40,11 +40,13 @@ public class GameWinScreen extends ScreenAdapter {
     TextureAtlas atlas;
     int completionTime;
     String lbText;
+    int customersServed;
 
 
-    public GameWinScreen(PiazzaPanicGame game, int completionTime) {
+    public GameWinScreen(PiazzaPanicGame game, int completionTime, int customersServed) {
         this.game = game;
         this.completionTime = completionTime;
+        this.customersServed = customersServed;
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
         bg = new Texture(Gdx.files.internal("title_screen_large-min.png"));
     }
@@ -117,7 +119,7 @@ public class GameWinScreen extends ScreenAdapter {
                 0,
                 bg.getWidth() * bgScaleFactor,
                 bg.getHeight() * bgScaleFactor);
-        font.draw(game.batch, "CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!", winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
+        font.draw(game.batch, "CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!\n" + "You served " + customersServed + " customers." , winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
         game.batch.end();
         stage.draw();
 

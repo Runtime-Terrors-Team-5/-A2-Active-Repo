@@ -62,6 +62,7 @@ class ScenarioGameMaster extends GameMaster {
     HashMap<Pair<Integer, Integer>, ArrayList<Machine>> machineLocation;
     int money = 0;
     List<Texture> trayTextures;
+    private int customersServed = 0;
 
 
     /**
@@ -625,29 +626,32 @@ class ScenarioGameMaster extends GameMaster {
             if (Objects.equals(invTop, "completed burger")) {
                 customers.remove(0);
                 money += 5;
+                customersServed++;
                 chef.getInventory().pop();
                 repIncrease();
                 serving.play(soundVolume);
                 if (customers.size() == 0 && cusomerRemaining == 0){
-                    game.setScreen(new GameWinScreen(game, (int) totalTimer));
+                    game.setScreen(new GameWinScreen(game, (int) totalTimer, customersServed));
                 }
             } else if (Objects.equals(invTop, "completed salad")) {
                 customers.remove(0);
+                customersServed++;
                 money += 5;
                 chef.getInventory().pop();
                 repIncrease();
                 serving.play(soundVolume);
                 if (customers.size() == 0 && cusomerRemaining == 0){
-                    game.setScreen(new GameWinScreen(game, (int) totalTimer));
+                    game.setScreen(new GameWinScreen(game, (int) totalTimer, customersServed));
                 }
             } else if (Objects.equals(invTop, "pizza")) {
                 customers.remove(0);
+                customersServed++;
                 money += 5;
                 chef.getInventory().pop();
                 repIncrease();
                 serving.play(soundVolume);
                 if (customers.size() == 0 && cusomerRemaining == 0){
-                    game.setScreen(new GameWinScreen(game, (int) totalTimer));
+                    game.setScreen(new GameWinScreen(game, (int) totalTimer, customersServed));
                 }
             }
         } else if (targetx == 11 && targety == 3) {
@@ -990,8 +994,9 @@ class ScenarioGameMaster extends GameMaster {
                 }
             }
         }
+    }
 
-
-
+    public int getCustomersServed() {
+        return customersServed;
     }
 }
