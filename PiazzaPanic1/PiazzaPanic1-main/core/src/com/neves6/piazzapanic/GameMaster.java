@@ -180,6 +180,7 @@ class ScenarioGameMaster extends GameMaster {
                 if (workingLayer.getCell(j,i) != null){
                     tempArray.add(new Machine("grill1patty", "patty", "burger", 3, true));
                     tempArray.add(new Machine("grill1bun", "bun", "toastedbun", 3, true));
+                    tempArray.add(new Machine("grillpotato", "potato", "bakedPotato", 3, true));
                     machineLocation.put(new Pair<>(j,i),tempArray);
                     tempArray = new ArrayList<>();
                 }
@@ -504,7 +505,7 @@ class ScenarioGameMaster extends GameMaster {
                 }
             }
         }
-        //System.out.println(chefs.get(0).getInventory());
+
         //for customer timer increase
         boolean pauseTime = false;
         for (int i = 0; i < customers.size(); i++) {
@@ -545,6 +546,7 @@ class ScenarioGameMaster extends GameMaster {
         }
         
         totalTimer += delta;
+        System.out.println(chefs.get(0).getInventory());
     }
 
     /**
