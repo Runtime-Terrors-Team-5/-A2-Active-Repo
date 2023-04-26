@@ -615,7 +615,7 @@ class ScenarioGameMaster extends GameMaster {
             System.out.println("error");
         }
 
-
+        // serving counter
         if (targetx == 1 && targety == 5 && !Objects.equals(invTop, "null")) {
             chef.removeTopFromInventory();
             trash.play(soundVolume);
@@ -656,6 +656,7 @@ class ScenarioGameMaster extends GameMaster {
         setTrayTextures();
 
     }
+
 
     private void setTrayTextures(){
         if(!trayTextures.isEmpty()) {

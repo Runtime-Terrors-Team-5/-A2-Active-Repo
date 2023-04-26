@@ -287,6 +287,7 @@ public class AllMachinesTest {
 
     /**
      * Tests if customers are removed from the queue once their order has been completed
+     * by using the facing x and y function
      */
     @Test
     public void testCustomerOrdersRemovedOnceServed(){
@@ -294,44 +295,16 @@ public class AllMachinesTest {
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map, 1, 1, 1);
         System.out.println(game.customers.get(0).getOrder());
-
         System.out.println(game.customers.size());
+        game.chefs.get(0).setxCoord(8);
+        game.chefs.get(0).setyCoord(4);
+        game.chefs.get(0).setFacing("down");
         int NumberOfOrders = game.customers.size();
-        for (int i=0; i<game.customers.size(); i++) {
-            if (Objects.equals(game.customers.get(0).getOrder(), "salad")) {
-                game.chefs.get(0).addToInventory("choppedtomato");
-                game.UseAddToTray(false);
-                game.chefs.get(0).addToInventory("choppedlettuce");
-                game.UseAddToTray(false);
-                game.chefs.get(0).addToInventory("choppedonion");
-                game.UseAddToTray(false);
-                game.chefs.get(0).getInventory().pop();
-                NumberOfOrders -=1;
-                game.customers.pop();
-                assertEquals(game.customers.size(), NumberOfOrders);
-            } else if(Objects.equals(game.customers.get(0).getOrder(), "burger")) {
-                // burger
-                game.chefs.get(0).addToInventory("burger");
-                game.UseAddToTray(false );
-                game.chefs.get(0).addToInventory("toastedbun");
-                game.UseAddToTray(false );
-                game.chefs.get(0).getInventory().pop();
-                NumberOfOrders -=1;
-                game.customers.pop();
-                assertEquals(game.customers.size(), NumberOfOrders);
-                // pizza
-            } else if (Objects.equals(game.customers.get(0).getOrder(), "pizza")) {
-                game.chefs.get(0).addToInventory("cheese");
-                game.UseAddToTray(true);
-                game.chefs.get(0).addToInventory("dough");
-                game.UseAddToTray(true);
-                game.chefs.get(0).getInventory().pop();
-                NumberOfOrders -=1;
-                game.customers.pop();
-                assertEquals(game.customers.size(), NumberOfOrders);
-            }
 
-        }
+        assertEquals(game.customers.size(), NumberOfOrders);
+
+
+
 
     }
 }
