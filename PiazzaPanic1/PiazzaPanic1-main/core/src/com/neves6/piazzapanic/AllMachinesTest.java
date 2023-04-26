@@ -296,11 +296,11 @@ public class AllMachinesTest {
         ScenarioGameMaster game = new ScenarioGameMaster(A, map, 1, 1, 1);
         System.out.println(game.customers.get(0).getOrder());
         System.out.println(game.customers.size());
+        game.chefs.get(0).addToInventory(game.customers.get(0).getOrder());
         game.chefs.get(0).setxCoord(8);
         game.chefs.get(0).setyCoord(4);
         game.chefs.get(0).setFacing("down");
         int NumberOfOrders = game.customers.size();
-
         assertEquals(game.customers.size(), NumberOfOrders);
 
 
