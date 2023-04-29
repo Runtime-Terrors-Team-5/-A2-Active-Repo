@@ -1000,4 +1000,9 @@ class ScenarioGameMaster extends GameMaster {
     public int getCustomersServed() {
         return customersServed;
     }
+
+    public Quintet<Float, Float, Integer, ArrayList, Boolean> returnStartingVars() {
+        return new Quintet<>(customerSpawnTimer, finalSpawnTimer, customerPersonalTimer, validOrder, endless);
+    }
+
 }
