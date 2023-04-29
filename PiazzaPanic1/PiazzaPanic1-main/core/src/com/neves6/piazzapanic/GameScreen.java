@@ -144,6 +144,12 @@ public class GameScreen extends ScreenAdapter {
                 if (keyCode == Input.Keys.B) {
                     gm.unlockMachine(3); //unlocks the pizza station
                 }
+//                for testing gamewinscreen
+//                if (keyCode == Input.Keys.P) {
+//                    game.setScreen(new GameWinScreen(game,0, gm.getCustomersServed()));
+//                }
+
+
                 return true;
             }
         });

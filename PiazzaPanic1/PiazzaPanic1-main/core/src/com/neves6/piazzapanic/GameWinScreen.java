@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import org.javatuples.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -127,6 +128,10 @@ public class GameWinScreen extends ScreenAdapter {
 
     public String winMsg() {
         return ("CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!\n" + "You served " + customersServed + " customers.");
+    }
+
+    public Pair<Integer, Integer> returnVars() {
+        return new Pair<Integer, Integer>(completionTime, customersServed);
     }
 
     @Override
