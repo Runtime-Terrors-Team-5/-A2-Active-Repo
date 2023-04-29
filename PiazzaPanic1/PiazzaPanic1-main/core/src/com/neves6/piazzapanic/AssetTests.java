@@ -18,6 +18,10 @@ public class AssetTests {
         assertTrue(" levelselector.png", Gdx.files.internal("buttons/levelselector/levelselector.png").exists());
     }
     @Test
+    public void testLeaderboardExists() {
+        assertTrue("leaderboard.txt", Gdx.files.internal("leaderboard.txt").exists());
+    }
+    @Test
     public void testTitleAssetsExists() {
         assertTrue("black_alpha_low.png", Gdx.files.internal("buttons/black_alpha_low.png").exists());
         assertTrue("black_alpha_mid.png", Gdx.files.internal("buttons/black_alpha_mid.png").exists());
