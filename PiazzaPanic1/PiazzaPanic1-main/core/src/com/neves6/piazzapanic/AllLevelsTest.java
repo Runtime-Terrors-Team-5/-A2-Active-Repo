@@ -40,7 +40,7 @@ public class AllLevelsTest {
         thislist.add("burger");
         Quintet thisQuintet = new Quintet<Float, Float, Integer, ArrayList, Boolean>((float)10.0, (float)10.0, 30, thislist, false);
         PiazzaPanicGame A = new PiazzaPanicGame();
-        ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
+        ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 2);
         assertEquals(thisQuintet, game.returnStartingVars());
     }
     /**
@@ -54,7 +54,7 @@ public class AllLevelsTest {
         thislist.add("burger");
         Quintet thisQuintet = new Quintet<Float, Float, Integer, ArrayList, Boolean>((float)5.0, (float)5.0, 20, thislist, false);
         PiazzaPanicGame A = new PiazzaPanicGame();
-        ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
+        ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 3);
         assertEquals(thisQuintet, game.returnStartingVars());
     }
     /**
@@ -68,7 +68,7 @@ public class AllLevelsTest {
         thislist.add("burger");
         Quintet thisQuintet = new Quintet<Float, Float, Integer, ArrayList, Boolean>((float)3.0, (float)3.0, 40, thislist, true);
         PiazzaPanicGame A = new PiazzaPanicGame();
-        ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
+        ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 4);
         assertEquals(thisQuintet, game.returnStartingVars());
     }
 }
