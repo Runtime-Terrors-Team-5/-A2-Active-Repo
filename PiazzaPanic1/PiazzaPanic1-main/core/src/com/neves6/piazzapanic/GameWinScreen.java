@@ -119,10 +119,14 @@ public class GameWinScreen extends ScreenAdapter {
                 0,
                 bg.getWidth() * bgScaleFactor,
                 bg.getHeight() * bgScaleFactor);
-        font.draw(game.batch, "CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!\n" + "You served " + customersServed + " customers." , winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
+        font.draw(game.batch, winMsg() , winWidth / 2f - winWidth/10f, winHeight / 2f + winHeight/5f, winWidth/5f, 1, false);
         game.batch.end();
         stage.draw();
 
+    }
+
+    public String winMsg() {
+        return ("CONGRATULATIONS!\nYou completed the game in " + completionTime + " seconds!\n" + "You served " + customersServed + " customers.");
     }
 
     @Override
