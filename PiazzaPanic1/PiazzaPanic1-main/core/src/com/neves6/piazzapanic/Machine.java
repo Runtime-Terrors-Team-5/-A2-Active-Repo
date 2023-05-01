@@ -38,6 +38,11 @@ public class Machine{
         this.active = false;
     }
 
+    /**
+     *
+     * @param machine
+     * @param chefs
+     */
     public Machine(Septet machine, ArrayList<Chef> chefs) {
         this.type = "";
         this.input = (String) machine.getValue0();
