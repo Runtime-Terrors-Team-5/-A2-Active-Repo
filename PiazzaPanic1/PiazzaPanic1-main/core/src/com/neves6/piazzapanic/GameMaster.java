@@ -57,6 +57,7 @@ class ScenarioGameMaster extends GameMaster {
     boolean formingStationUnlocked = false; //defaults to true til we figure out how to unlock it
 
     boolean pizzaStationUnlocked = false;
+    boolean chefUnlocked = false;
 
     boolean endless;
     HashMap<Pair<Integer, Integer>, ArrayList<Machine>> machineLocation;
@@ -327,6 +328,9 @@ class ScenarioGameMaster extends GameMaster {
             repPoint,cusomerRemaining, customerSpawnTimer, validOrder, PowerUp.generatePowerData());
     }
     public void setSelectedChef(int selectedChef) {
+        if ((!chefUnlocked) && selectedChef == 3) {
+            return;
+        }
         this.selectedChef = selectedChef - 1;
     }
     public int getSelectedChef() {
@@ -960,6 +964,13 @@ class ScenarioGameMaster extends GameMaster {
      * unlock machines once game conditions met
      * @param machine
      */
+
+    public void unlockChef () {
+        if (!chefUnlocked && money>=5) {
+            chefUnlocked = true;
+            money -=5;
+        }
+    }
 
 
     public void unlockMachine (int machine) {
