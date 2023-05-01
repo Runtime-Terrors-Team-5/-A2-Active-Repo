@@ -31,7 +31,10 @@ public class AssetTests {
     }
     @Test
     public void testFontsExists() {
-        String[] myStrArr = {"fonts/IBM_Plex_Mono_SemiBold.fnt ","fonts/IBM_Plex_Mono_SemiBold.png" ,"fonts/IBM_Plex_Mono_SemiBold_Black.fnt" ,"fonts/IBM_Plex_Mono_SemiBold_Black.png"};
+        String[] myStrArr = {"fonts/IBM_Plex_Mono_SemiBold.fnt",
+            "fonts/IBM_Plex_Mono_SemiBold.png" ,
+            "fonts/IBM_Plex_Mono_SemiBold_Black.fnt" ,
+            "fonts/IBM_Plex_Mono_SemiBold_Black.png"};
         for (String s : myStrArr) {
             assertTrue(s.substring(6), Gdx.files.internal(s).exists());
         }
