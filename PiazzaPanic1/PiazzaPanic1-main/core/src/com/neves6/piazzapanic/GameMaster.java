@@ -58,6 +58,7 @@ class ScenarioGameMaster extends GameMaster {
 
     boolean pizzaStationUnlocked = false;
     boolean chefUnlocked = false;
+    boolean unlockUI = false;
 
     boolean endless;
     HashMap<Pair<Integer, Integer>, ArrayList<Machine>> machineLocation;
@@ -1036,6 +1037,10 @@ class ScenarioGameMaster extends GameMaster {
     public int getCustomersServed() {
         return customersServed;
     }
+
+    public void unlockUItoggle(){
+        if(!unlockUI){unlockUI = true;}
+        else{unlockUI = false;}}
 
     public Quintet<Float, Float, Integer, ArrayList, Boolean> returnStartingVars() {
         return new Quintet<>(customerSpawnTimer, finalSpawnTimer, customerPersonalTimer, validOrder, endless);
