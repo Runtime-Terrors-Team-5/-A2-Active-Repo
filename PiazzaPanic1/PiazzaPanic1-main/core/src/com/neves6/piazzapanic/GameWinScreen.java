@@ -44,6 +44,12 @@ public class GameWinScreen extends ScreenAdapter {
     int customersServed;
 
 
+    /**
+     *
+     * @param game
+     * @param completionTime time taken to clear the level
+     * @param customersServed int number of customers served by the player
+     */
     public GameWinScreen(PiazzaPanicGame game, int completionTime, int customersServed) {
         this.game = game;
         this.completionTime = completionTime;

@@ -30,6 +30,25 @@ public class saveData implements Serializable {
 
     private ArrayList powerUPs;
 
+    /**
+     * class implements Serializable
+     * it will ccontain all the variables and data which will be saved
+     * to a file which can be loaded later
+     * @param chefs array containing the chefs
+     * @param level int to show which level it is 1 easy, 2 medium, 3 hard, 4 endless
+     * @param customers stack containing all the customers which has been spawned
+     * @param selectedChef int which shows which chef is currently selected and
+     *                     controlled by the player
+     * @param machines dictionary containing the machines and their location stored as an
+     *                array and a pair containing 2 integers respectively
+     * @param trayContent array containing strings to denote the contents of the tray
+     * @param timeElapsed float to show how long since the game has started
+     * @param repPoint int showing how much repoints the player has before they lose the game
+     * @param customerRemaining int for how many customers left to spawn
+     * @param customerSpawnTimer float for how long before the next customer is spawned
+     * @param validOrder array containing what orders will be spawned with the customers
+     * @param powerUps array containing the spawned power ups
+     */
     public saveData(ArrayList<Chef> chefs,int level, Stack<Customer> customers,int selectedChef,
         HashMap<Pair<Integer, Integer>,ArrayList<Machine>> machines, ArrayList<String> trayContent,
         float timeElapsed, int repPoint,

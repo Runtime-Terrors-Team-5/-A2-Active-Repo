@@ -41,6 +41,7 @@ public class GameScreen extends ScreenAdapter {
 
 
     Music music_background;
+    // constructor from selecting a level 4 is endless mode
     public GameScreen(PiazzaPanicGame game, int level) {
         this.game = game;
         fontBlack = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
@@ -67,6 +68,7 @@ public class GameScreen extends ScreenAdapter {
         music_background.play();
     }
 
+    // constructor when loading a game from the file
     public GameScreen(PiazzaPanicGame game) {
         this.game = game;
         fontBlack = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold_Black.fnt"));
@@ -106,6 +108,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean keyDown(int keyCode) {
+                //keys for movement
                 if (keyCode == Input.Keys.W) {
                     gm.tryMove("up");
                 }
@@ -118,6 +121,7 @@ public class GameScreen extends ScreenAdapter {
                 if (keyCode == Input.Keys.D) {
                     gm.tryMove("right");
                 }
+                // keys to switch control of the chef
                 if (keyCode == Input.Keys.NUM_1) {
                     gm.setSelectedChef(1);
                 }
@@ -128,10 +132,11 @@ public class GameScreen extends ScreenAdapter {
                 if (keyCode == Input.Keys.NUM_3) {
                     gm.setSelectedChef(3);
                 }
-
+                // key to interact with all stations
                 if (keyCode == Input.Keys.E) {
                     gm.tryInteract();
                 }
+                // key to save the game
                 if (keyCode == Input.Keys.O){
                     SaveAndLoadHandler.setSave(gm);
                 }
@@ -155,6 +160,7 @@ public class GameScreen extends ScreenAdapter {
         });
 
         gm.tickUpdate(delta);
+        //enters if the player has 0 rep point and loses
         if (gm.repPoint==0){
             //this.dispose();
             game.setScreen(new GameWinScreen(game,0, gm.getCustomersServed()));
@@ -175,7 +181,8 @@ public class GameScreen extends ScreenAdapter {
         game.batch.begin();
         game.batch.draw(gm.getChef(gm.getChefsLength()).getUiIcon(), 16 * wScale,7 * wScale,150 * unitScale, 140 * unitScale);
         //System.out.println(gm.getSelectedChef());
-        for (int i=1;i<4;i++){
+        //draws the chefs and their inventory
+        for (int i=1;i<gm.getChefsLength()+1;i++){
             game.batch.draw(gm.getChef(i).getTxNow(), gm.getChef(i).getxCoord() * wScale,
                 gm.getChef(i).getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
             gm.getChef(i).setInventoryTextures();
@@ -183,6 +190,7 @@ public class GameScreen extends ScreenAdapter {
                 if(!gm.getChef(i).getInvItems().isEmpty()){ game.batch.draw(gm.getChef(i).getInvItems().get(j), (19 - j) * wScale, (float) ((10 - ((i-1)*1.425)) * wScale),42 * unitScale, 42 * unitScale);}
             }
         }
+        // draws the power ups
         for(PowerUp inst: PowerUp.PowerUps){
             if(!inst.getActive()) {
                 game.batch.draw(inst.texture, inst.getxCoord() * wScale, inst.getyCoord() * hScale, 32 * unitScale, 32 * unitScale);
@@ -194,16 +202,21 @@ public class GameScreen extends ScreenAdapter {
         gm.getPowerUp();
         gm.powerUpEffect();
 
+        // draws a lock on the unlockable station if not unlocked
         if(!gm.formingStationUnlocked){game.batch.draw(lock, 14 * wScale, 4 * hScale, 32 * unitScale, 32 * unitScale);}
         if(!gm.goldGrillUnlocked){game.batch.draw(lock, 14 * wScale, 5 * hScale, 32 * unitScale, 32 * unitScale);}
         if(!gm.pizzaStationUnlocked){game.batch.draw(lock, 14 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);}
 
+        //draws how many reppoints the player has remaining
         game.batch.draw(gm.repIcon, 1 * wScale, 1 * hScale, 93 * unitScale, 45 * unitScale);
 
+        // draws an indicator to show the player which chefs he is controlling
         game.batch.draw(selectedTexture, gm.getChef(gm.getSelectedChef()).getxCoord() * wScale,
             gm.getChef(gm.getSelectedChef()).getyCoord() * hScale, 32 * unitScale,
             32 * unitScale);
 
+        //draws the customer and their order, the first customer also has a timer bar to count down
+        // when they will leave
         if (gm.getCustomersSize() >= 1) {
             game.batch.draw(bar2,  8 * wScale, 3 * hScale, 32 * unitScale, 10 * unitScale);
             game.batch.draw(bar1,  8 * wScale, 3 * hScale, (gm.getCustomerRemainingTime() * unitScale)/2, 10 * unitScale);
@@ -215,7 +228,9 @@ public class GameScreen extends ScreenAdapter {
             }
         }
 
-        for (int i=0;i<3;i++){
+        // draws a timer to count down when a machine is processing an ingredient
+        // and when it is done and how long you have before it fails
+        for (int i=0;i<gm.getChefsLength();i++){
             if (gm.getChef(i+1).getMachineInteractingWith() != null){
                 Machine currentMachine = gm.getChef(i+1).getMachineInteractingWith();
                 if (currentMachine.getActive() && currentMachine.getRuntime() >= currentMachine.getProcessingTime()){
@@ -232,7 +247,7 @@ public class GameScreen extends ScreenAdapter {
 
             }
         }
-
+        //draws the contents of the tray
         for(int i=0;i<gm.trayTextures.size();i++){
             game.batch.draw(gm.trayTextures.get(i),  12 * wScale, (float) (3.2 * hScale), 32 * unitScale, 32 * unitScale);
         }

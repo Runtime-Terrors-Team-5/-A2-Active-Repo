@@ -30,7 +30,7 @@ public final class SaveAndLoadHandler {
     } // not intended to be instantiated
 
     /**
-     * Retrieves settings from file.
+     * Retrieves save data from file.
      *
      * @return ArrayList of settings values.
      */
@@ -58,7 +58,7 @@ public final class SaveAndLoadHandler {
     }
 
     /**
-     * Saves settings to file.
+     * Saves data to file.
      * @param gm ArrayList of settings values to be saved.
      */
     public static void setSave(ScenarioGameMaster gm) {
