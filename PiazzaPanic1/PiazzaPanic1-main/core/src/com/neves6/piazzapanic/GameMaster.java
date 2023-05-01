@@ -822,7 +822,7 @@ class ScenarioGameMaster extends GameMaster {
         }
         else if (powerupno == 1){
             Texture texture = new Texture(Gdx.files.internal("icons/fastIcon.png"));
-            new PowerUp("cookSpeed",6,1,1,texture );
+            new PowerUp("fast",6,1,1,texture );
         }
         else if (powerupno == 2){
             Texture texture = new Texture(Gdx.files.internal("icons/moneyIcon.png"));
@@ -835,7 +835,7 @@ class ScenarioGameMaster extends GameMaster {
         }
         else if (powerupno == 4){
             Texture texture = new Texture(Gdx.files.internal("icons/frzTimeIcon.png"));
-            new PowerUp("pauseTime",6,5,1,texture );
+            new PowerUp("frzTime",6,5,1,texture );
         }
 
 
