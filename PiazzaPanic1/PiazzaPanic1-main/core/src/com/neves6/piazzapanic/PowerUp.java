@@ -16,13 +16,14 @@ public class PowerUp {
     public Texture texture;
     public static List<PowerUp> PowerUps = new ArrayList<>();
 
+
     /**
-     * constructor to generate and spawn the powerup
-     * @param PowerUpType string for the name of the opwerup
-     * @param xCoord int x coordinate of the powerup
-     * @param yCoord int y coordinate of the powerup
-     * @param time int time for how long the powerup will remain before despawning
-     * @param texture the texture of the powerup to be drawn
+     * Power up constructor.
+     * @param PowerUpType a string declaring which power up the power up is
+     * @param xCoord the int of the xCoord the power up collectable is rendered at
+     * @param yCoord the int of the xCoord the power up collectable is rendered at
+     * @param time int that ticks down, once time reaches 0 the power up is no longer collectable or active
+     * @param texture the texture of the power up collectable
      */
     public PowerUp(String PowerUpType, int xCoord, int yCoord, int time, Texture texture) {
         this.powerUpType = PowerUpType;
@@ -36,11 +37,11 @@ public class PowerUp {
 
     /**
      * constructor used when loading to respawn the powerups
-     * @param PowerUpType string for the name of the opwerup
-     * @param xCoord int x coordinate of the powerup
-     * @param yCoord int y coordinate of the powerup
-     * @param time int time for how long the powerup will remain before despawning
-     * @param texture the texture of the powerup to be drawn
+     * @param PowerUpType a string declaring which power up the power up is
+     * @param xCoord the int of the xCoord the power up collectable is rendered at
+     * @param yCoord the int of the xCoord the power up collectable is rendered at
+     * @param time int that ticks down, once time reaches 0 the power up is no longer collectable or active
+     * @param texture the texture of the power up collectable
      * @param active boolean for whether the powerup effect is active or not
      */
     public PowerUp(String PowerUpType, int xCoord, int yCoord, int time, Texture texture, boolean active) {

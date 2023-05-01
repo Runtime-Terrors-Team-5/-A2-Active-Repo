@@ -261,6 +261,10 @@ class Chef extends Person {
         }
     }
 
+    /**
+     * Creates the list of textures (invItems) based off each chefs inventory contents, every time
+     * the function is called the list is cleared then recreated, so calling the function updates the list
+     */
     public void setInventoryTextures(){
         if(!invItems.isEmpty()) {
             invItems.clear();

@@ -662,7 +662,10 @@ class ScenarioGameMaster extends GameMaster {
 
     }
 
-
+    /**
+     * Used to generate a list of textures that a drawn over the tray,
+     * corresponding to the items on the tray.
+     */
     private void setTrayTextures(){
         if(!trayTextures.isEmpty()) {
             trayTextures.clear();
@@ -749,6 +752,11 @@ class ScenarioGameMaster extends GameMaster {
             addToTray(false);
         }
     }
+
+    /**
+     * Function with a 1/600 chance of instantiating a
+     * power up if the conditions are correct.
+     */
     public void generatePowerUp(){
         if(powerUpCount < 2){
             boolean powerUpCollisionCheck = false;
@@ -766,15 +774,15 @@ class ScenarioGameMaster extends GameMaster {
                     powerUpType = "fast";
                     texture = new Texture(Gdx.files.internal("icons/fastIcon.png"));
                 }
-                else if (randomInt < 45){
+                else if (randomInt < 45 && repPoint < 3){
                     powerUpType = "rep";
                     texture = new Texture(Gdx.files.internal("icons/repIcon.png"));
                 }
-                else if (randomInt < 55){
+                else if (randomInt < 50){
                     powerUpType = "minusRep";
                     texture = new Texture(Gdx.files.internal("icons/minusRepIcon.png"));
                 }
-                else if (randomInt < 85){
+                else if (randomInt < 80){
                     powerUpType = "frzTime";
                     texture = new Texture(Gdx.files.internal("icons/frzTimeIcon.png"));
                 }
@@ -833,6 +841,10 @@ class ScenarioGameMaster extends GameMaster {
 
 
     }
+
+    /**
+     * Removes all power ups that have exceeded their time.
+     */
     public void clearPowerUp(){
         List<PowerUp> found = new ArrayList<>();
         for(PowerUp inst: PowerUp.PowerUps)
@@ -846,6 +858,9 @@ class ScenarioGameMaster extends GameMaster {
         PowerUp.PowerUps.removeAll(found);
     }
 
+    /**
+     * Function used to collect power ups.
+     */
     public void getPowerUp(){
         List<PowerUp> found = new ArrayList<>();
         for(PowerUp inst: PowerUp.PowerUps){
@@ -863,6 +878,9 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 
+    /**
+     * Function used to activate the effects of the power ups that act instantly.
+     */
     public void powerUpEffect(){
         for(PowerUp inst: PowerUp.PowerUps){
             if(inst.active){
@@ -883,7 +901,10 @@ class ScenarioGameMaster extends GameMaster {
         }
     }
 
-    //rep decrease()
+    /**
+     * Function called when the negative reputation power up is collected, decreases the repPoint value by 1
+     * and updates the ui icon for reputation
+     */
     public void repDecrease(){
         repPoint -= 1;
         if (repPoint == 3) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints3.png"));}
@@ -892,6 +913,10 @@ class ScenarioGameMaster extends GameMaster {
         else if (repPoint == 0) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints0.png"));}
     }
 
+    /**
+     * Function called when the reputation power up is collected, increases the repPoint value by 1
+     * if it is less than 3 and updates the ui icon for reputation
+     */
     public void repIncrease(){
         if (repPoint < 3) {repPoint += 1;}
         if (repPoint == 3) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints3.png"));}
