@@ -27,12 +27,19 @@ public class LeaderboardScreen extends ScreenAdapter {
 
     ArrayList<Pair<String, Integer>> lbPairs = new ArrayList<Pair<String, Integer>>();
 
+    /**
+     * LeaderBoardScreen constructor.
+     * @param game PiazzaPanicGame instance.
+     */
 
     public LeaderboardScreen(PiazzaPanicGame game) {
         this.game = game;
         font = new BitmapFont(Gdx.files.internal("fonts/IBM_Plex_Mono_SemiBold.fnt"));
     }
-
+    /**
+     * ScenarioGameMaster show method.
+     * reads the leaderboard.txt file and displays it onto the screen
+     */
     public void show(){
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
