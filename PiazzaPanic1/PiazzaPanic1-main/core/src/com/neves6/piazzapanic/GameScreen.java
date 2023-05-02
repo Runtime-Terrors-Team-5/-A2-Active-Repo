@@ -60,6 +60,7 @@ public class GameScreen extends ScreenAdapter {
             hScale = unitScale * 32f;
             renderer = new OrthogonalTiledMapRenderer(map, unitScale);
         }
+        fontBlack.getData().setScale((float) (0.53*unitScale));
         selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
         bar2 = new Texture(Gdx.files.internal("icons/bar2.png"));
         bar1 = new Texture(Gdx.files.internal("icons/bar1.png"));
