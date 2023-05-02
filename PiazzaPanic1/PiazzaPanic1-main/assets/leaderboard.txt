@@ -1,2 +1,2 @@
-greg 20
-hello 0
+GREG 20
+STEVO 40

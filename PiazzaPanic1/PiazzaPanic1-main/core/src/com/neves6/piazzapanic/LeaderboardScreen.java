@@ -12,8 +12,9 @@ import com.badlogic.gdx.files.FileHandle;
 import org.javatuples.Pair;
 import javax.sound.midi.SysexMessage;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class LeaderboardScreen extends ScreenAdapter {
     PiazzaPanicGame game;
@@ -56,9 +57,19 @@ public class LeaderboardScreen extends ScreenAdapter {
         FileHandle handle = Gdx.files.local("leaderboard.txt");
         text = handle.readString(); //text contains the entire contents of leaderboard.txt
         String[] wordsArray = text.split("\\s+"); //this splits text by whitespace
-        //this loop places all the values in the wordarray into a list of pairs
-        for(int i=0; i<((wordsArray.length)-1); i+=2){
-            Pair<String, Integer> addPair = new Pair<>(wordsArray[i], Integer.parseInt(wordsArray[i+1]));
+
+        //this code removes empty strings
+        ArrayList<String> temparray = new ArrayList<>();
+        for (String s :
+                wordsArray) {
+            if (!s.equals("")) {
+                temparray.add(s);
+            }
+        }
+
+        //this loop places all the values in the temparray into a list of pairs
+        for(int i=0; i<((temparray.size())-1); i+=2){
+            Pair<String, Integer> addPair = new Pair<>(temparray.get(i), Integer.parseInt(temparray.get(i+1)));
             lbPairs.add(addPair);
         }
 
