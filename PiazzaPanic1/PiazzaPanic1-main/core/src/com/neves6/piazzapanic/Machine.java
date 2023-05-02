@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input.Keys;
 import java.util.ArrayList;
 import java.util.Objects;
 import org.javatuples.Septet;
-import org.javatuples.Sextet;
 
 /**
  * Machine class.
@@ -27,7 +26,7 @@ public class Machine{
      * @param input Input ingredient.
      * @param output Output ingredient.
      * @param processingTime Processing time.
-     * @param sticky Whether or not the machine locks the chef in place during use.
+     * @param sticky Whether the machine locks the chef in place during use.
      */
     public Machine(String type, String input, String output, float processingTime, Boolean sticky){
         this.type = type;
@@ -39,9 +38,9 @@ public class Machine{
     }
 
     /**
-     *
-     * @param machine
-     * @param chefs
+     *constructor of a machine used when loading
+     * @param machine tuple containing variables for this machine
+     * @param chefs array of chefs to identify if this machine is in use and which chef
      */
     public Machine(Septet machine, ArrayList<Chef> chefs) {
         this.type = "";
@@ -59,7 +58,7 @@ public class Machine{
      * @param chef Which chef is using the machine.
      */
     public void process(Chef chef){
-        if (input == "" && processingTime == 0) {
+        if (Objects.equals(input, "") && processingTime == 0) {
             chef.addToInventory(output);
         } else if (Objects.equals(chef.getInventory().peek(), input)) {
             active = true;
@@ -73,6 +72,7 @@ public class Machine{
     /**
      * Checks if the machine is done processing and adds the output to the chef's inventory if it is.
      * Handles unsticking the chef.
+     * @param SelectedChef the chef to which the processed ingredient will be added to
      */
     public void attemptGetOutput(int SelectedChef){
         Chef chef = operator;
@@ -125,6 +125,10 @@ public class Machine{
         return output;
     }  // game test
 
+    /**
+     * method which gets all important variables of this machine to be saved
+     * @return a tuple containing the variables
+     */
     public Septet getMachineInfo(){
         if (this.operator == null){return new Septet(input, output, processingTime, sticky, 1, active,
             runtime);}

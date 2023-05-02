@@ -52,9 +52,9 @@ class ScenarioGameMaster extends GameMaster {
     private float finalSpawnTimer;
     int customerPersonalTimer; //this sets the timer of the customer til they reduce the players reputation points
 
-    boolean goldGrillUnlocked = false; //defaults to true until we figure out how to "unlock" it
+    boolean goldGrillUnlocked = false;
 
-    boolean formingStationUnlocked = false; //defaults to true til we figure out how to unlock it
+    boolean formingStationUnlocked = false;
 
     boolean pizzaStationUnlocked = false;
 
@@ -242,6 +242,7 @@ class ScenarioGameMaster extends GameMaster {
         else if (repPoint == 2) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints2.png"));}
         else if (repPoint == 1) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints1.png"));}
         else if (repPoint == 0) {this.repIcon =  new Texture(Gdx.files.internal("icons/repPoints0.png"));}
+        this.trayTextures = new ArrayList<>();
 
         settings = Utility.getSettings();
         this.level = data.getLevel();
@@ -272,7 +273,7 @@ class ScenarioGameMaster extends GameMaster {
         HashMap<Pair,ArrayList<Septet>> machineData = data.getMachinedata();
         ArrayList<Machine> tempMachine;
         for (Pair key : machineData.keySet()) {
-            tempMachine = new ArrayList<Machine>();
+            tempMachine = new ArrayList<>();
             for (Septet mac : machineData.get(key)) {
                 tempMachine.add(new Machine(mac,chefs));
             }
@@ -479,11 +480,10 @@ class ScenarioGameMaster extends GameMaster {
             this.cusomerRemaining -= 1;
         }
         this.customerSpawnTimer = finalSpawnTimer;
-        for (int i = 0; i < customers.size(); i++) {
-            System.out.print(customers.get(i).getOrder());
+        for (Customer customer : customers) {
+            System.out.print(customer.getOrder());
             System.out.print(", ");
         }
-        System.out.println("");
     }
 
     /**
@@ -746,11 +746,7 @@ class ScenarioGameMaster extends GameMaster {
      * @param isitpizza if pizza being tested
      */
     public void UseAddToTray(boolean isitpizza){
-        if (isitpizza){
-            addToTray(true);
-        }else{
-            addToTray(false);
-        }
+        addToTray(isitpizza);
     }
 
     /**
@@ -766,8 +762,8 @@ class ScenarioGameMaster extends GameMaster {
             int randomInt = rand.nextInt(600);
             if (randomInt == 0){
                 int time = 300;
-                String powerUpType = "";
-                Texture texture = new Texture(Gdx.files.internal("icons/fastIcon.png"));
+                String powerUpType;
+                Texture texture;
 
                 randomInt = rand.nextInt(100);
                 if (randomInt < 30){
@@ -786,7 +782,7 @@ class ScenarioGameMaster extends GameMaster {
                     powerUpType = "frzTime";
                     texture = new Texture(Gdx.files.internal("icons/frzTimeIcon.png"));
                 }
-                else if (randomInt < 100){
+                else {
                     powerUpType = "money";
                     texture = new Texture(Gdx.files.internal("icons/moneyIcon.png"));
                 }
@@ -794,12 +790,13 @@ class ScenarioGameMaster extends GameMaster {
                 while (!powerUpCollisionCheck) {
                     tempX = rand.nextInt(13) + 1;
                     tempY = rand.nextInt(3) + 4;
-                    if ((tempX == chefs.get(0).getxCoord() && tempY == chefs.get(0).getyCoord()) ||
-                            (tempX == chefs.get(1).getxCoord() && tempY == chefs.get(1).getyCoord()) ||
-                            (tempX == chefs.get(2).getxCoord() && tempY == chefs.get(2).getyCoord()) ||
-                            (tempX == 1 && tempY == 5))
-                    { powerUpCollisionCheck = false; }
-                    else { powerUpCollisionCheck = true; }
+                    powerUpCollisionCheck =
+                        (tempX != chefs.get(0).getxCoord() || tempY != chefs.get(0).getyCoord()) &&
+                            (tempX != chefs.get(1).getxCoord() || tempY != chefs.get(1).getyCoord())
+                            &&
+                            (tempX != chefs.get(2).getxCoord() || tempY != chefs.get(2).getyCoord())
+                            &&
+                            (tempX != 1 || tempY != 5);
                 }
 
                 int xCoord = tempX;
@@ -862,7 +859,6 @@ class ScenarioGameMaster extends GameMaster {
      * Function used to collect power ups.
      */
     public void getPowerUp(){
-        List<PowerUp> found = new ArrayList<>();
         for(PowerUp inst: PowerUp.PowerUps){
             if(inst.getxCoord() == chefs.get(getSelectedChef()-1).getxCoord() &&
                     inst.getyCoord() == chefs.get(getSelectedChef()-1).getyCoord()){
@@ -944,17 +940,6 @@ class ScenarioGameMaster extends GameMaster {
 
     public float getTotalTimer(){return this.totalTimer;}
 
-//    public void scrambleOrders() {
-//        Random rand = new Random();
-//        int custSize = customers.size();
-//        int n;
-//        for (int i = 1; i < custSize; i++) {
-//            n = rand.nextInt(100);
-//            if (n < 35) {
-//                customers.get(i).setOrder("pizza");
-//            }
-//        }
-//    }
 
     /**
      * unlock machines once game conditions met
