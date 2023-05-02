@@ -7,10 +7,8 @@ import java.util.Objects;
 import java.util.Stack;
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
-import org.javatuples.Quintet;
 import org.javatuples.Septet;
 import org.javatuples.Sextet;
-import org.javatuples.Triplet;
 
 public class saveData implements Serializable {
 
@@ -90,8 +88,7 @@ public class saveData implements Serializable {
     }
 
     public ScenarioGameMaster loadGameMaster(PiazzaPanicGame game){
-        ScenarioGameMaster gm = new ScenarioGameMaster(this,game);
-        return gm;
+        return new ScenarioGameMaster(this,game);
     }
 
     public HashMap<Pair,ArrayList<Septet>> getMachinedata() {return machinedata;}

@@ -6,6 +6,5 @@ dave    180
 jeff 95
 null 0
 d 0
- 0
 null 0
 greg 115

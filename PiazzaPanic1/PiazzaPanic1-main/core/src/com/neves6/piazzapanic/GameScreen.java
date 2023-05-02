@@ -93,6 +93,12 @@ public class GameScreen extends ScreenAdapter {
         moneyUI = new Texture(Gdx.files.internal("icons/moneyUI.png"));
         renderer = new OrthogonalTiledMapRenderer(map, unitScale);
         selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
+        lock = new Texture(Gdx.files.internal("icons/locked.png"));
+        unlockUITip = new Texture(Gdx.files.internal("icons/unlockTip.png"));
+        unlockUI = new Texture(Gdx.files.internal("icons/unlockGuide.png"));
+        music_background = Gdx.audio.newMusic(Gdx.files.internal("sounds/background.mp3"));
+        music_background.setLooping(true);
+        music_background.play();
     }
 
 
@@ -220,7 +226,7 @@ public class GameScreen extends ScreenAdapter {
         if(!gm.pizzaStationUnlocked){game.batch.draw(lock, 14 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);}
         if(!gm.chefUnlocked){game.batch.draw(lock, 8 * wScale, 5 * hScale, 32 * unitScale, 32 * unitScale);}
         if(gm.unlockUI){game.batch.draw(unlockUI, (float) (15.75 * wScale), 1 * hScale, 160 * unitScale, 160 * unitScale);}
-        game.batch.draw(unlockUITip, 0 * wScale, 0 * hScale, 144 * unitScale, 20 * unitScale);
+        game.batch.draw(unlockUITip, 0 * wScale, 0 * hScale, 210 * unitScale, 22 * unitScale);
 
         //draws how many reppoints the player has remaining
         game.batch.draw(gm.repIcon, 1 * wScale, 1 * hScale, 93 * unitScale, 45 * unitScale);

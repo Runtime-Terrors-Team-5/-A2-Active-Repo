@@ -178,7 +178,7 @@ public class AllMachinesTest {
      * tests if given the correct input in chef inventory the machines returns the correct output
      *
      *
-     * @throws InterruptedException
+     *
      */
     @Test
     public void testNewAddToChefInventory()  {
@@ -192,6 +192,7 @@ public class AllMachinesTest {
         assertEquals((getMachineFromGame("tomato",4,"")),  "choppedtomato");
         assertEquals((getMachineFromGame("lettuce",4,"")),  "choppedlettuce");
         assertEquals((getMachineFromGame("onion",4,"")),  "choppedonion");
+        assertEquals((getMachineFromGame("potato",6,"")),  "bakedPotato");
 
     }
 
@@ -210,6 +211,7 @@ public class AllMachinesTest {
         assertEquals((getMachineFromGame("",10,"meat")),  "meat");
         assertEquals((getMachineFromGame("",10,"bun")),  "bun");
         assertEquals((getMachineFromGame("",10,"onion")),  "onion");
+        assertEquals((getMachineFromGame("",10,"potato")),  "potato");
 
 
 

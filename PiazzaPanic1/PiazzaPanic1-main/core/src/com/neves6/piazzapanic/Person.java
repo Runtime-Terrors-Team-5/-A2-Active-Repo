@@ -274,7 +274,7 @@ class Chef extends Person {
         }
         List<String> items = Arrays.asList("bun", "burger", "completed burger", "choppedlettuce",
             "lettuce", "meat", "onion", "choppedonion", "patty", "pizza", "completed salad",
-            "toastedbun", "tomato", "choppedtomato","cheese","dough","uncooked_pizza","potato","bakedPotato");
+            "toastedbun", "tomato", "choppedtomato","cheese","dough","uncooked_pizza","potato","bakedPotato", "Junk");
         for (int i=0;i<(this.inventory.size()) && i<3;i++){
             for(int j = 0; j < items.size(); j++){
                 if (Objects.equals(this.inventory.get(i), items.get(j))){
