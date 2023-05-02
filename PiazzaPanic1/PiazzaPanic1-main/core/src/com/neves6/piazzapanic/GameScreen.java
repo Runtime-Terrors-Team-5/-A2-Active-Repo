@@ -202,8 +202,8 @@ public class GameScreen extends ScreenAdapter {
         gm.tickUpdate(delta);
         //enters if the player has 0 rep point and loses
         if (gm.repPoint==0){
-            //this.dispose();
-            //game.setScreen(new GameWinScreen(game,0, gm.getCustomersServed()));
+            this.dispose();
+            game.setScreen(new GameWinScreen(game,0, gm.getCustomersServed()));
         }
 
         Gdx.gl20.glViewport( 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );
