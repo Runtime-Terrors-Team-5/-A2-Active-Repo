@@ -57,6 +57,8 @@ class ScenarioGameMaster extends GameMaster {
     boolean formingStationUnlocked = false;
 
     boolean pizzaStationUnlocked = false;
+    boolean chefUnlocked = false;
+    boolean unlockUI = false;
 
     boolean endless;
     HashMap<Pair<Integer, Integer>, ArrayList<Machine>> machineLocation;
@@ -328,6 +330,9 @@ class ScenarioGameMaster extends GameMaster {
             repPoint,cusomerRemaining, customerSpawnTimer, validOrder, PowerUp.generatePowerData());
     }
     public void setSelectedChef(int selectedChef) {
+        if ((!chefUnlocked) && selectedChef == 3) {
+            return;
+        }
         this.selectedChef = selectedChef - 1;
     }
     public int getSelectedChef() {
@@ -946,6 +951,13 @@ class ScenarioGameMaster extends GameMaster {
      * @param machine
      */
 
+    public void unlockChef () {
+        if (!chefUnlocked && money>=5) {
+            chefUnlocked = true;
+            money -=5;
+        }
+    }
+
 
     public void unlockMachine (int machine) {
         if (machine == 1 && money >= 5) {
@@ -1010,6 +1022,10 @@ class ScenarioGameMaster extends GameMaster {
     public int getCustomersServed() {
         return customersServed;
     }
+
+    public void unlockUItoggle(){
+        if(!unlockUI){unlockUI = true;}
+        else{unlockUI = false;}}
 
     public Quintet<Float, Float, Integer, ArrayList, Boolean> returnStartingVars() {
         return new Quintet<>(customerSpawnTimer, finalSpawnTimer, customerPersonalTimer, validOrder, endless);

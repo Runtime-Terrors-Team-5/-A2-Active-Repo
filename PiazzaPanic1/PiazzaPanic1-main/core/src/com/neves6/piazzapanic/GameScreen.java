@@ -38,6 +38,8 @@ public class GameScreen extends ScreenAdapter {
     Texture bar2;
     Texture moneyUI;
     Texture lock;
+    Texture unlockUI;
+    Texture unlockUITip;
 
 
     Music music_background;
@@ -63,6 +65,8 @@ public class GameScreen extends ScreenAdapter {
         bar1 = new Texture(Gdx.files.internal("icons/bar1.png"));
         moneyUI = new Texture(Gdx.files.internal("icons/moneyUI.png"));
         lock = new Texture(Gdx.files.internal("icons/locked.png"));
+        unlockUITip = new Texture(Gdx.files.internal("icons/unlockTip.png"));
+        unlockUI = new Texture(Gdx.files.internal("icons/unlockGuide.png"));
         music_background = Gdx.audio.newMusic(Gdx.files.internal("sounds/background.mp3"));
         music_background.setLooping(true);
         music_background.play();
@@ -153,6 +157,14 @@ public class GameScreen extends ScreenAdapter {
                 if (keyCode == Input.Keys.B) {
                     gm.unlockMachine(3); //unlocks the pizza station
                 }
+                if (keyCode == Input.Keys.X) {
+                    gm.unlockChef(); //unlocks the chef
+                }
+                if (keyCode == Input.Keys.Q) {
+                    gm.unlockUItoggle(); //opens unlock menu
+                }
+
+
 //                for testing gamewinscreen
 //                if (keyCode == Input.Keys.P) {
 //                    game.setScreen(new GameWinScreen(game,0, gm.getCustomersServed()));
@@ -210,6 +222,9 @@ public class GameScreen extends ScreenAdapter {
         if(!gm.formingStationUnlocked){game.batch.draw(lock, 14 * wScale, 4 * hScale, 32 * unitScale, 32 * unitScale);}
         if(!gm.goldGrillUnlocked){game.batch.draw(lock, 14 * wScale, 5 * hScale, 32 * unitScale, 32 * unitScale);}
         if(!gm.pizzaStationUnlocked){game.batch.draw(lock, 14 * wScale, 6 * hScale, 32 * unitScale, 32 * unitScale);}
+        if(!gm.chefUnlocked){game.batch.draw(lock, 8 * wScale, 5 * hScale, 32 * unitScale, 32 * unitScale);}
+        if(gm.unlockUI){game.batch.draw(unlockUI, (float) (15.75 * wScale), 1 * hScale, 160 * unitScale, 160 * unitScale);}
+        game.batch.draw(unlockUITip, 0 * wScale, 0 * hScale, 144 * unitScale, 20 * unitScale);
 
         //draws how many reppoints the player has remaining
         game.batch.draw(gm.repIcon, 1 * wScale, 1 * hScale, 93 * unitScale, 45 * unitScale);
