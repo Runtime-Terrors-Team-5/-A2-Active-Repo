@@ -299,6 +299,7 @@ class ScenarioGameMaster extends GameMaster {
         this.tray = data.getTrayContent();
         this.validOrder = data.getValidOrder();
         this.totalTimer = data.getTimeElapled();
+        this.money = data.getMoney();
 
 
 
@@ -331,7 +332,8 @@ class ScenarioGameMaster extends GameMaster {
      */
     public saveData generateSaveData(){
         return new saveData(chefs, level, customers,selectedChef,machineLocation,tray,totalTimer,
-            repPoint,cusomerRemaining, customerSpawnTimer, validOrder, PowerUp.generatePowerData());
+            repPoint,cusomerRemaining, customerSpawnTimer, validOrder, PowerUp.generatePowerData(),
+            money);
     }
     public void setSelectedChef(int selectedChef) {
         if ((!chefUnlocked) && selectedChef == 3) {
