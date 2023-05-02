@@ -93,6 +93,7 @@ class ScenarioGameMaster extends GameMaster {
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
+            validOrder.add("potato");
             //validOrder.add("pizza");
             endless = false;
         }
@@ -104,6 +105,7 @@ class ScenarioGameMaster extends GameMaster {
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
+            validOrder.add("potato");
             endless = false;
         }
 
@@ -114,6 +116,7 @@ class ScenarioGameMaster extends GameMaster {
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
+            validOrder.add("potato");
             endless = false;
         }
 
@@ -124,6 +127,7 @@ class ScenarioGameMaster extends GameMaster {
             validOrder = new ArrayList<>();
             validOrder.add("salad");
             validOrder.add("burger");
+            validOrder.add("potato");
             endless = true;
         }
         
@@ -650,6 +654,16 @@ class ScenarioGameMaster extends GameMaster {
                     game.setScreen(new GameWinScreen(game, (int) totalTimer, customersServed));
                 }
             } else if (Objects.equals(invTop, "pizza")) {
+                customers.remove(0);
+                customersServed++;
+                money += 5;
+                chef.getInventory().pop();
+                repIncrease();
+                serving.play(soundVolume);
+                if (customers.size() == 0 && cusomerRemaining == 0){
+                    game.setScreen(new GameWinScreen(game, (int) totalTimer, customersServed));
+                }
+            } else if (Objects.equals(invTop, "bakedPotato")) {
                 customers.remove(0);
                 customersServed++;
                 money += 5;

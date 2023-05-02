@@ -95,6 +95,9 @@ class Customer extends Person{
         else if (Objects.equals(order, "pizza")){
             this.orderTexture = new Texture("foods/pizza.png");
         }
+        else if (Objects.equals(order, "potato")){
+            this.orderTexture = new Texture("foods/potato.png");
+        }
     }
 
     public String getOrder(){
