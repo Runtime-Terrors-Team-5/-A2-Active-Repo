@@ -94,6 +94,8 @@ public class GameScreen extends ScreenAdapter {
         renderer = new OrthogonalTiledMapRenderer(map, unitScale);
         selectedTexture = new Texture(Gdx.files.internal("people/selected.png"));
         lock = new Texture(Gdx.files.internal("icons/locked.png"));
+        unlockUITip = new Texture(Gdx.files.internal("icons/unlockTip.png"));
+        unlockUI = new Texture(Gdx.files.internal("icons/unlockGuide.png"));
         music_background = Gdx.audio.newMusic(Gdx.files.internal("sounds/background.mp3"));
         music_background.setLooping(true);
         music_background.play();
