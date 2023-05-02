@@ -675,7 +675,7 @@ class ScenarioGameMaster extends GameMaster {
         if(!trayTextures.isEmpty()) {
             trayTextures.clear();
         }
-        List<String> items = Arrays.asList(new String[]{"bun", "burger", "completed burger", "choppedlettuce", "lettuce",  "meat", "onion", "choppedonion", "patty", "pizza", "completed salad", "toastedbun", "tomato", "choppedtomato","cheese","dough","uncooked_pizza","potato","bakedPotato"});
+        List<String> items = Arrays.asList(new String[]{"bun", "burger", "completed burger", "choppedlettuce", "lettuce",  "meat", "onion", "choppedonion", "patty", "pizza", "completed salad", "toastedbun", "tomato", "choppedtomato","cheese","dough","uncooked_pizza","potato","bakedPotato","junk"});
         for(int i=0;i<tray.size();i++){
             for(int j=0;j<items.size();j++){
                 if(this.tray.get(i) == items.get(j)){
