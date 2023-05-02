@@ -19,6 +19,9 @@ import java.util.concurrent.TimeUnit;
 public class testSaveLoad {
     TiledMap map;
 
+    /**
+     * Tests that the saved instance of the game is equal to the load version
+     */
     @Test
     public void testGameScreen(){
         map = new TmxMapLoader().load("tilemaps/level1.tmx");
