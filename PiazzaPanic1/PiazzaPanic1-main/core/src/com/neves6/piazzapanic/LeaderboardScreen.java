@@ -52,6 +52,7 @@ public class LeaderboardScreen extends ScreenAdapter {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch = new SpriteBatch();
+        Utility.lbExistenceHandler();
         FileHandle handle = Gdx.files.local("leaderboard.txt");
         text = handle.readString(); //text contains the entire contents of leaderboard.txt
         String[] wordsArray = text.split("\\s+"); //this splits text by whitespace

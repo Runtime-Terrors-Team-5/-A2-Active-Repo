@@ -51,6 +51,7 @@ public class GameWinScreen extends ScreenAdapter {
      * @param customersServed int number of customers served by the player
      */
     public GameWinScreen(PiazzaPanicGame game, int completionTime, int customersServed) {
+        Utility.lbExistenceHandler();
         this.game = game;
         this.completionTime = completionTime;
         this.customersServed = customersServed;

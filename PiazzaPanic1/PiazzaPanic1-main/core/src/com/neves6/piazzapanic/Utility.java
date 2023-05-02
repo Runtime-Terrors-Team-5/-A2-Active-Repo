@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public final class Utility {
 
     public static String settingsFilepath = "./settings.txt";
+    public static String lbFilepath = "./leaderboard.txt";
 
     /**
      * Utility constructor.
@@ -82,6 +83,18 @@ public final class Utility {
                 defaults.add("windowed");
                 defaults.add("full");
                 setSettings(defaults);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void lbExistenceHandler() {
+        File f = new File(lbFilepath);
+        if (f.isFile()) {
+        } else {
+            try {
+                f.createNewFile();
             } catch (Exception e) {
                 e.printStackTrace();
             }
