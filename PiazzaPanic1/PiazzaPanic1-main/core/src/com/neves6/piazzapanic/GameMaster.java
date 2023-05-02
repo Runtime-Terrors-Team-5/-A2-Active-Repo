@@ -946,10 +946,6 @@ class ScenarioGameMaster extends GameMaster {
     public float getTotalTimer(){return this.totalTimer;}
 
 
-    /**
-     * unlock machines once game conditions met
-     * @param machine
-     */
 
     public void unlockChef () {
         if (!chefUnlocked && money>=5) {
@@ -957,7 +953,10 @@ class ScenarioGameMaster extends GameMaster {
             money -=5;
         }
     }
-
+    /**
+     * unlock machines once game conditions met
+     * @param machine
+     */
 
     public void unlockMachine (int machine) {
         if (machine == 1 && money >= 5) {

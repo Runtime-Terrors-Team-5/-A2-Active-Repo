@@ -178,7 +178,7 @@ public class AllMachinesTest {
      * tests if given the correct input in chef inventory the machines returns the correct output
      *
      *
-     * @throws InterruptedException
+     *
      */
     @Test
     public void testNewAddToChefInventory()  {

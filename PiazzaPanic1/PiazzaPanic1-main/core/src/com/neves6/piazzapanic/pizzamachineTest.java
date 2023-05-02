@@ -47,7 +47,7 @@ public class pizzamachineTest {
      */
 
     public void testPizzaAddedToChefInventory() throws InterruptedException {
-        
+
         map = new TmxMapLoader().load("tilemaps/level1.tmx");
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);

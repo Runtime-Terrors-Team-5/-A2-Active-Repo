@@ -116,7 +116,7 @@ public class poweruptest {
 
     }
     /**
-     * Tests that time is freezed for a set time
+     * Tests that time is freezed for a set time once the icon is collected
      */
     @Test
     public void testFreezeTime() throws InterruptedException {
