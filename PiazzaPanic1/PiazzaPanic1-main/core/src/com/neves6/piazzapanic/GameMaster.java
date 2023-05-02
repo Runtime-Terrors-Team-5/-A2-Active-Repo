@@ -663,7 +663,7 @@ class ScenarioGameMaster extends GameMaster {
                 if (customers.size() == 0 && cusomerRemaining == 0){
                     game.setScreen(new GameWinScreen(game, (int) totalTimer, customersServed));
                 }
-            } else if (Objects.equals(invTop, "bakedPotato")) {
+            } else if (Objects.equals(invTop, "bakedPotato") && Objects.equals(customers.get(0).getOrder(), "potato")) {
                 customers.remove(0);
                 customersServed++;
                 money += 5;
