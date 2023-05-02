@@ -47,10 +47,7 @@ public class pizzamachineTest {
      */
 
     public void testPizzaAddedToChefInventory() throws InterruptedException {
-        //chefs.add(new Chef("Chef", 6, 5, 1, 1, 1, false, new Stack<String>(), 1));
-        //chefs.get(0).addToInventory("uncooked_pizza");
-        //machines.add(new Machine("Pizza", "uncooked_pizza", "Pizza", 3, true));
-        //machines.get(0).process(chefs.get(0));
+        
         map = new TmxMapLoader().load("tilemaps/level1.tmx");
         PiazzaPanicGame A = new PiazzaPanicGame();
         ScenarioGameMaster game = new ScenarioGameMaster(A, map , 1, 1, 1);
@@ -100,11 +97,7 @@ public class pizzamachineTest {
 
     }
 
-    //@Test
-  //  public void main(){
-  //      pizzamachinetest test = new pizzamachinetest();
-  //      test.testCheeseDoughAddedToChefInventory();
-  //  }
+
 
 
 }
