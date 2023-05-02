@@ -2,9 +2,10 @@ package com.neves6.piazzapanic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import org.javatuples.Septet;
+
 import java.util.ArrayList;
 import java.util.Objects;
-import org.javatuples.Septet;
 
 /**
  * Machine class.
@@ -58,7 +59,7 @@ public class Machine{
      * @param chef Which chef is using the machine.
      */
     public void process(Chef chef){
-        if (Objects.equals(input, "") && processingTime == 0) {
+        if (Objects.equals(input, "") && processingTime == 0 && chef.getInventory().size() < 3) {
             chef.addToInventory(output);
         } else if (Objects.equals(chef.getInventory().peek(), input)) {
             active = true;
@@ -95,7 +96,7 @@ public class Machine{
     }
     public void attemptGetOutput(){
         Chef chef = operator;
-        if (active && runtime >= processingTime) {
+        if (active && runtime >= processingTime && chef.getInventory().size() < 3) {
             chef.addToInventory(output);
             chef.setIsStickied(false);
             chef.setMachineInteractingWith(null);
