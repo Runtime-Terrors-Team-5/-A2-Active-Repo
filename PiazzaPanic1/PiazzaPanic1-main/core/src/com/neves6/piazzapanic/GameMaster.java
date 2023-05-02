@@ -252,8 +252,8 @@ class ScenarioGameMaster extends GameMaster {
 
         settings = Utility.getSettings();
         this.level = data.getLevel();
-        if (this.level == 1) {
-            this.map = new TmxMapLoader().load("tilemaps/level1.tmx");}
+
+        this.map = new TmxMapLoader().load("tilemaps/level1.tmx");
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(3);
         this.rand = new Random();
 
@@ -272,6 +272,8 @@ class ScenarioGameMaster extends GameMaster {
         this.selectedChef = data.getSelectedChef();
 
         this.customerSpawnTimer = data.getCustomerSpawnTimer();
+        this.finalSpawnTimer = data.getFinalspawnTimer();
+        this.customerPersonalTimer = data.getcustomerPersonalTimer();
 
         totalTimer = 0f;
 
@@ -333,7 +335,7 @@ class ScenarioGameMaster extends GameMaster {
     public saveData generateSaveData(){
         return new saveData(chefs, level, customers,selectedChef,machineLocation,tray,totalTimer,
             repPoint,cusomerRemaining, customerSpawnTimer, validOrder, PowerUp.generatePowerData(),
-            money);
+            money, customerPersonalTimer,finalSpawnTimer);
     }
     public void setSelectedChef(int selectedChef) {
         if ((!chefUnlocked) && selectedChef == 3) {

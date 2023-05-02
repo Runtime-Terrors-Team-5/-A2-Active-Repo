@@ -30,6 +30,9 @@ public class saveData implements Serializable {
 
     private int money;
 
+    private int customerPersonalTimer;
+    private float finalspawnTimer;
+
     /**
      * class implements Serializable it will ccontain all the variables and data which will be saved
      * to a file which can be loaded later
@@ -55,7 +58,7 @@ public class saveData implements Serializable {
         HashMap<Pair<Integer, Integer>,ArrayList<Machine>> machines, ArrayList<String> trayContent,
         float timeElapsed, int repPoint,
         int customerRemaining, float customerSpawnTimer, ArrayList validOrder, ArrayList powerUps,
-        int money){
+        int money, int customerPersonalTimer, float finalSpawnTimer){
 
         this.chefdata = new ArrayList<>();
         for (Chef i:chefs) {
@@ -86,6 +89,8 @@ public class saveData implements Serializable {
         this.repPoint = repPoint;
         this.customerRemaining = customerRemaining;
         this.customerSpawnTimer = customerSpawnTimer;
+        this.customerPersonalTimer = customerPersonalTimer;
+        this.finalspawnTimer = finalSpawnTimer;
 
         this.validOrder = validOrder;
 
@@ -122,6 +127,12 @@ public class saveData implements Serializable {
     public ArrayList getPowerUPs() {return powerUPs;}
 
     public int getMoney() {return money;}
+
+    public int getcustomerPersonalTimer(){return customerPersonalTimer;}
+
+    public float getFinalspawnTimer() {
+        return finalspawnTimer;
+    }
 
     @Override
     public boolean equals(Object o) {
