@@ -52,7 +52,28 @@ public class GameScreen extends ScreenAdapter {
         //bg = new Texture(Gdx.files.internal("title_screen_large.png"));
         this.INITIAL_WIDTH = Gdx.graphics.getWidth();
         this.INITIAL_HEIGHT = Gdx.graphics.getHeight();
-        if (level == 1 || level == 2 || level == 3 || level == 4) {
+        if (level == 1) {
+            map = new TmxMapLoader().load("tilemaps/level1.tmx");
+            gm = new ScenarioGameMaster(game, map, 3, 5, level);
+            unitScale = Gdx.graphics.getHeight() / (12f*32f);
+            wScale = unitScale * 32f;
+            hScale = unitScale * 32f;
+            renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        } else if (level == 2) {
+            map = new TmxMapLoader().load("tilemaps/level1.tmx");
+            gm = new ScenarioGameMaster(game, map, 3, 10, level);
+            unitScale = Gdx.graphics.getHeight() / (12f*32f);
+            wScale = unitScale * 32f;
+            hScale = unitScale * 32f;
+            renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        } if (level == 3) {
+            map = new TmxMapLoader().load("tilemaps/level1.tmx");
+            gm = new ScenarioGameMaster(game, map, 3, 15, level);
+            unitScale = Gdx.graphics.getHeight() / (12f*32f);
+            wScale = unitScale * 32f;
+            hScale = unitScale * 32f;
+            renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        } if (level == 4) {
             map = new TmxMapLoader().load("tilemaps/level1.tmx");
             gm = new ScenarioGameMaster(game, map, 3, 5, level);
             unitScale = Gdx.graphics.getHeight() / (12f*32f);
@@ -182,7 +203,7 @@ public class GameScreen extends ScreenAdapter {
         //enters if the player has 0 rep point and loses
         if (gm.repPoint==0){
             //this.dispose();
-            game.setScreen(new GameWinScreen(game,0, gm.getCustomersServed()));
+            //game.setScreen(new GameWinScreen(game,0, gm.getCustomersServed()));
         }
 
         Gdx.gl20.glViewport( 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );
